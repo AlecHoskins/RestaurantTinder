@@ -47,23 +47,23 @@ class Login extends Component {
         return(
             <div>
                 <h1>Please Sign In</h1>
-                <label class="sr-only">Username</label>
+                <label className="sr-only">Username</label>
                 <input
                     type="text"
                     id="username"
                     name="username"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Username"
                     v-model="user.username"
                     onChange={this.handleInputChange}
                     required
                 />
-                <label class="sr-only">Password</label>
+                <label className="sr-only">Password</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Password"
                     v-model="user.password"
                     onChange={this.handleInputChange}

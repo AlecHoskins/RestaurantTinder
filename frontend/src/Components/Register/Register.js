@@ -35,23 +35,23 @@ class Register extends Component{
         return(
             <div>
                 <h1>Create Account</h1>
-                <label class="sr-only">Username</label>
+                <label className="sr-only">Username</label>
                 <input
                     type="text"
                     id="username"
                     name="username"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Username"
                     v-model="user.username"
                     onChange={this.handleInputChange}
                     required
                 />
-                <label class="sr-only">Password</label>
+                <label className="sr-only">Password</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Password"
                     v-model="user.password"
                     onChange={this.handleInputChange}
@@ -61,7 +61,7 @@ class Register extends Component{
                     type="password"
                     id="password-confirm"
                     name="confirmPassword"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Confirm Password"
                     v-model="user.password"
                     onChange={this.handleInputChange}
