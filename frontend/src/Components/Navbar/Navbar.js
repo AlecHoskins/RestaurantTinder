@@ -8,8 +8,8 @@ export default function Navbar() {
       <div className="navbar-links">
         <ul>
           <li><Link to="/home">Home</Link></li>
-          <li>My Events</li>
-          <li>Near Me</li>
+          <li className="vertical-line">My Events</li>
+          <li className="vertical-line"><Link to="/nearme">Near Me</Link></li>
         </ul>
       </div>
       <div className="navbar-buttons">

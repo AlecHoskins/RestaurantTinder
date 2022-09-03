@@ -7,7 +7,9 @@ function Home(props) {
     
     return(
         <div>
-            Welcome, {currUser}
+            <h3>Welcome, {currUser}</h3>
+			<button>My Events</button>
+			<button>New Event</button>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {addToken, addUser} from '../../Redux/actionCreators'
-import {baseUrl} from '../../Shared/baseUrl'
+import {API} from '../../Shared/baseUrl'
 import axios from 'axios'
 
 
@@ -29,7 +29,7 @@ class Login extends Component {
         const data = { username: this.state.username, password: this.state.password };
         
 
-        const userWithToken = await axios.post(baseUrl + '/login', data)
+        const userWithToken = await axios.post(API.login, data)
 
         
         await this.props.dispatch(addToken(userWithToken.data.token))
