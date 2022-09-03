@@ -1,7 +1,8 @@
 import axios from 'axios'
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
-import { baseUrl } from '../../Shared/baseUrl'
+import { API } from '../../Shared/baseUrl'
+import { Redirect } from 'react-router-dom'
 
 class Register extends Component{
 
@@ -10,7 +11,8 @@ class Register extends Component{
         this.state = {
             username: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+			created: false
         }
         
     }
@@ -22,10 +24,14 @@ class Register extends Component{
         })
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
+		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
         if(this.state.password === this.state.confirmPassword){
-            axios.post(baseUrl + "/register", data)
+            const response = await axios.post(API.register, data);
+			if (response.status === HTTP_CREATED) {
+				this.setState({created: true});
+			}
         }else{
             alert("Password and Confirm Password must match!!!")
         }
@@ -68,7 +74,8 @@ class Register extends Component{
                     required
                 />
                 <Link to="/login">Have an account?</Link>
-                <button type="submit" onClick={this.handleSubmit}>Sign in</button>
+                <button type="submit" onClick={this.handleSubmit}>Create Account</button>
+				{this.state.created ? <Redirect to='/login'/> : <></>}
             </div>
         )
     }

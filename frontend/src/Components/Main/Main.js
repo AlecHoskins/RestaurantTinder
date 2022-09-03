@@ -7,6 +7,8 @@ import {addToken, deleteUser} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
+import Footer from '../Footer/Footer'
+import NearMe from '../NearMe/NearMe'
 
 const mapStateToProps = state => {
     return {
@@ -47,9 +49,11 @@ class Main extends Component {
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
+					<Route path='/nearme'component={() => <NearMe />}/>
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : null}/>
                     <Redirect to='/login'/>
                 </Switch>
+				<Footer />
             </div>
         )
     }
