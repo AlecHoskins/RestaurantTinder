@@ -84,6 +84,7 @@ CREATE TABLE restaurant_type (
 CREATE TABLE restaurant (
    restaurant_id int DEFAULT nextval('seq_restaurant_id'::regclass) NOT NULL,
    type_id int NOT NULL,
+   img_url varchar(200),
    restaurant_name varchar(200) NOT NULL,
    address varchar(200) NOT NULL,
    city_state varchar(50) NOT NULL,
