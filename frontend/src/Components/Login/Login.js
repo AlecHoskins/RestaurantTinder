@@ -34,6 +34,8 @@ class Login extends Component {
         
         await this.props.dispatch(addToken(userWithToken.data.token))
         await this.props.dispatch(addUser(userWithToken.data.user));
+
+        
     }
 
     handleInputChange = (event) => {

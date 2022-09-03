@@ -1,9 +1,13 @@
+import { connect, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 
 function Home(props) {
+    
+    let currUser = useSelector(state => state.user.username);
+    
     return(
         <div>
-            You must be authorized to see this page.
+            Welcome, {currUser}
         </div>
     )
 }
