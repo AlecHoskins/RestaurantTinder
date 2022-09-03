@@ -27,7 +27,7 @@ CREATE SEQUENCE seq_hours_id
   NO MINVALUE
   CACHE 1;
 
-DROP TABLE IF EXISTS type;
+DROP TABLE IF EXISTS restaurant_type;
 DROP SEQUENCE IF EXISTS seq_type_id;
 
 CREATE SEQUENCE seq_type_id
@@ -66,6 +66,21 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE event (
+   event_id int DEFAULT nextval('seq_event_id'::regclass) NOT NULL,
+   event_time timestamp NOT NULL,
+   zipcode int NOT NULL,
+   host_id int NOT NULL,
+   CONSTRAINT PK_event PRIMARY KEY (event_id),
+   CONSTRAINT FK_host FOREIGN KEY (host_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE restaurant_type (
+   type_id int DEFAULT nextval('seq_type_id'::regclass) NOT NULL,
+   restaurant_type varchar(50) NOT NULL,
+   CONSTRAINT PK_type PRIMARY KEY (type_id)
+);
+
 CREATE TABLE restaurant (
    restaurant_id int DEFAULT nextval('seq_restaurant_id'::regclass) NOT NULL,
    type_id int NOT NULL,
@@ -74,7 +89,7 @@ CREATE TABLE restaurant (
    city_state varchar(50) NOT NULL,
    zip int NOT NULL,
    CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id),
-   CONSTRAINT FK_type FOREIGN KEY (type_id)
+   CONSTRAINT FK_type FOREIGN KEY (type_id) REFERENCES restaurant_type(type_id)
 );
 
 CREATE TABLE restaurant_hours (
@@ -84,15 +99,7 @@ CREATE TABLE restaurant_hours (
    open_time time NOT NULL,
    close_time time NOT NULL,
    CONSTRAINT PK_hours PRIMARY KEY (hours_id),
-   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id)
-);
-
-CREATE TABLE type (
-   type_id int DEFAULT nextval('seq_type_id'::regclass) NOT NULL,
-   restaurant_id int NOT NULL,
-   type varchar(50) NOT NULL,
-   CONSTRAINT PK_type PRIMARY KEY (type_id),
-   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id)
+   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id)
 );
 
 CREATE TABLE restaurant_votes (
@@ -100,19 +107,11 @@ CREATE TABLE restaurant_votes (
    event_id int NOT NULL,
    down_votes int NOT NULL,
    up_votes int NOT NULL,
-   CONSTRAINT FK_event FOREIGN KEY (event_id),
-   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id),
+   CONSTRAINT FK_event FOREIGN KEY (event_id) REFERENCES event(event_id),
+   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id),
    CONSTRAINT PK_vote PRIMARY KEY (event_id, restaurant_id)
 );
 
-CREATE TABLE event (
-   event_id int DEFAULT nextval('seq_event_id'::regclass) NOT NULL,
-   event_time timestamp NOT NULL,
-   zipcode int NOT NULL,
-   host_id int NOT NULL,
-   CONSTRAINT PK_event PRIMARY KEY (event_id),
-   CONSTRAINT FK_host FOREIGN KEY (host_id)
-);
 
 CREATE TABLE guest (
    guest_id int DEFAULT nextval('seq_guest_id'::regclass) NOT NULL,
@@ -121,14 +120,14 @@ CREATE TABLE guest (
    role varchar(200) NOT NULL,
    user_id int NOT NULL,
    CONSTRAINT PK_guest PRIMARY KEY (guest_id),
-   CONSTRAINT FK_user FOREIGN KEY (user_id)
+   CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE guest_event (
    guest_id int NOT NULL,
    event_id int NOT NULL,
-   CONSTRAINT FK_event FOREIGN KEY (event_id),
-   CONSTRAINT FK_guest FOREIGN KEY (guest_id),
+   CONSTRAINT FK_event FOREIGN KEY (event_id) REFERENCES event(event_id),
+   CONSTRAINT FK_guest FOREIGN KEY (guest_id) REFERENCES guest(guest_id),
    CONSTRAINT PK_guest_event PRIMARY KEY (event_id, guest_id)
 );
 
