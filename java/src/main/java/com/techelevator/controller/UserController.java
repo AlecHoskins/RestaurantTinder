@@ -15,14 +15,7 @@ import java.security.Principal;
 @PreAuthorize("isAuthenticated()")
 public class UserController {
 
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private UserDao userDao;
-
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDao = userDao;
+    public UserController() {
     }
 
     @GetMapping(path = "/username")
