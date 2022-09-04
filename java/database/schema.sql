@@ -1,22 +1,15 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS seq_user_id;
+DROP TABLE IF EXISTS restaurant_category;
 
-CREATE SEQUENCE seq_user_id
+DROP TABLE IF EXISTS category_id;
+DROP SEQUENCE IF EXISTS seq_category_id;
+
+CREATE SEQUENCE seq_category_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-
-DROP TABLE IF EXISTS restaurant;
-DROP SEQUENCE IF EXISTS seq_restaurant_id;
-
-CREATE SEQUENCE seq_restaurant_id
-INCREMENT BY 1
-NO MAXVALUE
-NO MINVALUE
-CACHE 1;
 
 DROP TABLE IF EXISTS restaurant_hours;
 DROP SEQUENCE IF EXISTS seq_hours_id;
@@ -27,16 +20,18 @@ CREATE SEQUENCE seq_hours_id
   NO MINVALUE
   CACHE 1;
 
-DROP TABLE IF EXISTS restaurant_type;
-DROP SEQUENCE IF EXISTS seq_type_id;
-
-CREATE SEQUENCE seq_type_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-
 DROP TABLE IF EXISTS restaurant_votes;
+
+DROP TABLE IF EXISTS restaurant;
+DROP SEQUENCE IF EXISTS seq_restaurant_id;
+
+CREATE SEQUENCE seq_restaurant_id
+	INCREMENT BY 1
+	NO MAXVALUE
+	NO MINVALUE
+	CACHE 1;
+
+DROP TABLE IF EXISTS guest_event;
 
 DROP TABLE IF EXISTS event;
 DROP SEQUENCE IF EXISTS seq_event_id;
@@ -51,12 +46,19 @@ DROP TABLE IF EXISTS guest;
 DROP SEQUENCE IF EXISTS seq_guest_id;
 
 CREATE SEQUENCE seq_guest_id
-INCREMENT BY 1
-NO MAXVALUE
-NO MINVALUE
-CACHE 1;
+	INCREMENT BY 1
+	NO MAXVALUE
+	NO MINVALUE
+	CACHE 1;
 
-DROP TABLE IF EXISTS guest_event;
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS seq_user_id;
+
+CREATE SEQUENCE seq_user_id
+  INCREMENT BY 1
+  NO MAXVALUE
+  NO MINVALUE
+  CACHE 1;
 
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
@@ -75,22 +77,28 @@ CREATE TABLE event (
    CONSTRAINT FK_host FOREIGN KEY (host_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE restaurant_type (
-   type_id int DEFAULT nextval('seq_type_id'::regclass) NOT NULL,
-   restaurant_type varchar(50) NOT NULL,
-   CONSTRAINT PK_type PRIMARY KEY (type_id)
+CREATE TABLE category (
+   category_id int DEFAULT nextval('seq_category_id'::regclass) NOT NULL,
+   category varchar(50) NOT NULL,
+   CONSTRAINT PK_category PRIMARY KEY (category_id)
 );
 
 CREATE TABLE restaurant (
    restaurant_id int DEFAULT nextval('seq_restaurant_id'::regclass) NOT NULL,
-   type_id int NOT NULL,
    img_url varchar(200),
    restaurant_name varchar(200) NOT NULL,
    address varchar(200) NOT NULL,
    city_state varchar(50) NOT NULL,
    zip int NOT NULL,
-   CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id),
-   CONSTRAINT FK_type FOREIGN KEY (type_id) REFERENCES restaurant_type(type_id)
+   CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
+);
+
+CREATE TABLE restaurant_category (
+   restaurant_id int NOT NULL,
+   category_id int NOT NULL,
+   CONSTRAINT FK_event FOREIGN KEY (category_id) REFERENCES category(category_id),
+   CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id),
+   CONSTRAINT PK_restaurant_category PRIMARY KEY (category_id, restaurant_id)
 );
 
 CREATE TABLE restaurant_hours (
@@ -139,3 +147,4 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 
 
 COMMIT TRANSACTION;
+
