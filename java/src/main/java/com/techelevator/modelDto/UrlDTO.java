@@ -1,4 +1,4 @@
-package com.techelevator.model;
+package com.techelevator.modelDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

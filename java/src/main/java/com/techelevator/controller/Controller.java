@@ -1,6 +1,6 @@
 package com.techelevator.controller;
 
-import com.techelevator.model.UrlDTO;
+import com.techelevator.modelDto.UrlDTO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

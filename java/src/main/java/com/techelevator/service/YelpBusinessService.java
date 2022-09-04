@@ -3,8 +3,13 @@ package com.techelevator.service;
 import com.mashape.unirest.http.HttpResponse;
         import com.mashape.unirest.http.Unirest;
         import com.mashape.unirest.http.exceptions.UnirestException;
+import com.techelevator.modelDto.SearchDTO;
 import lombok.Data;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Data
 @Service
@@ -34,4 +39,25 @@ public class YelpBusinessService {
                 .asString();
         System.out.println("\n------------------------------------\n"+response.getBody());
     }
+
+    public SearchDTO searchYelp(long zipCode) {
+        RestTemplate restTemplate = new RestTemplate(); // Create a new client
+
+        SearchDTO response = restTemplate.getForObject(
+                API_BUSINESSES_BASE_URL + "search?location=" + zipCode,
+                SearchDTO.class); // Make GET request using client
+
+        return response;
+    }
+
+//    public static void setAuthToken(String authToken) {
+//        ApiService.authToken = authToken;
+//    }
+
+    protected HttpEntity<Void> makeAuthEntity() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(authToken);
+        return new HttpEntity<>(headers);
+    }
+
 }
