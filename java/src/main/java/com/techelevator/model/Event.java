@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.time.LocalDateTime;
+
 public class Event {
 
     private long id;

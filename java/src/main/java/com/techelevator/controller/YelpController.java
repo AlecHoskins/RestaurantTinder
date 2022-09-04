@@ -15,6 +15,7 @@ public class YelpController {
     //for testing
     public static void main(String[] args) throws UnirestException {
         YelpBusinessService yelpBusinessService = new YelpBusinessService();
-        yelpBusinessService.getBusinessesByTermAndLocation("ready ,set,go", "keller");
+        yelpBusinessService.getBusinessesByTermAndLocation("vietnamese", "keller, tx");
+        yelpBusinessService.getBusinessById("MKHNbrsxdFAN7wGBGNcfTQ");
     }
 }
