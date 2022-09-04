@@ -1,8 +1,16 @@
 import axios from 'axios'
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
-import { API } from '../../Shared/baseUrl'
 import { Redirect } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+
+const mapStateToProps = state => {
+	return {
+		urls: state.urls.urls,
+		dispatch: state.dispatch
+	}
+}
 
 class Register extends Component{
 
@@ -13,8 +21,7 @@ class Register extends Component{
             password: '',
             confirmPassword: '',
 			created: false
-        }
-        
+        }        
     }
 
     handleInputChange = (event) => {
@@ -28,7 +35,7 @@ class Register extends Component{
 		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
         if(this.state.password === this.state.confirmPassword){
-            const response = await axios.post(API.register, data);
+            const response = await axios.post(this.props.urls.register, data);
 			if (response.status === HTTP_CREATED) {
 				this.setState({created: true});
 			}
@@ -81,4 +88,4 @@ class Register extends Component{
     }
 }
 
-export default Register;
+export default withRouter(connect(mapStateToProps)(Register));

@@ -13,3 +13,8 @@ export const addUser = (user) => ({
 export const deleteUser = () => ({
     type: ActionTypes.DELETE_USER
 })
+
+export const setURLs = (urls) => ({
+	type: ActionTypes.SET_URLS,
+	payload: urls
+})
