@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux'
+
+
 
 export default function Navbar() {
+
+	let token = useSelector(state => state.token.token);
   return (
     <nav>
       <img src="" alt="logo"/>
@@ -13,7 +18,7 @@ export default function Navbar() {
         </ul>
       </div>
       <div className="navbar-buttons">
-        <button className="login-button" value="Login">Login</button>
+        {!token ? (<button className="login-button" value="Login">Login</button>) : <></>}
         <button className="signup-button" value="Sign Up">Sign Up</button>
       </div>
     </nav>
