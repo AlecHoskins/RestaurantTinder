@@ -35,8 +35,10 @@ class Register extends Component{
 		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
         if(this.state.password === this.state.confirmPassword){
-            const response = await axios.post(this.props.urls.register, data);
-			if (response.status === HTTP_CREATED) {
+            const response = await axios.post(this.props.urls.register, data).catch((error) => {
+                alert("Username already in use, please choose another!")
+            });
+			if (response && response.status === HTTP_CREATED) {
 				this.setState({created: true});
 			}
         }else{
