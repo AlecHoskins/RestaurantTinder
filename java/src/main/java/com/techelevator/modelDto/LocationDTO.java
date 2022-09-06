@@ -1,11 +1,28 @@
 package com.techelevator.modelDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LocationDTO {
 
     private String address1;
     private String city;
     private String state;
+    @JsonProperty("zip_code")
     private long zipCode;
+
+    @Override
+    public String toString() {
+        String info = "address1: " + address1;
+        info += "\n";
+        info += "city: " + city;
+        info += "\n";
+        info += "state: " + state;
+        info += "\n";
+        info += "zipCode: " + zipCode;
+        info += "\n";
+
+        return info;
+    }
 
     public String getAddress1() {
         return address1;
