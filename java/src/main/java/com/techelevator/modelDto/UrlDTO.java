@@ -12,10 +12,10 @@ public class UrlDTO {
     private final String register = BASE_URL + "register";
     @JsonProperty("getUsername")
     private final String getUsername = BASE_URL + "username";
-    @JsonProperty("search")
-    private final String search = BASE_URL + "search";
-    @JsonProperty("restaurant")
-    private final String restaurant = BASE_URL + "restaurant/";
+    @JsonProperty("yelp")
+    private final String search = BASE_URL + "yelp";
+    @JsonProperty("yelpById")
+    private final String restaurant = BASE_URL + "yelp/";
 
     public UrlDTO() {
     }
