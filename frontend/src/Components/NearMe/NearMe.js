@@ -14,24 +14,8 @@ export default function NearMe() {
 		event.preventDefault();
 		let zipcode = searchData.location;
 		let term = searchData.cuisine;
-		const restaurants = await axios.get(urls.search + "?term=" + term + "?location=" + zipcode);
-		//
-		console.log(restaurantData);
-		//call the API and get back the restaurants
-		//dummy data
-		const data = [{
-			restaurantId: 1,
-			name: 'restaurant 1',
-			imgUrl: 'asdf.jpg',
-			info: 'restaurant info'
-		},
-		{
-			restaurantId: 2,
-			name: 'restaurant 2',
-			imgUrl: 'asdasdff.jpg',
-			info: 'restaurant info'
-		}];
-		setRestaurantData(data);
+		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode);
+		await setRestaurantData(restaurants.data);
 	}
 
 	const handleInputChange = (event) => {
@@ -44,12 +28,14 @@ export default function NearMe() {
 		});
 	}
 
-	const restarauntCards = function() { return restaurantData.map(card => (
-	<div className="card" key={card.restarauntId}>
-		<h5>{card.name}</h5>
-		<img src={card.imgUrl} alt="restaurant" />
-		<div>{card.info}</div>
-	</div>)) };
+	const restarauntCards = function() { console.log(restaurantData); 
+		return restaurantData.map(card => (
+			<div className="card" key={card.restarauntId}>
+				<h5>{card.name}</h5>
+				<img src={card.image_url} alt="restaurant" style={{width: "40px"}} />
+				<div>{card.info}</div>
+			</div>)) 
+	};
 
 
 	return (
@@ -57,9 +43,9 @@ export default function NearMe() {
 			<div>
 				<input type="text" onChange={handleInputChange} name="location"/>
 				<select name="cuisine" onChange={handleInputChange}>
-					<option value="type1">type1</option>
-					<option value="type2">type2</option>
-					<option value="type3">type3</option>
+					<option value="french">french</option>
+					<option value="vietnamese">vietnamese</option>
+					<option value="italian">italian</option>
 				</select>
 				<button id="search-button" onClick={searchHandler}>Let's go</button>
 			</div>
