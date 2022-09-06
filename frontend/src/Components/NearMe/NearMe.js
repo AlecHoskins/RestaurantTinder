@@ -1,14 +1,21 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import {useSelector} from 'react-redux';
 
 
 export default function NearMe() {
 
+	const urls = useSelector(state => state.urls.urls);
 
 	const [searchData, setSearchData] = useState();
 	const [restaurantData, setRestaurantData] = useState();
 
-	const searchHandler = (event) => {
+	const searchHandler = async (event) => {
 		event.preventDefault();
+		let zipcode = searchData.location;
+		let term = searchData.cuisine;
+		const restaurants = await axios.get(urls.search + "?term=" + term + "?location=" + zipcode);
+		console.log(restaurantData);
 		//call the API and get back the restaurants
 		//dummy data
 		const data = [{
@@ -28,7 +35,12 @@ export default function NearMe() {
 
 	const handleInputChange = (event) => {
 		event.preventDefault();
-		setSearchData({[event.target.name]: event.target.value});
+		setSearchData((previousSearchData) => {
+			return {
+				...previousSearchData,
+				[event.target.name]: event.target.value
+			}
+		});
 	}
 
 	const restarauntCards = function() { return restaurantData.map(card => (
@@ -42,8 +54,8 @@ export default function NearMe() {
 	return (
 		<div>
 			<div>
-				<input type="text" onChange={handleInputChange} name="city-zipcode"/>
-				<select name="type" onChange={handleInputChange}>
+				<input type="text" onChange={handleInputChange} name="location"/>
+				<select name="cuisine" onChange={handleInputChange}>
 					<option value="type1">type1</option>
 					<option value="type2">type2</option>
 					<option value="type3">type3</option>
