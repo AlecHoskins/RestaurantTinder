@@ -15,6 +15,7 @@ export default function NearMe() {
 		let zipcode = searchData.location;
 		let term = searchData.cuisine;
 		const restaurants = await axios.get(urls.search + "?term=" + term + "?location=" + zipcode);
+		//
 		console.log(restaurantData);
 		//call the API and get back the restaurants
 		//dummy data
