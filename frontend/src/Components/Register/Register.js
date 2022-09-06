@@ -34,14 +34,25 @@ class Register extends Component{
     handleSubmit = async () => {
 		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
+        if(!this.checkPasswordStrength(this.state.password)) {
+            alert("Password must be 8 characters in length and contain at least one capital letter, one lowercase letter, and one number.")
+            return;
+        }
         if(this.state.password === this.state.confirmPassword){
-            const response = await axios.post(this.props.urls.register, data);
-			if (response.status === HTTP_CREATED) {
+            const response = await axios.post(this.props.urls.register, data).catch((error) => {
+                alert("Username already in use, please choose another!")
+            });
+			if (response && response.status === HTTP_CREATED) {
 				this.setState({created: true});
 			}
         }else{
             alert("Password and Confirm Password must match!!!")
         }
+    }
+
+    checkPasswordStrength = (password) => {
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8}$/;
+        return passw.test(password);
     }
 
     render(){

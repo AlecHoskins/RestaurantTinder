@@ -28,12 +28,14 @@ class Login extends Component {
     handleLogin = async () => {
         const data = { username: this.state.username, password: this.state.password };
         
-        const userWithToken = await axios.post(this.props.urls.login, data)
+        const userWithToken = await axios.post(this.props.urls.login, data).catch((error) => {
+            alert("Username or Password is Incorrect, Please Login Again")
+        })
 
-        
+        if (userWithToken) {
         await this.props.dispatch(addToken(userWithToken.data.token));
         await this.props.dispatch(addUser(userWithToken.data.user));
-
+        }
         
     }
 

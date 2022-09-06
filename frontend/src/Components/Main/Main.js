@@ -50,14 +50,9 @@ class Main extends Component {
             <div>
 				<Navbar />
                 {this.props.token.token !== undefined ?
-                        <div>
-                            <Link to='/home'>Home | </Link>
-                            <Link to='/login' onClick={this.handleLogout}>logout</Link> 
                             <Redirect to='/home'/>
-
-                        </div>  
                     : 
-                        <Link to='/login'>Home | </Link>
+                      <Redirect to='/login'/>  
                 }
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
