@@ -4,14 +4,12 @@ import com.techelevator.modelDto.RestaurantDTO;
 import com.techelevator.modelDto.SearchDTO;
 import com.techelevator.service.YelpBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class YelpController {
     @Autowired
     YelpBusinessService yelpBusinessService;
@@ -33,7 +31,6 @@ public class YelpController {
     @GetMapping(path = "/yelp")
     public RestaurantDTO[] search(@RequestParam String term, @RequestParam String location) {
         SearchDTO search = yelpBusinessService.getBusinessesByTermAndLocation(term, location);
-
         return search.getRestaurants();
     }
 
