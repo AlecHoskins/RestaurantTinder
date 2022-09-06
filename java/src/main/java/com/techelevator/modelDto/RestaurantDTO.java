@@ -1,16 +1,39 @@
 package com.techelevator.modelDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techelevator.model.Category;
 
 public class RestaurantDTO {
 
     private String id;
     private String name;
+    @JsonProperty("image_url")
     private String imageUrl;
+    @JsonProperty("is_closed")
     private boolean isClosed;
     private Category[] categories;
     private LocationDTO location;
     private String phone;
+
+    @Override
+    public String toString() {
+
+        String info = "id: " + id;
+        info += "\n";
+        info += "name: " + name;
+        info += "\n";
+        info += "imageUrl: " + imageUrl;
+        info += "\n";
+        info += "isClosed: " + isClosed;
+        info += "\n";
+        info += "categories: " + categories;
+        info += "\n";
+        info += "location: " + location;
+        info += "\n";
+        info += "phone: " + phone;
+
+        return info;
+    }
 
     public String getId() {
         return id;

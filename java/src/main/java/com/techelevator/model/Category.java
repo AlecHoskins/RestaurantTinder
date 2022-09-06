@@ -2,15 +2,20 @@ package com.techelevator.model;
 
 public class Category {
 
-    private long id;
+    private String alias;
     private String title;
 
-    public long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "title: " + title;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getTitle() {
@@ -21,8 +26,8 @@ public class Category {
         this.title = title;
     }
 
-    public Category(long id, String title) {
-        this.id = id;
+    public Category(String alias, String title) {
+        this.alias = alias;
         this.title = title;
     }
 
