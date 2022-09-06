@@ -14,6 +14,7 @@ public class RestaurantDTO {
     private Category[] categories;
     private LocationDTO location;
     private String phone;
+    private HoursDTO[] hours;
 
     @Override
     public String toString() {
@@ -33,6 +34,14 @@ public class RestaurantDTO {
         info += "phone: " + phone;
 
         return info;
+    }
+
+    public HoursDTO[] getHours() {
+        return hours;
+    }
+
+    public void setHours(HoursDTO[] hours) {
+        this.hours = hours;
     }
 
     public String getId() {
@@ -91,7 +100,7 @@ public class RestaurantDTO {
         this.phone = phone;
     }
 
-    public RestaurantDTO(String id, String name, String imageUrl, boolean isClosed, Category[] categories, LocationDTO location, String phone) {
+    public RestaurantDTO(String id, String name, String imageUrl, boolean isClosed, Category[] categories, LocationDTO location, String phone, HoursDTO[] hours) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -99,6 +108,7 @@ public class RestaurantDTO {
         this.categories = categories;
         this.location = location;
         this.phone = phone;
+        this.hours = hours;
     }
 
     public RestaurantDTO() {
