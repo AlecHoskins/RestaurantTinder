@@ -44,13 +44,19 @@ select {
 }
 
 .label-location {
-    margin-right: 4px;
     margin-left: 10px;
 }
 
+.input-location {
+    margin-left: 4px;
+}
+
 .label-cuisine {
-    margin-right: 4px;
     margin-left: 10px;
+}
+
+.input-cuisine {
+    margin-left: 4px;
 }
 
 #search-button {

@@ -64,12 +64,12 @@ export default function NearMe() {
 	return (
 		<div>
 			<form>
-				<label className="label-date" for="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span></label>
-				<input type="datetime-local" name="date" onChange={handleInputChange} />
-				<label className="label-location" for="location">Location: </label>
-				<input type="text" onChange={handleInputChange} name="location" required/>
-				<label className="label-cuisine" for="cuisine">Cuisine: </label>
-				<select name="cuisine" onChange={handleInputChange}>
+				<label className="label-date" for="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
+				<input type="datetime-local" name="date" onChange={handleInputChange} /></label>
+				<label className="label-location" for="location">Location: 
+				<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
+				<label className="label-cuisine" for="cuisine">Cuisine: 
+				<select className="input-cuisine" name="cuisine" onChange={handleInputChange}>
 					<option value="restaurant">None</option>
 					<option value="french">French</option>
 					<option value="chinese">Chinese</option>
@@ -82,7 +82,7 @@ export default function NearMe() {
 					<option value="american">American</option>
 					<option value="pizza">Pizza</option>
 					<option value="burgers">Burgers</option>
-				</select>
+				</select></label>
 				<button id="search-button" onClick={searchHandler}>Let's go</button>
 			</form>
 			<div>
