@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect, useSelector } from 'react-redux'
-import {addToken, deleteUser, setURLs} from '../../Redux/actionCreators'
+import {addToken, deleteUser } from '../../Redux/actionCreators'
+import { withRouter } from 'react-router-dom';
 import './Navbar.css';
 
 const mapStateToProps = state => {
@@ -24,6 +25,7 @@ function Navbar(props) {
   const handleLogout = () => {
     props.addToken("")
     props.deleteUser()
+	props.history.push("/home");
   }
 
 	let token = useSelector(state => state.token.token);
@@ -47,4 +49,4 @@ function Navbar(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
