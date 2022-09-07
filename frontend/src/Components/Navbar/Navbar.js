@@ -36,7 +36,7 @@ function Navbar(props) {
           <div className="vl"></div>
           <li>My Events</li>
           <div className="vl"></div>
-          <li><Link to="/nearme">Near Me</Link></li>
+          <li><Link to="/nearme">New Event</Link></li>
         </ul>
       </div>
       <div className="navbar-buttons">

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import {useSelector} from 'react-redux';
+import './NearMe.css';
 
 
 export default function NearMe() {
@@ -63,13 +64,13 @@ export default function NearMe() {
 	return (
 		<div>
 			<form>
-				<label for="date">Date for Event: </label>
+				<label className="label-date" for="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span></label>
 				<input type="datetime-local" name="date" onChange={handleInputChange} />
-				<label for="location">Location: </label>
+				<label className="label-location" for="location">Location: </label>
 				<input type="text" onChange={handleInputChange} name="location" required/>
-				<label for="cuisine">Type: </label>
+				<label className="label-cuisine" for="cuisine">Cuisine: </label>
 				<select name="cuisine" onChange={handleInputChange}>
-					<option value="restaurant">none</option>
+					<option value="restaurant">None</option>
 					<option value="french">French</option>
 					<option value="chinese">Chinese</option>
 					<option value="japanese">Japanese</option>
@@ -80,7 +81,7 @@ export default function NearMe() {
 					<option value="thai">Thai</option>
 					<option value="american">American</option>
 					<option value="pizza">Pizza</option>
-					<option value="burgers">burgers</option>
+					<option value="burgers">Burgers</option>
 				</select>
 				<button id="search-button" onClick={searchHandler}>Let's go</button>
 			</form>
