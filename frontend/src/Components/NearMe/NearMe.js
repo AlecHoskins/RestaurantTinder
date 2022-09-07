@@ -64,7 +64,7 @@ export default function NearMe() {
 
 
 	return (
-		<div>
+		<div className='nearme'>
 			<form>
 				<label className="label-date" for="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
 				<input type="datetime-local" name="date" onChange={handleInputChange} /></label>

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {addToken, addUser} from '../../Redux/actionCreators'
 import axios from 'axios'
+import './Login.css'
 
 
 const mapStateToProps = state => {
@@ -48,7 +49,7 @@ class Login extends Component {
 
     render(){
         return(
-            <div>
+            <div className='loginPage'>
                 <h1>Please Sign In</h1>
                 <label className="sr-only">Username</label>
                 <input
