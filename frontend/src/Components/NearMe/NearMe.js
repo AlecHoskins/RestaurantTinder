@@ -85,7 +85,7 @@ export default function NearMe() {
 				</select></label>
 				<button id="search-button" onClick={searchHandler}>Let's go</button>
 			</form>
-			<div>
+			<div className='restaurant-cardContainer'>
 				{(restaurantData) ? restarauntCards() : (<div></div>)}
 			</div>
 		</div>
