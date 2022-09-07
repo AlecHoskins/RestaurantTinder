@@ -70,6 +70,25 @@ public class YelpBusinessService {
         return searchResults;
     }
 
+    public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location, int unixTime) {
+        String urlQuery = getUrlQuery("search?term=" + searchTerm + "&location=" + location + "&open_at=" + unixTime);
+
+        SearchDTO searchResults = null;
+        try {
+            ResponseEntity<SearchDTO> response = restTemplate.exchange(
+                    urlQuery,
+                    HttpMethod.GET,
+                    makeAuthEntity(),
+                    SearchDTO.class
+            );
+            searchResults = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return searchResults;
+    }
+
 //    public static void setAuthToken(String authToken) {
 //        ApiService.authToken = authToken;
 //    }
