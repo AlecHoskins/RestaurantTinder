@@ -4,6 +4,7 @@ nav {
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     font-family: 'Roboto', sans-serif;
+    height: 100px;
   }
   
   nav img {
@@ -14,6 +15,7 @@ nav {
   
   .navbar-links {
     justify-self: center;
+    margin-top: 15px;
   }
   
   .navbar-links ul {
@@ -57,4 +59,46 @@ nav {
   a {
     text-decoration: none;
     color: white;
+  }
+
+  @media only screen and (max-width: 900px){
+    nav {
+      grid-template-columns: 200px auto auto;
+    }
+
+    nav img {
+      margin-left: 40px;
+    }
+  }
+
+  @media only screen and (max-width: 800px){
+    nav {
+      grid-template-columns: 180px auto auto;
+    }
+
+    .navbar-buttons {
+      margin-right: none;
+    }
+
+    button {
+      width: 85px;
+      height: 45px;
+      margin: 2px;
+    }
+  }
+
+  @media only screen and (max-width: 720px){
+    nav {
+      grid-template-columns: 120px auto auto;
+    }
+  }
+
+  @media only screen and (max-width: 525px){
+    nav {
+      grid-template-columns: 80px auto auto;
+    }
+
+    nav img {
+      margin-left: 4px;
+    }
   }
