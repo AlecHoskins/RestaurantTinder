@@ -8,6 +8,8 @@ export default function NearMe() {
 
 	const urls = useSelector(state => state.urls.urls);
 
+	const phoneLogo = '/phone-icon.png';
+
 	const [searchData, setSearchData] = useState();
 	const [restaurantData, setRestaurantData] = useState();
 
@@ -42,8 +44,8 @@ export default function NearMe() {
 		return restaurantData.map(card => (
 			<div className="card" key={card.id}>
 				<div>
-					<h5>{card.name}</h5>
-					<img src={card.image_url} alt="restaurant" style={{width: "40px"}} />
+					<h5 className='card-name'>{card.name}</h5>
+					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div>
 					<button className="add-restaurant">Add</button>
@@ -51,7 +53,7 @@ export default function NearMe() {
 						<div>{card.location.address1}</div>
 						<div>{card.location.city}, {card.location.state} {card.location.zipcode}</div> 
 					</div>
-					<div className="restaurant-phone">{card.phone}</div>
+					<div className="restaurant-phone"><img src={phoneLogo} className="phoneLogo" />{card.phone}</div>
 					<div className="categories">
 						{(card.categories.map((e) => (<span className="category" key={e.alias}>{e.title}</span>)))}
 					</div>
