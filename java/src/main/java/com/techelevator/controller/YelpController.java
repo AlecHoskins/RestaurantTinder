@@ -34,10 +34,10 @@ public class YelpController {
         return search.getRestaurants();
     }
 
-    // the unixTime addition allows the user to find restaurant that are open at the time of the event
+    // the eventUnixTime addition allows the user to find restaurant that are open at the time of the event
     @GetMapping(path = "/yelp/time")
-    public RestaurantDTO[] search(@RequestParam String term, @RequestParam String location, @RequestParam int unixTime) {
-        SearchDTO search = yelpBusinessService.getBusinessesByTermAndLocation(term, location, unixTime);
+    public RestaurantDTO[] search(@RequestParam String term, @RequestParam String location, @RequestParam int eventUnixTime) {
+        SearchDTO search = yelpBusinessService.getBusinessesByTermAndLocation(term, location, eventUnixTime);
         return search.getRestaurants();
     }
 
