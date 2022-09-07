@@ -9,7 +9,7 @@ function Home(props) {
         <div>
             <h3>Welcome, {currUser}</h3>
 			<button>My Events</button>
-			<button>New Event</button>
+			<Link to='/nearme'><button>New Event</button></Link>
         </div>
     )
 }
