@@ -9,6 +9,7 @@ import {withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
 import NearMe from '../NearMe/NearMe'
+import MainPage from '../MainPage/MainPage'
 import baseUrl from '../../Shared/baseUrl'
 import axios from 'axios'
 
@@ -52,14 +53,14 @@ class Main extends Component {
                 {this.props.token.token !== undefined ?
                             <Redirect to='/home'/>
                     : 
-                      <Redirect to='/login'/>  
+                      <Redirect to='/home'/>  
                 }
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
 					<Route path='/nearme'component={() => <NearMe />}/>
-                    <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : null}/>
-                    <Redirect to='/login'/>
+                    <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
+                    <Redirect to='/home'/>
                 </Switch>
 				<Footer />
             </div>

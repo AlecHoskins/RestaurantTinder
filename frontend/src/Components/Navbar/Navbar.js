@@ -36,7 +36,7 @@ function Navbar(props) {
           <div className="vl"></div>
           <li>My Events</li>
           <div className="vl"></div>
-          <li><Link to="/nearme">New Event</Link></li>
+          <li>{!token ? (<Link to="/login">New Event</Link>) : (<Link to="/nearme">New Event</Link>)}</li>
         </ul>
       </div>
       <div className="navbar-buttons">
