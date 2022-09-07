@@ -56,7 +56,7 @@ class Main extends Component {
                       <Redirect to='/home'/>  
                 }
                 <Switch>
-                    <Route path='/login' component={() => <Login/>}/>
+                    <Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
 					<Route path='/nearme'component={() => <NearMe />}/>
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
