@@ -17,7 +17,7 @@ public class UrlDTO {
     @JsonProperty("yelpById")
     private final String restaurant = BASE_URL + "yelp/";
     @JsonProperty("yelpUnixSearch")
-    private final String searchWithUnixTime = BASE_URL + "yelp/time";
+    private final String searchWithUnixTime = search;
 
     public UrlDTO() {
     }

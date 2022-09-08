@@ -15,6 +15,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Service
 public class YelpBusinessService {
@@ -52,26 +55,24 @@ public class YelpBusinessService {
 
     /********************************** SEARCHES BUSINESSES WITH SEARCH TERM AND LOCATION *******************************/
     public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location) {
-        String urlQuery = getUrlQuery("search?term=" + searchTerm + "&location=" + location);
-
-        SearchDTO searchResults = null;
-        try {
-            ResponseEntity<SearchDTO> response = restTemplate.exchange(
-                    urlQuery,
-                    HttpMethod.GET,
-                    makeAuthEntity(),
-                    SearchDTO.class
-            );
-            searchResults = response.getBody();
-        } catch (RestClientResponseException | ResourceAccessException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return searchResults;
+        return getBusinessesByTermAndLocation(searchTerm, location, -1);
     }
 
     public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location, int unixTime) {
-        String urlQuery = getUrlQuery("search?term=" + searchTerm + "&location=" + location + "&open_at=" + unixTime);
+
+        List<String> queries = new ArrayList<>();
+
+        if(searchTerm != null && searchTerm.length() > 0) {
+            queries.add("term=" + searchTerm);
+        }
+        if(location != null && location.length() > 0) {
+            queries.add("location=" + location);
+        }
+        if(unixTime > 0) {
+            queries.add("open_at=" + unixTime);
+        }
+
+        String urlQuery = getUrlQuery(queries);
 
         SearchDTO searchResults = null;
         try {
@@ -89,11 +90,29 @@ public class YelpBusinessService {
         return searchResults;
     }
 
-//    public static void setAuthToken(String authToken) {
-//        ApiService.authToken = authToken;
-//    }
+    private String getUrlQuery(String query) {
+        List<String> queries = new ArrayList<>(1);
+        queries.add(query);
+        return getUrlQuery(queries);
+    }
 
-    private String getUrlQuery(String urlQuery) {
+    private String getUrlQuery(List<String> queries) {
+        if(queries == null) {
+            return API_BUSINESSES_BASE_URL;
+        }
+
+        String urlQuery = "";
+
+        if(queries.size() > 0) {
+            urlQuery += "search?";
+
+            for(String query : queries) {
+                urlQuery += query + "&";
+            }
+
+            urlQuery = urlQuery.substring(0, urlQuery.length() - 1);
+        }
+
         return API_BUSINESSES_BASE_URL + urlQuery.replaceAll("\\s",""); //spaces are illegal in url search
     }
 

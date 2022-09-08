@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36dcee53-5894-41cb-b513-c13fed690824" name="Changes" comment="created endpoint to search yelp with unix time">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/YelpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/YelpController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/modelDto/UrlDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/modelDto/UrlDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/service/YelpBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/service/YelpBusinessService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
