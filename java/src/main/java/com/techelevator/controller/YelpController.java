@@ -20,7 +20,7 @@ public class YelpController {
     @GetMapping(path = "/yelp")
     public RestaurantDTO[] search(
             @RequestParam (defaultValue = "restaurant") String term,
-            @RequestParam (defaultValue = "") String location,
+            @RequestParam (defaultValue = "78229") String location,
             @RequestParam (defaultValue = "-1") int eventUnixTime
     ) {
         SearchDTO search = yelpBusinessService.getBusinessesByTermAndLocation(term, location, eventUnixTime);

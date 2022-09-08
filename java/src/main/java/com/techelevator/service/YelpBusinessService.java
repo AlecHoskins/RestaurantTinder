@@ -27,9 +27,11 @@ public class YelpBusinessService {
     static final String API_BUSINESSES_BASE_URL ="https://api.yelp.com/v3/businesses/";
 
     private RestTemplate restTemplate;
+    private HttpEntity<Void> authEntity;
 
     public YelpBusinessService() {
         restTemplate = new RestTemplate();
+        authEntity = makeAuthEntity();
     }
 
     /********************************** GETS THE DETAILS OF A BUSINESSES BY ID *******************************/
@@ -42,7 +44,7 @@ public class YelpBusinessService {
             ResponseEntity<RestaurantDTO> response = restTemplate.exchange(
                     urlQuery,
                     HttpMethod.GET,
-                    makeAuthEntity(),
+                    authEntity,
                     RestaurantDTO.class
             );
             restaurant = response.getBody();
@@ -79,7 +81,7 @@ public class YelpBusinessService {
             ResponseEntity<SearchDTO> response = restTemplate.exchange(
                     urlQuery,
                     HttpMethod.GET,
-                    makeAuthEntity(),
+                    authEntity,
                     SearchDTO.class
             );
             searchResults = response.getBody();
@@ -102,8 +104,10 @@ public class YelpBusinessService {
         }
 
         String urlQuery = "";
-
-        if(queries.size() > 0) {
+        if(queries.size() == 1) {
+            urlQuery = queries.get(0);
+        }
+        if(queries.size() > 1) {
             urlQuery += "search?";
 
             for(String query : queries) {
