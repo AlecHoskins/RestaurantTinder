@@ -51,7 +51,7 @@ class Register extends Component{
     }
 
     checkPasswordStrength = (password) => {
-        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8}$/;
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/;
         return passw.test(password);
     }
 

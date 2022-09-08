@@ -31,7 +31,7 @@ function Navbar(props) {
 	let token = useSelector(state => state.token.token);
   return (
     <nav>
-      <img src={logo} alt="logo"/>
+      <Link to="/home"><img src={logo} alt="logo"/></Link>
       <div className="navbar-links">
         <ul>
           <li><Link to="/home">Home</Link></li>

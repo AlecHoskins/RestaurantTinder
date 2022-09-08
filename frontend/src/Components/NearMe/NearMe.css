@@ -133,3 +133,12 @@ select {
 .restaurant-info {
     margin-top: 2px;
 }
+
+.telephone-link {
+	color: black;
+}
+
+.telephone-link:hover {
+	color: blue;
+	text-decoration: underline;
+}
