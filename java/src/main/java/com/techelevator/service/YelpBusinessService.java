@@ -26,7 +26,7 @@ public class YelpBusinessService {
     static final String YELP_TOKEN = "iaMEHWlcw7lHm7MnaRb88lv1rcor5PPvUY7DLToMpAAaqx9TF4mW7bWITQbjaZyTp-qRM7IKqNP7bIzgy93gIUx6hJfxabcnAoumPcpP-GwPXX8EQADNFzu0osMUY3Yx";
     static final String API_BUSINESSES_BASE_URL ="https://api.yelp.com/v3/businesses/";
 
-    static final int ONE_WEEK_IN_UNIX = 1;
+    static final int ONE_WEEK_IN_UNIX = 604800;
 
     private RestTemplate restTemplate;
     private HttpEntity<Void> authEntity;
