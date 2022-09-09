@@ -22,9 +22,11 @@ import java.util.List;
 @Service
 public class YelpBusinessService {
 
-    static final String API_KEY = "Bearer iaMEHWlcw7lHm7MnaRb88lv1rcor5PPvUY7DLToMpAAaqx9TF4mW7bWITQbjaZyTp-qRM7IKqNP7bIzgy93gIUx6hJfxabcnAoumPcpP-GwPXX8EQADNFzu0osMUY3Yx";
+//    static final String API_KEY = "Bearer iaMEHWlcw7lHm7MnaRb88lv1rcor5PPvUY7DLToMpAAaqx9TF4mW7bWITQbjaZyTp-qRM7IKqNP7bIzgy93gIUx6hJfxabcnAoumPcpP-GwPXX8EQADNFzu0osMUY3Yx";
     static final String YELP_TOKEN = "iaMEHWlcw7lHm7MnaRb88lv1rcor5PPvUY7DLToMpAAaqx9TF4mW7bWITQbjaZyTp-qRM7IKqNP7bIzgy93gIUx6hJfxabcnAoumPcpP-GwPXX8EQADNFzu0osMUY3Yx";
     static final String API_BUSINESSES_BASE_URL ="https://api.yelp.com/v3/businesses/";
+
+    static final int ONE_WEEK_IN_UNIX = 1;
 
     private RestTemplate restTemplate;
     private HttpEntity<Void> authEntity;
@@ -37,7 +39,7 @@ public class YelpBusinessService {
     /********************************** GETS THE DETAILS OF A BUSINESSES BY ID *******************************/
     //business id will appear as one of first properties in the business json in business search
     public RestaurantDTO getBusinessById(String businessId) {
-        String urlQuery = getUrlQuery(businessId);
+        String urlQuery = getIdUrl(businessId);
 
         RestaurantDTO restaurant = null;
         try {
@@ -61,7 +63,6 @@ public class YelpBusinessService {
     }
 
     public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location, int unixTime) {
-
         List<String> queries = new ArrayList<>();
 
         if(searchTerm != null && searchTerm.length() > 0) {
@@ -92,10 +93,8 @@ public class YelpBusinessService {
         return searchResults;
     }
 
-    private String getUrlQuery(String query) {
-        List<String> queries = new ArrayList<>(1);
-        queries.add(query);
-        return getUrlQuery(queries);
+    private String getIdUrl(String id) {
+        return API_BUSINESSES_BASE_URL + id;
     }
 
     private String getUrlQuery(List<String> queries) {
@@ -104,10 +103,7 @@ public class YelpBusinessService {
         }
 
         String urlQuery = "";
-        if(queries.size() == 1) {
-            urlQuery = queries.get(0);
-        }
-        if(queries.size() > 1) {
+        if(queries.size() >= 1) {
             urlQuery += "search?";
 
             for(String query : queries) {

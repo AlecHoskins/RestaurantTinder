@@ -14,6 +14,8 @@ public class RestaurantDTO {
     private Category[] categories;
     private LocationDTO location;
     private String phone;
+    @JsonProperty("display_phone")
+    private String displayPhone;
     private HoursDTO[] hours;
 
     @Override
@@ -32,8 +34,18 @@ public class RestaurantDTO {
         info += "location: " + location;
         info += "\n";
         info += "phone: " + phone;
+        info += "\n";
+        info += "displayPhone: " + displayPhone;
 
         return info;
+    }
+
+    public String getDisplayPhone() {
+        return displayPhone;
+    }
+
+    public void setDisplayPhone(String displayPhone) {
+        this.displayPhone = displayPhone;
     }
 
     public HoursDTO[] getHours() {
@@ -100,7 +112,7 @@ public class RestaurantDTO {
         this.phone = phone;
     }
 
-    public RestaurantDTO(String id, String name, String imageUrl, boolean isClosed, Category[] categories, LocationDTO location, String phone, HoursDTO[] hours) {
+    public RestaurantDTO(String id, String name, String imageUrl, boolean isClosed, Category[] categories, LocationDTO location, String phone, String displayPhone, HoursDTO[] hours) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -108,6 +120,7 @@ public class RestaurantDTO {
         this.categories = categories;
         this.location = location;
         this.phone = phone;
+        this.displayPhone = displayPhone;
         this.hours = hours;
     }
 
