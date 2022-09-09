@@ -23,13 +23,6 @@ CREATE SEQUENCE seq_hours_id
 DROP TABLE IF EXISTS restaurant_votes;
 
 DROP TABLE IF EXISTS restaurant;
-DROP SEQUENCE IF EXISTS seq_restaurant_id;
-
-CREATE SEQUENCE seq_restaurant_id
-	INCREMENT BY 1
-	NO MAXVALUE
-	NO MINVALUE
-	CACHE 1;
 
 DROP TABLE IF EXISTS guest_event;
 
@@ -85,11 +78,13 @@ CREATE TABLE category (
 
 CREATE TABLE restaurant (
    restaurant_id int DEFAULT nextval('seq_restaurant_id'::regclass) NOT NULL,
-   img_url varchar(200),
+   image_url varchar(200),
    restaurant_name varchar(200) NOT NULL,
    address varchar(200) NOT NULL,
    city_state varchar(50) NOT NULL,
    zip int NOT NULL,
+   phone varchar(20) NOT NULL,
+   display_phone varchar(30) NOT NULL,
    CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
 );
 
