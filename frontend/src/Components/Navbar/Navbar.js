@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect, useSelector } from 'react-redux'
-import {addToken, deleteUser } from '../../Redux/actionCreators'
+import {addToken, deleteUser, deleteCurrentEvent } from '../../Redux/actionCreators'
 import { withRouter } from 'react-router-dom';
 import './Navbar.css';
 
@@ -17,7 +17,8 @@ const logo = '/restaurant-tinder.png';
 
 const mapDispatchToProps = (dispatch) => ({
   addToken: () => { dispatch(addToken()) },
-  deleteUser: () => { dispatch(deleteUser())}
+  deleteUser: () => { dispatch(deleteUser())},
+  deleteCurrentEvent: () => { dispatch(deleteCurrentEvent())}
 })
 
 function Navbar(props) {
@@ -25,6 +26,7 @@ function Navbar(props) {
   const handleLogout = () => {
     props.addToken("")
     props.deleteUser()
+	props.deleteCurrentEvent();
 	props.history.push("/home");
   }
 

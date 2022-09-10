@@ -15,6 +15,8 @@ export const Event = (
       return { ...state, selectedRestaurants: action.payload };
     case ActionTypes.SET_EVENT_DEADLINE_DATE:
       return { ...state, deadlineDate: action.payload };
+	case ActionTypes.DELETE_EVENT:
+		return {...state, date: undefined, deadlineDate: undefined, selectedRestaurants: []}
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Home from '../Home/Home'
-import {addToken, deleteUser, setURLs} from '../../Redux/actionCreators'
+import {addToken, deleteUser, setURLs, deleteCurrentEvent} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
@@ -25,7 +25,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     addToken: () => { dispatch(addToken()) },
     deleteUser: () => { dispatch(deleteUser())},
-	setURLs: (data) => { dispatch(setURLs(data))}
+	setURLs: (data) => { dispatch(setURLs(data))},
+	deleteCurrentEvent: () => { dispatch(deleteCurrentEvent())}
 });
 
 
@@ -43,6 +44,7 @@ class Main extends Component {
     handleLogout = () => {
         this.props.addToken("")
         this.props.deleteUser()
+		this.props.deleteCurrentEvent();
     }
 
     render(){
@@ -57,9 +59,9 @@ class Main extends Component {
                 <Switch>
                     <Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
-					<Route path='/nearme'component={() => <NearMe />}/>
+					{this.props.token.token !== undefined ? <Route path='/nearme'component={() => <NearMe />}/> : <Redirect to='/login/'/> }
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-					<Route path='/event' component={() => <Event />}/>
+					{this.props.token.token !== undefined ? <Route path='/event' component={() => <Event />}/> : <Redirect to='/login/' /> }
                     <Redirect to='/home'/>
                 </Switch>
 				<Footer />

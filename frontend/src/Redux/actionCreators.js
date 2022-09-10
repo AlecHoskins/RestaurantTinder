@@ -33,3 +33,7 @@ export const setEventDeadlineDate = (date) => ({
 	type: ActionTypes.SET_EVENT_DEADLINE_DATE,
 	payload: date
 })
+
+export const deleteCurrentEvent = () => ({
+	type:ActionTypes.DELETE_EVENT,
+})
