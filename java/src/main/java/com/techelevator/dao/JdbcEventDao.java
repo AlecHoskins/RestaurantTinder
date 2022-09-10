@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Event;
-import com.techelevator.model.User;
+import com.techelevator.model.event.Event;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;

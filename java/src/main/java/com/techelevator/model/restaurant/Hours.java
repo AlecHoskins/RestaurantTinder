@@ -1,20 +1,20 @@
-package com.techelevator.modelDto;
+package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HoursDTO {
+public class Hours {
 
-    private DayDTO[] open;
+    private Day[] open;
     @JsonProperty("hours_type")
     private String hoursType;
     @JsonProperty("is_open_now")
     private boolean isOpenNow;
 
-    public DayDTO[] getOpen() {
+    public Day[] getOpen() {
         return open;
     }
 
-    public void setOpen(DayDTO[] open) {
+    public void setOpen(Day[] open) {
         this.open = open;
     }
 
@@ -34,12 +34,12 @@ public class HoursDTO {
         isOpenNow = openNow;
     }
 
-    public HoursDTO(DayDTO[] open, String hoursType, boolean isOpenNow) {
+    public Hours(Day[] open, String hoursType, boolean isOpenNow) {
         this.open = open;
         this.hoursType = hoursType;
         this.isOpenNow = isOpenNow;
     }
 
-    public HoursDTO() {
+    public Hours() {
     }
 }

@@ -1,6 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.modelDto.RestaurantDTO;
+import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class JdbcRestaurantDao implements RestaurantDao{
     }
 
     @Override
-    public RestaurantDTO findRestaurantById(String restaurantId) {
+    public Restaurant findRestaurantById(String restaurantId) {
 
         String sql = "SELECT * FROM restaurant WHERE restaurant_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, restaurantId);
@@ -35,8 +35,8 @@ public class JdbcRestaurantDao implements RestaurantDao{
         return false;
     }
 
-    private RestaurantDTO mapRowToRestaurant(SqlRowSet rs) {
-        RestaurantDTO restaurant = new RestaurantDTO();
+    private Restaurant mapRowToRestaurant(SqlRowSet rs) {
+        Restaurant restaurant = new Restaurant();
         restaurant.setId(rs.getString("restaurant_id"));
         restaurant.setName(rs.getString("restaurant_name"));
         restaurant.setImageUrl(rs.getString("image_url"));

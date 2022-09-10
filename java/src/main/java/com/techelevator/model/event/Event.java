@@ -1,6 +1,6 @@
-package com.techelevator.model;
+package com.techelevator.model.event;
 
-import com.techelevator.modelDto.RestaurantDTO;
+import com.techelevator.model.restaurant.Restaurant;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,10 +15,10 @@ public class Event {
     private int day;
     private String time;
     private int decision;
-    private RestaurantDTO[] eventRestaurants;
+    private Restaurant[] eventRestaurants;
     private List<Guest> guestList;
 
-    public Event(long id, long hostId, int day, String time, int decision, RestaurantDTO[] eventRestaurants, List<Guest> guestList) {
+    public Event(long id, long hostId, int day, String time, int decision, Restaurant[] eventRestaurants, List<Guest> guestList) {
         this.id = id;
         this.hostId = hostId;
         this.day = day;
@@ -72,11 +72,11 @@ public class Event {
         this.decision = decision;
     }
 
-    public RestaurantDTO[] getEventRestaurants() {
+    public Restaurant[] getEventRestaurants() {
         return eventRestaurants;
     }
 
-    public void setEventRestaurants(RestaurantDTO[] eventRestaurants) {
+    public void setEventRestaurants(Restaurant[] eventRestaurants) {
         this.eventRestaurants = eventRestaurants;
     }
 

@@ -1,8 +1,8 @@
-package com.techelevator.modelDto;
+package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LocationDTO {
+public class Location {
 
     private String address1;
     private String city;
@@ -56,13 +56,13 @@ public class LocationDTO {
         this.zipCode = zipCode;
     }
 
-    public LocationDTO(String address1, String city, String state, String zipCode) {
+    public Location(String address1, String city, String state, String zipCode) {
         this.address1 = address1;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
     }
 
-    public LocationDTO() {
+    public Location() {
     }
 }

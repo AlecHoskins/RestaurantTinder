@@ -1,17 +1,18 @@
-package com.techelevator.modelDto;
+package com.techelevator.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.techelevator.model.restaurant.Restaurant;
 
 public class SearchDTO {
 
     private long total;
     @JsonProperty("businesses")
-    private RestaurantDTO[] restaurants;
+    private Restaurant[] restaurants;
 
     @Override
     public String toString() {
         String businesses = "Total: " + total + "\n";
-        for(RestaurantDTO restaurant : this.restaurants) {
+        for(Restaurant restaurant : this.restaurants) {
             businesses += restaurant.getName();
             businesses += "\n";
         }
@@ -27,15 +28,15 @@ public class SearchDTO {
         this.total = total;
     }
 
-    public RestaurantDTO[] getRestaurants() {
+    public Restaurant[] getRestaurants() {
         return restaurants;
     }
 
-    public void setRestaurants(RestaurantDTO[] restaurants) {
+    public void setRestaurants(Restaurant[] restaurants) {
         this.restaurants = restaurants;
     }
 
-    public SearchDTO(long total, RestaurantDTO[] businesses) {
+    public SearchDTO(long total, Restaurant[] businesses) {
         this.total = total;
         this.restaurants = businesses;
     }
