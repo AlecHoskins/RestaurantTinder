@@ -49,17 +49,18 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
-    public void addEvent(Event event) {
+    public int addEvent(Event event) {
 
         String sql = "INSERT INTO event (Long.class, host_id, day, time, decision" +
             "VALUES(?,?,?,?,?);";
 
         try {
-        jdbcTemplate.queryForObject(sql, Long.class, event.getHostId(), event.getDay(), event.getTime(), event.getDecision());
+            jdbcTemplate.queryForObject(sql, Long.class, event.getHostId(), event.getDay(), event.getTime(), event.getDecision());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return -1;
     }
 
     private Event mapRowToEvent(SqlRowSet rs) {

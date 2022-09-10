@@ -12,5 +12,5 @@ public interface EventDao {
 
     List<Event> getEventByHostId(long hostId);
 
-    void addEvent(Event event);
+    int addEvent(Event event);
 }

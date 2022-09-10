@@ -30,7 +30,7 @@ public class EventController {
         return eventDao.getEventByUserId(id);
     }
 
-    @PutMapping
+    @PostMapping
     public void addEvent(@RequestBody Event event) {
         try {
             eventDao.addEvent(event);
