@@ -1,13 +1,10 @@
 package com.techelevator.controller;
 
-import com.techelevator.modelDto.RestaurantDTO;
-import com.techelevator.modelDto.SearchDTO;
+import com.techelevator.model.restaurant.Restaurant;
+import com.techelevator.dto.SearchDTO;
 import com.techelevator.service.YelpBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -18,7 +15,7 @@ public class YelpController {
 
     // the eventUnixTime addition allows the user to find restaurant that are open at the time of the event
     @GetMapping(path = "/yelp")
-    public RestaurantDTO[] search(
+    public Restaurant[] search(
             @RequestParam (defaultValue = "restaurant") String term,
             @RequestParam (defaultValue = "78229") String location,
             @RequestParam (defaultValue = "-1") int eventUnixTime
@@ -31,7 +28,7 @@ public class YelpController {
     }
 
     @GetMapping(path = "/yelp/{id}")
-    public RestaurantDTO restaurant(@PathVariable String id) {
+    public Restaurant restaurant(@PathVariable String id) {
         return yelpBusinessService.getBusinessById(id);
     }
 

@@ -1,4 +1,4 @@
-package com.techelevator.modelDto;
+package com.techelevator.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,9 +24,9 @@ public class UrlDTO {
     private final String searchWithUnixTime = search;
 
     @JsonProperty("getEvent")
-    private final String getEvent = BASE_URL + "/event/";
+    private final String getEvent = BASE_URL + "event/";
     @JsonProperty("getHostEvents")
-    private final String getHostEvents = BASE_URL + "/event/host/{}";
+    private final String getHostEvents = BASE_URL + "event/host/";
 //    @JsonProperty("createEvent")
 //    private final String createEvent = BASE_URL + "/event";
 

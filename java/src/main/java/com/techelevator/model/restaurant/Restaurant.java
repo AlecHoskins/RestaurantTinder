@@ -1,9 +1,9 @@
-package com.techelevator.modelDto;
+package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techelevator.model.Category;
 
-public class RestaurantDTO {
+public class Restaurant {
 
     private String id;
     private String name;
@@ -12,11 +12,11 @@ public class RestaurantDTO {
     @JsonProperty("is_closed")
     private boolean isClosed;
     private Category[] categories;
-    private LocationDTO location;
+    private Location location;
     private String phone;
     @JsonProperty("display_phone")
     private String displayPhone;
-    private HoursDTO[] hours;
+    private Hours[] hours;
 
     @Override
     public String toString() {
@@ -48,11 +48,11 @@ public class RestaurantDTO {
         this.displayPhone = displayPhone;
     }
 
-    public HoursDTO[] getHours() {
+    public Hours[] getHours() {
         return hours;
     }
 
-    public void setHours(HoursDTO[] hours) {
+    public void setHours(Hours[] hours) {
         this.hours = hours;
     }
 
@@ -96,11 +96,11 @@ public class RestaurantDTO {
         this.categories = categories;
     }
 
-    public LocationDTO getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(LocationDTO location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -112,7 +112,7 @@ public class RestaurantDTO {
         this.phone = phone;
     }
 
-    public RestaurantDTO(String id, String name, String imageUrl, boolean isClosed, Category[] categories, LocationDTO location, String phone, String displayPhone, HoursDTO[] hours) {
+    public Restaurant(String id, String name, String imageUrl, boolean isClosed, Category[] categories, Location location, String phone, String displayPhone, Hours[] hours) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -124,6 +124,6 @@ public class RestaurantDTO {
         this.hours = hours;
     }
 
-    public RestaurantDTO() {
+    public Restaurant() {
     }
 }

@@ -1,10 +1,7 @@
 package com.techelevator.service;
 
-import com.mashape.unirest.http.HttpResponse;
-        import com.mashape.unirest.http.Unirest;
-        import com.mashape.unirest.http.exceptions.UnirestException;
-import com.techelevator.modelDto.RestaurantDTO;
-import com.techelevator.modelDto.SearchDTO;
+import com.techelevator.model.restaurant.Restaurant;
+import com.techelevator.dto.SearchDTO;
 import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -38,16 +35,16 @@ public class YelpBusinessService {
 
     /********************************** GETS THE DETAILS OF A BUSINESSES BY ID *******************************/
     //business id will appear as one of first properties in the business json in business search
-    public RestaurantDTO getBusinessById(String businessId) {
+    public Restaurant getBusinessById(String businessId) {
         String urlQuery = getIdUrl(businessId);
 
-        RestaurantDTO restaurant = null;
+        Restaurant restaurant = null;
         try {
-            ResponseEntity<RestaurantDTO> response = restTemplate.exchange(
+            ResponseEntity<Restaurant> response = restTemplate.exchange(
                     urlQuery,
                     HttpMethod.GET,
                     authEntity,
-                    RestaurantDTO.class
+                    Restaurant.class
             );
             restaurant = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {

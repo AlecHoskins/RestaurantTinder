@@ -1,8 +1,8 @@
-package com.techelevator.modelDto;
+package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DayDTO {
+public class Day {
 
     @JsonProperty("is_overnight")
     private boolean isOvernight;
@@ -42,13 +42,13 @@ public class DayDTO {
         this.day = day;
     }
 
-    public DayDTO(boolean isOvernight, String start, String end, int day) {
+    public Day(boolean isOvernight, String start, String end, int day) {
         this.isOvernight = isOvernight;
         this.start = start;
         this.end = end;
         this.day = day;
     }
 
-    public DayDTO() {
+    public Day() {
     }
 }
