@@ -193,7 +193,7 @@ function NearMe(props) {
 		<div className='nearme'>
 			<form className="search-form">
 				<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
-				<input type="datetime-local" name="date" onChange={handleDateChange} /></label>
+				<input type="datetime-local" name="date" onChange={handleDateChange} defaultValue={props.date} /></label>
 				<label className="label-location" htmlFor="location">Location: 
 				<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
 				<label className="label-cuisine" htmlFor="cuisine">Cuisine: 

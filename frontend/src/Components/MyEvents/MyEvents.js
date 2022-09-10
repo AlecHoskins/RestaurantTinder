@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import baseUrl from '../../Shared/baseUrl';
-import {setEventDate} from '../../Redux/actionCreators'
+import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
 import { Redirect } from 'react-router-dom'
 
 const mapStateToProps = state => {
@@ -21,8 +20,7 @@ function MyEvents(props) {
 	const [newEventCreated, setNewEventCreated] = useState(false);
 
 	const loadEvents = async() => {
-		//props.urls.getHostEvents - url is currently broken
-		const myEvents = await axios.get(baseUrl + "/event/host/" + props.userId);
+		const myEvents = await axios.get(props.urls.getHostEvents + props.userId);
 		setEvents(myEvents.data);
 	}
 
@@ -31,9 +29,11 @@ function MyEvents(props) {
 	}, []);
 
 	const handleNewEvent = () => {
-		setEventDate(eventDate);
+
+		props.dispatch(deleteCurrentEvent());
+		props.dispatch(setEventDate(eventDate));
 		setNewEventCreated(true);
-		
+
 	}
 
 	const handleDateChange = (event) => {
