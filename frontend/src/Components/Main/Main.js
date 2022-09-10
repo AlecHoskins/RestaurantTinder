@@ -11,6 +11,7 @@ import Footer from '../Footer/Footer'
 import NearMe from '../NearMe/NearMe'
 import MainPage from '../MainPage/MainPage'
 import Event from '../Event/Event'
+import MyEvents from '../MyEvents/MyEvents'
 import baseUrl from '../../Shared/baseUrl'
 import axios from 'axios'
 
@@ -57,11 +58,12 @@ class Main extends Component {
                       <Redirect to='/home'/>  
                 } */}
                 <Switch>
+					<Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
                     <Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
-					{this.props.token.token !== undefined ? <Route path='/nearme'component={() => <NearMe />}/> : <Redirect to='/login/'/> }
-                    <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-					{this.props.token.token !== undefined ? <Route path='/event' component={() => <Event />}/> : <Redirect to='/login/' /> }
+					<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
+					<Route path='/event' component={this.props.token.token !== undefined ? () => <Event/> : () => <Login/>}/>
+					<Route path='/myevents' component={this.props.token.token !== undefined ? () => <MyEvents/> : () => <Login/>}/>
                     <Redirect to='/home'/>
                 </Switch>
 				<Footer />
