@@ -56,6 +56,7 @@ CREATE SEQUENCE seq_user_id
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
 	username varchar(50) NOT NULL,
+	nickname varchar(50),
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
@@ -82,7 +83,7 @@ CREATE TABLE restaurant (
    restaurant_name varchar(200) NOT NULL,
    address varchar(200) NOT NULL,
    city_state varchar(50) NOT NULL,
-   zip int NOT NULL,
+   zip varchar(20) NOT NULL,
    phone varchar(20) NOT NULL,
    display_phone varchar(30) NOT NULL,
    CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
@@ -120,8 +121,7 @@ CREATE TABLE guest (
    event_id int NOT NULL,
    nickname varchar(50) NOT NULL,
    url varchar(200) NOT NULL,
-   role varchar(200) NOT NULL,
-   user_id int NOT NULL,
+   user_id int,
    CONSTRAINT PK_guest PRIMARY KEY (guest_id),
    CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id),
    CONSTRAINT FK_event FOREIGN KEY (event_id) REFERENCES event(event_id)

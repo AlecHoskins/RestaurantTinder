@@ -35,7 +35,6 @@ public class UrlDTO {
     }
 
     static class Url { // maybe add more metadata?
-
     }
 
 }
