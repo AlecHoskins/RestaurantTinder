@@ -1,0 +1,72 @@
+.mainPage {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.mainPage-content {
+    background-color: white;
+    border: solid white;
+    box-shadow: 0px 0px 20px 0px black;
+    border-radius: 6px;
+    position: fixed;
+    width: 400px;
+    top: 20%;
+    left: 15%;
+    z-index: 2;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#get-started {
+    float: right;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: large;
+    width: 150px;
+}
+
+#name {
+    color: #fec63d;
+    font-weight: bolder;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#you {
+    font-weight: bold;
+}
+
+#imageBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#plate {
+    width: 800px;
+    height: auto;
+    position: fixed;
+    right: -200px;
+    bottom: 20px;
+    z-index: 1;
+    animation: rotation 30s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+

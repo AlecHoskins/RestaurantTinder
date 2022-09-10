@@ -50,29 +50,31 @@ class Login extends Component {
     render(){
         return(
             <div className='loginPage'>
-                <h1>Please Sign In</h1>
-                <label className="sr-only">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    className="form-control"
-                    placeholder="Username"
-                    v-model="user.username"
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <label className="sr-only">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Password"
-                    v-model="user.password"
-                    onChange={this.handleInputChange}
-                    required
-                />
+                <h1 className='please'>Please Sign In</h1>
+                <div className="user-box">
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        v-model="user.username"
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                    <label className="sr-only">Username</label>
+                </div>
+                <div className="user-box">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control"
+                        v-model="user.password"
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                    <label className="sr-only">Password</label>
+                </div>
                 <Link to="/register">Need an account?</Link>
                 <button type="submit" onClick={this.handleLogin}>Sign in</button>
             </div>

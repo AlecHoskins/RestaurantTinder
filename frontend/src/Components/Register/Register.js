@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import './Register.css'
 
 const mapStateToProps = state => {
 	return {
@@ -57,40 +58,44 @@ class Register extends Component{
 
     render(){
         return(
-            <div>
-                <h1>Create Account</h1>
-                <label className="sr-only">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    className="form-control"
-                    placeholder="Username"
-                    v-model="user.username"
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <label className="sr-only">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Password"
-                    v-model="user.password"
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input
-                    type="password"
-                    id="password-confirm"
-                    name="confirmPassword"
-                    className="form-control"
-                    placeholder="Confirm Password"
-                    v-model="user.password"
-                    onChange={this.handleInputChange}
-                    required
-                />
+            <div className='registerPage'>
+                <h1 className='please'>Create Account</h1>
+                <div className='user-box'>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        v-model="user.username"
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                    <label className="sr-only">Username</label>
+                </div>
+                <div className='user-box'>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control"
+                        v-model="user.password"
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                    <label className="sr-only">Password</label>
+                </div>
+                <div className='user-box'>
+                    <input
+                        type="password"
+                        id="password-confirm"
+                        name="confirmPassword"
+                        className="form-control"
+                        v-model="user.password"
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                    <label className="sr-only">Confirm Password</label>
+                </div>
                 <Link to="/login">Have an account?</Link>
                 <button type="submit" onClick={this.handleSubmit}>Create Account</button>
 				{this.state.created ? <Redirect to='/login'/> : <></>}

@@ -1,4 +1,4 @@
-.loginPage {
+.registerPage {
     position: absolute;
     top: 50%;
     left:50%;
@@ -37,6 +37,7 @@
 
 .user-box label {
     position: absolute;
+    width: auto;
     top: 0;
     left: 0;
     padding: 10px 0;
@@ -45,11 +46,10 @@
     pointer-events: none;
     transition: .5s !important;
     overflow: visible;
-    clip: auto;
 }
 
-.loginPage .user-box input:focus ~ label,
-.loginPage .user-box input:valid ~ label {
+.registerPage .user-box input:focus ~ label,
+.registerPage .user-box input:valid ~ label {
   top: -20px;
   left: 0;
   color: white;
@@ -64,6 +64,7 @@
     box-shadow: none;
 }
 
-.loginPage button {
+.registerPage button {
     float: right;
+    width: 170px;
 }
