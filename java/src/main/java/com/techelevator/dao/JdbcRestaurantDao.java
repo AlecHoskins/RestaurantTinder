@@ -3,9 +3,11 @@ package com.techelevator.dao;
 import com.techelevator.modelDto.RestaurantDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class JdbcRestaurantDao implements RestaurantDao{
 
     private final JdbcTemplate jdbcTemplate;

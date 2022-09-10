@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/event")
 public class EventController {
 
-    @Autowired
+
     private final JdbcEventDao eventDao;
 
     public EventController(JdbcEventDao eventDao) {

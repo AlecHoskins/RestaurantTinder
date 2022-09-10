@@ -4,9 +4,11 @@ import com.techelevator.model.Event;
 import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class JdbcEventDao implements EventDao{
 
     private final JdbcTemplate jdbcTemplate;
