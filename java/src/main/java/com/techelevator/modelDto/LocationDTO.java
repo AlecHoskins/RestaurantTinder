@@ -8,7 +8,7 @@ public class LocationDTO {
     private String city;
     private String state;
     @JsonProperty("zip_code")
-    private long zipCode;
+    private String zipCode;
 
     @Override
     public String toString() {
@@ -48,15 +48,15 @@ public class LocationDTO {
         this.state = state;
     }
 
-    public long getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(long zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
-    public LocationDTO(String address1, String city, String state, long zipCode) {
+    public LocationDTO(String address1, String city, String state, String zipCode) {
         this.address1 = address1;
         this.city = city;
         this.state = state;
