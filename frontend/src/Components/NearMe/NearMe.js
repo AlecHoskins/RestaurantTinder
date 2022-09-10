@@ -1,18 +1,29 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import './NearMe.css';
+import {setSelectedRestaurants} from '../../Redux/actionCreators'
+import { Link } from 'react-router-dom';
 
+const mapStateToProps = state => {
+	return {
+		selectedRestaurants: state.selectedRestaurants,
+		dispatch: state.dispatch
+	}
+}
 
-export default function NearMe() {
+function NearMe(props) {
 
 	const urls = useSelector(state => state.urls.urls);
+
+	//added this function because this was getting verbose
+	const getSelected = () => props.selectedRestaurants.selectedRestaurants;
 
 	const phoneLogo = '/phone-icon.png';
 
 	const [searchData, setSearchData] = useState();
 	const [restaurantData, setRestaurantData] = useState();
-	const [restaurantSelections, setRestaurantSelections] = useState([]);
+	//const [restaurantSelections, setRestaurantSelections] = useState([]);
 	// const [restaurantDetail, setRestaurantDetail] = useState();
 	// const [restaurantDetailId, setRestaurantDetailId] = useState();
 
@@ -30,6 +41,15 @@ export default function NearMe() {
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
 		let open_at = timeToUnix(new Date(searchData.date)) 
 		const restaurants = await axios.get(urls.yelpUnixSearch + "?term=" + term + "&location=" + zipcode + "&eventUnixTime=" + open_at);
+
+		//check to see if these restaurants have already been added
+		if (getSelected().length > 0 && restaurants.data && restaurants.data.length > 0) {
+			restaurants.data.map((restaurant) => {
+				restaurant.added = (getSelected().find((selection) => (restaurant.id === selection.id)));
+				return restaurant;
+			})
+		}
+
 		await setRestaurantData(restaurants.data);
 	}
 
@@ -90,7 +110,7 @@ export default function NearMe() {
 		} else if (firstHalf > 12) {
 			formattedFirstHalf = (firstHalf % 12);
 			amPm = "PM";
-		} else if (firstHalf == 12) {
+		} else if (firstHalf === 12) {
 			amPm = "PM";
 		}
 		if (firstHalf < 10 && formattedFirstHalf !== 12) {
@@ -115,19 +135,18 @@ export default function NearMe() {
 	}
 
 	const handleRestaurantAddRemove = (card) => {
-		let restaurants = [...restaurantSelections];
+		let restaurants = [...getSelected()];
 		if (!card.added) {
 			restaurants.push(card);
 		} else {
-			restaurants.splice(restaurants.indexOf(card), 1);
+			//remove the element based on the index of the element with the same id as the card
+			restaurants.splice(restaurants.indexOf(
+				restaurants.find((r) => r.id === card.id)), 1);
 		}
 		card.added = (!card.added) ? true : false;
-		setRestaurantSelections(restaurants);
-		console.log(restaurantSelections);
-	}
-
-	const handleCreateEvent = () => {
-
+		//setting this to the redux store so event js can access it
+		props.dispatch(setSelectedRestaurants(restaurants));
+		//setRestaurantSelections(restaurants);
 	}
 
 	const restarauntCards = function() {  
@@ -194,16 +213,18 @@ export default function NearMe() {
 				</div>
 				<div id="eventCO">
 					<ul className='selected-restaurants'>
-						{restaurantSelections.map((card) => 
+						{getSelected().map((card) => 
 							<li style={{color: "black"}} key={card.id}>
 								{card.name}
 								<button className="remove-restaurant" onClick={() => handleRestaurantAddRemove(card)}>❌</button>
 							</li>
 						)}
 					</ul>
-					<button id="event-button" onClick={handleCreateEvent}>Create Event</button>
+					<Link to="/Event"><button id="event-button">Create Event</button></Link>
 				</div>
 			</div>
 		</div>
 	);
 }
+
+export default connect(mapStateToProps)(NearMe);

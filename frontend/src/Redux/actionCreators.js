@@ -18,3 +18,8 @@ export const setURLs = (urls) => ({
 	type: ActionTypes.SET_URLS,
 	payload: urls
 })
+
+export const setSelectedRestaurants = (selectedRestaurants) => ({
+	type: ActionTypes.SET_SELECTED_RESTAURANTS,
+	payload: selectedRestaurants
+})

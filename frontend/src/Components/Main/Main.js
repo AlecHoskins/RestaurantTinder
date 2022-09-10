@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route, Redirect } from 'react-router-dom'
+import {Switch, Route } from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Home from '../Home/Home'
@@ -10,6 +10,7 @@ import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
 import NearMe from '../NearMe/NearMe'
 import MainPage from '../MainPage/MainPage'
+import Event from '../Event/Event'
 import baseUrl from '../../Shared/baseUrl'
 import axios from 'axios'
 
@@ -31,14 +32,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Main extends Component {
 
-	componentWillMount() {
+    constructor(props){
+        super(props);
+
 		axios.get(baseUrl).then((response) => {
 			this.props.setURLs(response.data);
 		})
-	}
-
-    constructor(props){
-        super(props);
     }
 
     handleLogout = () => {
@@ -50,17 +49,18 @@ class Main extends Component {
         return(
             <div>
 				<Navbar />
-                {this.props.token.token !== undefined ?
+                {/* {this.props.token.token !== undefined ?
                             <Redirect to='/home'/>
                     : 
                       <Redirect to='/home'/>  
-                }
+                } */}
                 <Switch>
                     <Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
 					<Route path='/nearme'component={() => <NearMe />}/>
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-                    <Redirect to='/home'/>
+					<Route path='/event' component={() => <Event />}/>
+                    {/* <Redirect to='/home'/> */}
                 </Switch>
 				<Footer />
             </div>
