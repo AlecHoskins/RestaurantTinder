@@ -4,11 +4,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Day {
 
+    private long id;
     @JsonProperty("is_overnight")
     private boolean isOvernight;
     private String start;
     private String end;
     private int day;
+    private String restaurantId;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
     public boolean isOvernight() {
         return isOvernight;
@@ -42,11 +60,13 @@ public class Day {
         this.day = day;
     }
 
-    public Day(boolean isOvernight, String start, String end, int day) {
+    public Day(boolean isOvernight, String start, String end, int day, String restaurantId, long id) {
         this.isOvernight = isOvernight;
         this.start = start;
         this.end = end;
         this.day = day;
+        this.restaurantId = restaurantId;
+        this.id = id;
     }
 
     public Day() {

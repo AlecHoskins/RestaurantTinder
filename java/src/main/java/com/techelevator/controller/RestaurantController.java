@@ -1,9 +1,10 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.RestaurantDao;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.techelevator.dao.restaurant.RestaurantDao;
+import com.techelevator.model.restaurant.Restaurant;
+import org.apache.coyote.Request;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/restaurant")
 public class RestaurantController {
 
+    @Autowired
     private RestaurantDao restaurantDao;
 
     public RestaurantController(RestaurantDao restaurantDao) {
@@ -20,6 +22,18 @@ public class RestaurantController {
 //    public RestaurantDTO getRestaurantById() {
 //
 //    }
+
+    @GetMapping(path = "/{id}")
+    public Restaurant getRestaurant(@PathVariable String id) {
+        return restaurantDao.findRestaurantById(id);
+    }
+
+    @PostMapping
+    public boolean test(@RequestBody Restaurant newRestaurant) {
+
+        return restaurantDao.save(newRestaurant);
+
+    }
 
     public RestaurantController() {
     }

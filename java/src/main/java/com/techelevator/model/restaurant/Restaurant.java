@@ -1,7 +1,8 @@
 package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.techelevator.model.Category;
+
+import java.util.List;
 
 public class Restaurant {
 
@@ -11,12 +12,12 @@ public class Restaurant {
     private String imageUrl;
     @JsonProperty("is_closed")
     private boolean isClosed;
-    private Category[] categories;
+    private List<Category> categories;
     private Location location;
     private String phone;
     @JsonProperty("display_phone")
     private String displayPhone;
-    private Hours[] hours;
+    private List<Hours> hours;
 
     @Override
     public String toString() {
@@ -48,11 +49,11 @@ public class Restaurant {
         this.displayPhone = displayPhone;
     }
 
-    public Hours[] getHours() {
+    public List<Hours> getHours() {
         return hours;
     }
 
-    public void setHours(Hours[] hours) {
+    public void setHours(List<Hours> hours) {
         this.hours = hours;
     }
 
@@ -88,11 +89,11 @@ public class Restaurant {
         isClosed = closed;
     }
 
-    public Category[] getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Category[] categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -112,7 +113,7 @@ public class Restaurant {
         this.phone = phone;
     }
 
-    public Restaurant(String id, String name, String imageUrl, boolean isClosed, Category[] categories, Location location, String phone, String displayPhone, Hours[] hours) {
+    public Restaurant(String id, String name, String imageUrl, boolean isClosed, List<Category> categories, Location location, String phone, String displayPhone, List<Hours> hours) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
