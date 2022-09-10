@@ -1,4 +1,4 @@
-import { connect, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 
 function Home(props) {

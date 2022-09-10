@@ -142,3 +142,13 @@ select {
 	color: blue;
 	text-decoration: underline;
 }
+
+.remove-restaurant {
+	background: white;
+	width: initial;
+	height: initial;
+}
+
+.selected-restaurants li:hover {
+	box-shadow: initial;
+}
