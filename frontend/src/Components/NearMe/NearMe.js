@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import {useSelector, connect} from 'react-redux';
 import './NearMe.css';
-import {setSelectedRestaurants} from '../../Redux/actionCreators'
+import {setSelectedRestaurants, setEventDate} from '../../Redux/actionCreators'
 import { Link } from 'react-router-dom';
 
 const mapStateToProps = state => {
 	return {
-		selectedRestaurants: state.selectedRestaurants,
+		date: state.event.date,
+		selectedRestaurants: state.event.selectedRestaurants,
 		dispatch: state.dispatch
 	}
 }
@@ -15,9 +16,6 @@ const mapStateToProps = state => {
 function NearMe(props) {
 
 	const urls = useSelector(state => state.urls.urls);
-
-	//added this function because this was getting verbose
-	const getSelected = () => props.selectedRestaurants.selectedRestaurants;
 
 	const phoneLogo = '/phone-icon.png';
 
@@ -43,14 +41,19 @@ function NearMe(props) {
 		const restaurants = await axios.get(urls.yelpUnixSearch + "?term=" + term + "&location=" + zipcode + "&eventUnixTime=" + open_at);
 
 		//check to see if these restaurants have already been added
-		if (getSelected().length > 0 && restaurants.data && restaurants.data.length > 0) {
+		if (props.selectedRestaurants.length > 0 && restaurants.data && restaurants.data.length > 0) {
 			restaurants.data.map((restaurant) => {
-				restaurant.added = (getSelected().find((selection) => (restaurant.id === selection.id)));
+				restaurant.added = (props.selectedRestaurants.find((selection) => (restaurant.id === selection.id)));
 				return restaurant;
 			})
 		}
 
 		await setRestaurantData(restaurants.data);
+	}
+
+	const handleDateChange = (event) => {
+		props.dispatch(setEventDate(event.target.value));
+		handleInputChange(event);
 	}
 
 	const handleInputChange = (event) => {
@@ -135,7 +138,7 @@ function NearMe(props) {
 	}
 
 	const handleRestaurantAddRemove = (card) => {
-		let restaurants = [...getSelected()];
+		let restaurants = [...props.selectedRestaurants];
 		if (!card.added) {
 			restaurants.push(card);
 		} else {
@@ -187,7 +190,7 @@ function NearMe(props) {
 		<div className='nearme'>
 			<form className="search-form">
 				<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
-				<input type="datetime-local" name="date" onChange={handleInputChange} /></label>
+				<input type="datetime-local" name="date" onChange={handleDateChange} /></label>
 				<label className="label-location" htmlFor="location">Location: 
 				<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
 				<label className="label-cuisine" htmlFor="cuisine">Cuisine: 
@@ -213,7 +216,7 @@ function NearMe(props) {
 				</div>
 				<div id="eventCO">
 					<ul className='selected-restaurants'>
-						{getSelected().map((card) => 
+						{props.selectedRestaurants.map((card) => 
 							<li style={{color: "black"}} key={card.id}>
 								{card.name}
 								<button className="remove-restaurant" onClick={() => handleRestaurantAddRemove(card)}>❌</button>

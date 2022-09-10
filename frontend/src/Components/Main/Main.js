@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route } from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Home from '../Home/Home'
@@ -60,7 +60,7 @@ class Main extends Component {
 					<Route path='/nearme'component={() => <NearMe />}/>
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
 					<Route path='/event' component={() => <Event />}/>
-                    {/* <Redirect to='/home'/> */}
+                    <Redirect to='/home'/>
                 </Switch>
 				<Footer />
             </div>

@@ -1,0 +1,9 @@
+.event-detail-form {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.event-detail-form > div, .event-detail-form .label-date {
+	display: flex;
+	flex-direction: column;
+}

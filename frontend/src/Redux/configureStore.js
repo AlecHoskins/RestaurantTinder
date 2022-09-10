@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import {Token} from './token'
 import {User} from './user'
 import {URLs} from './urls'
-import {RestaurantReducer} from './restaurants'
+import {Event} from './event'
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -11,7 +11,7 @@ export const ConfigureStore = () => {
             token: Token,
             user: User,
 			urls: URLs,
-			selectedRestaurants: RestaurantReducer
+			event: Event
         }),
         applyMiddleware(thunk)
     );

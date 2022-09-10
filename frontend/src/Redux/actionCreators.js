@@ -23,3 +23,13 @@ export const setSelectedRestaurants = (selectedRestaurants) => ({
 	type: ActionTypes.SET_SELECTED_RESTAURANTS,
 	payload: selectedRestaurants
 })
+
+export const setEventDate = (date) => ({
+	type: ActionTypes.SET_EVENT_DATE,
+	payload: date
+})
+
+export const setEventDeadlineDate = (date) => ({
+	type: ActionTypes.SET_EVENT_DEADLINE_DATE,
+	payload: date
+})
