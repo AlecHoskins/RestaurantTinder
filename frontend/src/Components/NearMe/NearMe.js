@@ -158,7 +158,7 @@ function NearMe(props) {
 			<div className="card" key={card.id} >
 				<div>
 					<h5 className='card-name'>{card.name}</h5>
-					<span className='open-now'>{card.is_closed ? "isClosed" : "isOpen"}</span>
+					<span className='open-now'>{card.is_closed ? "" : "Open Now"}</span>
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div>

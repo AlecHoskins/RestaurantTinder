@@ -184,3 +184,30 @@ select {
     overflow: auto;
     height: 650px;
 }
+
+/* Is Open Badge */
+
+.open-now {
+    position: absolute;
+    top: 42px;
+    left: 10px;
+    background: #fec63d;
+    text-align: center;
+    border-radius: 8px;
+    color:#004e63;
+    padding: 4px;
+    font-size: 16px;
+    animation: pulse 2s infinite;    
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
