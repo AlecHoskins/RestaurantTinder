@@ -7,3 +7,18 @@
 	display: flex;
 	flex-direction: column;
 }
+
+div.guest-list {
+	display: flex;
+	flex-direction: column;
+}
+
+#links-table th {
+	background-color: 037aff;
+	color: black;
+	font-weight: bold;
+}
+
+#links-table th, #links-table td {
+	border-width: 1px;
+}
