@@ -68,3 +68,11 @@
     float: right;
     width: 170px;
 }
+
+#signupBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}

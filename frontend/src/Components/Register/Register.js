@@ -13,6 +13,8 @@ const mapStateToProps = state => {
 	}
 }
 
+const signupBlob = './yellowblobsignup.png';
+
 class Register extends Component{
 
     constructor(props){
@@ -58,47 +60,52 @@ class Register extends Component{
 
     render(){
         return(
-            <div className='registerPage'>
-                <h1 className='please'>Create Account</h1>
-                <div className='user-box'>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="form-control"
-                        v-model="user.username"
-                        onChange={this.handleInputChange}
-                        required
-                    />
-                    <label className="sr-only">Username</label>
+            <div>
+                <div>
+                    <img src={signupBlob} alt="Yellow Blob" id="signupBlob" />
                 </div>
-                <div className='user-box'>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="form-control"
-                        v-model="user.password"
-                        onChange={this.handleInputChange}
-                        required
-                    />
-                    <label className="sr-only">Password</label>
+                <div className='registerPage'>
+                    <h1 className='please'>Create Account</h1>
+                    <div className='user-box'>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            className="form-control"
+                            v-model="user.username"
+                            onChange={this.handleInputChange}
+                            required
+                        />
+                        <label className="sr-only">Username</label>
+                    </div>
+                    <div className='user-box'>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="form-control"
+                            v-model="user.password"
+                            onChange={this.handleInputChange}
+                            required
+                        />
+                        <label className="sr-only">Password</label>
+                    </div>
+                    <div className='user-box'>
+                        <input
+                            type="password"
+                            id="password-confirm"
+                            name="confirmPassword"
+                            className="form-control"
+                            v-model="user.password"
+                            onChange={this.handleInputChange}
+                            required
+                        />
+                        <label className="sr-only">Confirm Password</label>
+                    </div>
+                    <Link to="/login">Have an account?</Link>
+                    <button type="submit" onClick={this.handleSubmit}>Create Account</button>
+                    {this.state.created ? <Redirect to='/login'/> : <></>}
                 </div>
-                <div className='user-box'>
-                    <input
-                        type="password"
-                        id="password-confirm"
-                        name="confirmPassword"
-                        className="form-control"
-                        v-model="user.password"
-                        onChange={this.handleInputChange}
-                        required
-                    />
-                    <label className="sr-only">Confirm Password</label>
-                </div>
-                <Link to="/login">Have an account?</Link>
-                <button type="submit" onClick={this.handleSubmit}>Create Account</button>
-				{this.state.created ? <Redirect to='/login'/> : <></>}
             </div>
         )
     }
