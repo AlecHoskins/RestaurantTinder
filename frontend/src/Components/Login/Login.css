@@ -67,3 +67,11 @@
 .loginPage button {
     float: right;
 }
+
+#loginBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}

@@ -1,0 +1,50 @@
+#homeBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.userInfo {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 90%;
+    height: 77%;
+    padding: 20px;
+    transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.upcomingEvents {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upcomingCard {
+    background-color: rgba(0, 78, 99, 1);
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    opacity: 1.0;
+    color: white;
+}
+
+.upcomingCard button {
+    float: right;
+    width: auto;
+    padding: 10px;
+}
+
+#yellow {
+    color: #fec63d;
+    font-weight: 700;
+}

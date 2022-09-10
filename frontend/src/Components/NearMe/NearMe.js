@@ -31,13 +31,16 @@ function NearMe(props) {
 
 	const searchHandler = async (event) => {
 		event.preventDefault();
-		if (!searchData || !searchData.location || !searchData.date) {
+		//if searchData state is undefined, use the props instead
+		const date = (!searchData.date) ? props.date : searchData.date;
+		
+		if (!searchData || !searchData.location || !date) {
 			alert("Please enter a location and date");
 			return;
 		}
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
-		let open_at = timeToUnix(new Date(searchData.date)) 
+		let open_at = timeToUnix(new Date(date)) 
 		const restaurants = await axios.get(urls.yelpUnixSearch + "?term=" + term + "&location=" + zipcode + "&eventUnixTime=" + open_at);
 
 		//check to see if these restaurants have already been added
@@ -156,12 +159,15 @@ function NearMe(props) {
 		return (
 			restaurantData.map(card => (
 			<div className="card" key={card.id} >
-				<div>
+				<div className='titleSection'>
 					<h5 className='card-name'>{card.name}</h5>
+					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
+				</div>
+				<div className='imageSection'>
+					<span className='open-now'>{card.is_closed ? "" : "Open Now"}</span>
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
-				<div>
-					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
+				<div className='infoSection'>
 					<div className="address">
 						<div>{card.location.address1}</div>
 						<div>{card.location.city}, {card.location.state} {card.location.zipcode}</div> 
@@ -171,7 +177,7 @@ function NearMe(props) {
 						{(card.categories.map((e) => (<span className="category" key={e.alias}>{e.title}</span>)))}
 					</div>
 					{!card.hours && <button className="restaurant-info" onClick={() => handleMoreInfo(card.id)}>Display Hours</button>}
-					<div>{card.hours && card.hours.map((hour, index) => {
+					<div id="hoursInfo">{card.hours && card.hours.map((hour, index) => {
 						return (
 							<table key={index}>
 								<tbody>
@@ -190,7 +196,7 @@ function NearMe(props) {
 		<div className='nearme'>
 			<form className="search-form">
 				<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
-				<input type="datetime-local" name="date" onChange={handleDateChange} /></label>
+				<input type="datetime-local" name="date" onChange={handleDateChange} defaultValue={props.date} /></label>
 				<label className="label-location" htmlFor="location">Location: 
 				<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
 				<label className="label-cuisine" htmlFor="cuisine">Cuisine: 

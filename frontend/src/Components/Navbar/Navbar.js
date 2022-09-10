@@ -38,7 +38,7 @@ function Navbar(props) {
         <ul>
           <li><Link to="/home">Home</Link></li>
           <div className="vl"></div>
-          <li>My Events</li>
+          <li><Link to="/myevents">My Events</Link></li>
           <div className="vl"></div>
           <li>{!token ? (<Link to="/login">New Event</Link>) : (<Link to="/nearme">New Event</Link>)}</li>
         </ul>
