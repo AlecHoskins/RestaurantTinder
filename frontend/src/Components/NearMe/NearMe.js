@@ -31,13 +31,16 @@ function NearMe(props) {
 
 	const searchHandler = async (event) => {
 		event.preventDefault();
-		if (!searchData || !searchData.location || !searchData.date) {
+		//if searchData state is undefined, use the props instead
+		const date = (!searchData.date) ? props.date : searchData.date;
+		
+		if (!searchData || !searchData.location || !date) {
 			alert("Please enter a location and date");
 			return;
 		}
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
-		let open_at = timeToUnix(new Date(searchData.date)) 
+		let open_at = timeToUnix(new Date(date)) 
 		const restaurants = await axios.get(urls.yelpUnixSearch + "?term=" + term + "&location=" + zipcode + "&eventUnixTime=" + open_at);
 
 		//check to see if these restaurants have already been added
