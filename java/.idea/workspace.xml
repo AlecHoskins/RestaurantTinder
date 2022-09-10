@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36dcee53-5894-41cb-b513-c13fed690824" name="Changes" comment="created endpoint to search yelp with unix time">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/EventController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/RestaurantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/controller/RestaurantController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/dao/EventDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/dao/EventDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/dao/JdbcEventDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/dao/JdbcEventDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/modelDto/UrlDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/modelDto/UrlDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
