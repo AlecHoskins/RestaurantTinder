@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/event")
@@ -25,7 +27,7 @@ public class EventController {
     }
 
     @GetMapping("/host/{id}")
-    public Event getEventByHost(@PathVariable long id) {
+    public List<Event> getEventsByHost(@PathVariable long id) {
         return eventDao.getEventByUserId(id);
     }
 

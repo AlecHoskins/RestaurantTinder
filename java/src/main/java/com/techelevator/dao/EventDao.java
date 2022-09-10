@@ -2,11 +2,15 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Event;
 
+import java.util.List;
+
 public interface EventDao {
 
     Event getEventById(long eventId);
 
-    Event getEventByUserId(long userId);
+    List<Event> getEventByUserId(long userId);
+
+    List<Event> getEventByHostId(long hostId);
 
     void addEvent(Event event);
 }

@@ -5,6 +5,8 @@ import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import java.util.List;
+
 public class JdbcEventDao implements EventDao{
 
     private final JdbcTemplate jdbcTemplate;
@@ -26,15 +28,22 @@ public class JdbcEventDao implements EventDao{
         }
     }
 
+     // WIP
     @Override
-    public Event getEventByUserId(long userId) {
-        String sql = "SELECT * FROM event WHERE host_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+    public List<Event> getEventByUserId(long userId) {
+        return null;
+    }
 
-        if(results.next()) {
-            return mapRowToEvent(results);
+    @Override
+    public List<Event> getEventByHostId(long hostId) {
+        String sql = "SELECT * FROM event WHERE host_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, hostId);
+
+        if(results.next()) { // needs to loop through results
+            return null;
+//            return mapRowToEvent(results);
         } else {
-            throw new RuntimeException("eventID " + userId + " was not found.");
+            throw new RuntimeException("eventID " + hostId + " was not found.");
         }
     }
 
