@@ -86,6 +86,21 @@ select {
     padding: 5px;
     display: grid;
     grid-template-columns: 320px 1fr;
+    grid-template-areas: 
+        "title title"
+        "image info";
+}
+
+.titleSection {
+    grid-area: title;
+}
+
+.imageSection {
+    grid-area: image;
+}
+
+.infoSection {
+    grid-area: info;
 }
 
 .card-img {
@@ -95,11 +110,12 @@ select {
 }
 
 .add-restaurant {
-    float: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
 
 .address {
-    margin-top: 30px;
     font-weight: 500;
 }
 
@@ -210,4 +226,8 @@ select {
     100% {
         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     }
+}
+
+#hoursInfo {
+    margin-top: 3px;
 }

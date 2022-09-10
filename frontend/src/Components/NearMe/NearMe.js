@@ -156,13 +156,15 @@ function NearMe(props) {
 		return (
 			restaurantData.map(card => (
 			<div className="card" key={card.id} >
-				<div>
+				<div className='titleSection'>
 					<h5 className='card-name'>{card.name}</h5>
+					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
+				</div>
+				<div className='imageSection'>
 					<span className='open-now'>{card.is_closed ? "" : "Open Now"}</span>
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
-				<div>
-					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
+				<div className='infoSection'>
 					<div className="address">
 						<div>{card.location.address1}</div>
 						<div>{card.location.city}, {card.location.state} {card.location.zipcode}</div> 
@@ -172,7 +174,7 @@ function NearMe(props) {
 						{(card.categories.map((e) => (<span className="category" key={e.alias}>{e.title}</span>)))}
 					</div>
 					{!card.hours && <button className="restaurant-info" onClick={() => handleMoreInfo(card.id)}>Display Hours</button>}
-					<div>{card.hours && card.hours.map((hour, index) => {
+					<div id="hoursInfo">{card.hours && card.hours.map((hour, index) => {
 						return (
 							<table key={index}>
 								<tbody>
