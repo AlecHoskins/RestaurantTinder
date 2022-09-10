@@ -172,10 +172,14 @@ function NearMe(props) {
 						<div>{card.location.address1}</div>
 						<div>{card.location.city}, {card.location.state} {card.location.zipcode}</div> 
 					</div>
-					<div className="restaurant-phone"><img src={phoneLogo} className="phoneLogo" alt="📞" /><a className="telephone-link" href={`tel:${card.phone}`}>{card.phone}</a></div>
+					<div className="restaurant-phone">
+						<img src={phoneLogo} className="phoneLogo" alt="📞" />
+						<a className="telephone-link" href={`tel:${card.phone}`}>{card.phone}</a>
+					</div>
 					<div className="categories">
 						{(card.categories.map((e) => (<span className="category" key={e.alias}>{e.title}</span>)))}
 					</div>
+					<a href={`tel:${card.phone}`}><button className='restaurant-call-to-order'>Call to Order</button></a>
 					{!card.hours && <button className="restaurant-info" onClick={() => handleMoreInfo(card.id)}>Display Hours</button>}
 					<div id="hoursInfo">{card.hours && card.hours.map((hour, index) => {
 						return (
