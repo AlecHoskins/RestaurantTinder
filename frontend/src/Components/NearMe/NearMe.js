@@ -133,7 +133,7 @@ export default function NearMe() {
 	const restarauntCards = function() {  
 		return (
 			restaurantData.map(card => (
-			<div className="card" key={card.id}>
+			<div className="card" key={card.id} >
 				<div>
 					<h5 className='card-name'>{card.name}</h5>
 					<img className='card-img' src={card.image_url} alt="restaurant" />
@@ -187,18 +187,22 @@ export default function NearMe() {
 					<option value="burgers">Burgers</option>
 				</select></label>
 				<button id="search-button" onClick={searchHandler}>Search</button>
-				<button id="search-button" onClick={handleCreateEvent}>Create Event</button>
-				<ul className='selected-restaurants'>
-					{restaurantSelections.map((card) => 
-						<li style={{color: "black"}} key={card.id}>
-							{card.name}
-							<button className="remove-restaurant" onClick={() => handleRestaurantAddRemove(card)}>❌</button>
-						</li>
-					)}
-				</ul>
 			</form>
-			<div className='restaurant-cardContainer'>
-				{(restaurantData) ? restarauntCards() : (<div></div>)}
+			<div id="eventSelector">
+				<div className='restaurant-cardContainer'>
+					{(restaurantData) ? restarauntCards() : (<div></div>)}
+				</div>
+				<div id="eventCO">
+					<ul className='selected-restaurants'>
+						{restaurantSelections.map((card) => 
+							<li style={{color: "black"}} key={card.id}>
+								{card.name}
+								<button className="remove-restaurant" onClick={() => handleRestaurantAddRemove(card)}>❌</button>
+							</li>
+						)}
+					</ul>
+					<button id="event-button" onClick={handleCreateEvent}>Create Event</button>
+				</div>
 			</div>
 		</div>
 	);

@@ -30,7 +30,7 @@ function Navbar(props) {
 
 	let token = useSelector(state => state.token.token);
   return (
-    <nav>
+    <nav sticky="top">
       <Link to="/home"><img src={logo} alt="logo"/></Link>
       <div className="navbar-links">
         <ul>
@@ -48,5 +48,7 @@ function Navbar(props) {
     </nav>
   );
 }
+
+
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
