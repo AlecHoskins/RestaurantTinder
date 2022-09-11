@@ -15,10 +15,10 @@ public class Event {
     private int day;
     private String time;
     private int decision;
-    private Restaurant[] eventRestaurants;
+    private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
 
-    public Event(long id, long hostId, int day, String time, int decision, Restaurant[] eventRestaurants, List<Guest> guestList) {
+    public Event(long id, long hostId, int day, String time, int decision, List<Restaurant> eventRestaurants, List<Guest> guestList) {
         this.id = id;
         this.hostId = hostId;
         this.day = day;
@@ -72,11 +72,11 @@ public class Event {
         this.decision = decision;
     }
 
-    public Restaurant[] getEventRestaurants() {
+    public List<Restaurant> getEventRestaurants() {
         return eventRestaurants;
     }
 
-    public void setEventRestaurants(Restaurant[] eventRestaurants) {
+    public void setEventRestaurants(List<Restaurant> eventRestaurants) {
         this.eventRestaurants = eventRestaurants;
     }
 

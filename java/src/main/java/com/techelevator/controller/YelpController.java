@@ -4,16 +4,16 @@ import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.dto.SearchDTO;
 import com.techelevator.service.YelpBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class YelpController {
     @Autowired
     YelpBusinessService yelpBusinessService;
 
-    // the eventUnixTime addition allows the user to find restaurant that are open at the time of the event
     @GetMapping(path = "/yelp")
     public Restaurant[] search(
             @RequestParam (defaultValue = "restaurant") String term,

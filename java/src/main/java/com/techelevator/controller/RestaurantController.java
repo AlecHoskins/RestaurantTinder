@@ -15,27 +15,10 @@ public class RestaurantController {
     @Autowired
     private RestaurantDao restaurantDao;
 
-    public RestaurantController(RestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
-    }
-
-//    public RestaurantDTO getRestaurantById() {
-//
-//    }
-
     @GetMapping(path = "/{id}")
     public Restaurant getRestaurant(@PathVariable String id) {
+        // TODO - refactor to call on a logic class which gets a completed restaurant model
         return restaurantDao.findRestaurantById(id);
-    }
-
-    @PostMapping
-    public boolean test(@RequestBody Restaurant newRestaurant) {
-
-        return restaurantDao.save(newRestaurant);
-
-    }
-
-    public RestaurantController() {
     }
 
 }
