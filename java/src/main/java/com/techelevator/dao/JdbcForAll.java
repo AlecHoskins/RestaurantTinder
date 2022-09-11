@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.event.Event;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Day;
 import com.techelevator.model.restaurant.Location;
@@ -55,6 +56,18 @@ public abstract class JdbcForAll {
         day.setDay(result.getInt("day_of_week"));
 
         return day;
+    }
+
+    protected Event mapRowToEvent(SqlRowSet result) {
+        Event event = new Event();
+
+        event.setId(result.getLong("event_id"));
+        event.setHostId(result.getLong("host_id"));
+        event.setEventTitle(result.getString("event_title"));
+        event.setEventDayTime(result.getString("event_time"));
+        event.setDecisionDeadline(result.getString("decision_time"));
+
+        return event;
     }
 
 }

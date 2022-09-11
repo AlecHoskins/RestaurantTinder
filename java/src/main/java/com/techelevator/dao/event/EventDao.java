@@ -6,11 +6,18 @@ import java.util.List;
 
 public interface EventDao {
 
-    Event getEventById(long eventId);
+    // Create
+    long addEvent(Event event);
 
-    List<Event> getEventByUserId(long userId);
+    // Read
+    Event getEventById(long id);
+    List<Event> getEventsByUserId(long userId);
+    List<Event> getEventsByHostId(long hostId);
 
-    List<Event> getEventByHostId(long hostId);
+    // Update
+    boolean update(Event updatedEvent);
 
-    int addEvent(Event event);
+    // Delete
+    boolean delete(long id);
+
 }
