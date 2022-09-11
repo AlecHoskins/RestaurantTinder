@@ -1,0 +1,46 @@
+.blob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.myEventsCard {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 90%;
+    height: 77%;
+    padding: 20px;
+    transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.myEventsInfo h1 {
+    text-align: left;
+}
+
+.myEventsInfo button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: auto;
+    padding: 10px;
+}
+
+.noEvents h5 {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.noEvents button {
+    margin-left: 10px;
+    width: auto;
+    padding: 10px;
+}
