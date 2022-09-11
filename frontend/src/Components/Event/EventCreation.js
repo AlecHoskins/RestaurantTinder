@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 	}
 }
 
-function Event(props) {
+function EventCreation(props) {
 
 	const [guestList, setGuestList] = useState("");
 	const [created, setCreated] = useState(false);
@@ -140,4 +140,4 @@ function Event(props) {
 	);
 }
 
-export default connect(mapStateToProps)(Event);
+export default connect(mapStateToProps)(EventCreation);
