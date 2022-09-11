@@ -10,9 +10,10 @@ import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
 import NearMe from '../NearMe/NearMe'
 import MainPage from '../MainPage/MainPage'
-import Event from '../Event/Event'
+import EventCreation from '../Event/EventCreation'
 import MyEvents from '../MyEvents/MyEvents'
 import baseUrl from '../../Shared/baseUrl'
+import EventView from '../Event/EventView'
 import axios from 'axios'
 
 const mapStateToProps = state => {
@@ -62,8 +63,9 @@ class Main extends Component {
                     <Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
 					<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
-					<Route path='/event' component={this.props.token.token !== undefined ? () => <Event/> : () => <Login/>}/>
+					<Route path='/event' component={this.props.token.token !== undefined ? () => <EventCreation/> : () => <Login/>}/>
 					<Route path='/myevents' component={this.props.token.token !== undefined ? () => <MyEvents/> : () => <Login/>}/>
+                    <Route path='/eventview' component={this.props.token.token !== undefined ? () => <EventView/> : () => <Login/>}/>
                     <Redirect to='/home'/>
                 </Switch>
 				<Footer />

@@ -22,13 +22,13 @@ function Home(props) {
                 </div>
                 <div className='upcomingEvents'>
                     <div className='upcomingCard'>
-                        <button>Event Details {'>'}</button>
+                        <Link to='/eventview'><button>Event Details {'>'}</button></Link>
                         <h5>Emilia's 15th Birthday Party</h5>
                         <div>Saturday, September 17th, 2022 6:00PM</div>
                         <div>Current winning restaraunt: Papa Mario's Pizza</div>
                     </div>
                     <div className='upcomingCard'>
-                        <button>Event Details {'>'}</button>
+                        <Link to='/eventview'><button>Event Details {'>'}</button></Link>
                         <h5>Work Lunch Meeting</h5>
                         <div>Thursday, September 22nd, 2022 6:00PM</div>
                         <div>Current winning restaraunt: Texas Roadhouse</div>

@@ -1,0 +1,140 @@
+.blob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.eventCard {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 90%;
+    height: 77%;
+    padding: 20px;
+    transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+/* Event Info */
+.eventInfo h1 {
+    font-size: xx-large;
+    text-align: left;
+}
+
+.eventInfo h2 {
+    font-size: 22px;
+}
+
+.eventInfo a:not([href]):not([class]):hover {
+  color: rgb(0, 78, 99); 
+  cursor: pointer; 
+}
+
+.eventInfo .eventEdit {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
+
+.eventInfo .eventSubmit {
+    position: fixed;
+    bottom: 10px;
+    right: 70%;
+}
+
+/* Restaraunt Cards */
+.eventRestaurants {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.eventRestaurants::-webkit-scrollbar {
+    width: 20px;
+}
+
+.eventRestaurants::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+.eventRestaurants::-webkit-scrollbar-thumb {
+    background: #004e63; 
+    border-radius: 10px;
+}
+
+.eventRestaurants::-webkit-scrollbar-thumb:hover {
+    background: #003d4e; 
+}
+
+.restaurantCard {
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid rgb(0, 78, 99);
+    border-radius: 10px;
+    padding: 10px;
+    width: 99%;
+    height: auto;
+    opacity: 1.0;
+    color: white;
+    display: grid;
+    grid-template-columns: 270px 1fr 1fr;
+    grid-template-areas: 
+        "title title thumbs"
+        "image info info";
+}
+
+.titleSection {
+    grid-area: title;
+}
+
+.thumbs {
+    grid-area: thumbs;
+}
+
+.imageSection {
+    grid-area: image;
+}
+
+.infoSection {
+    grid-area: info;
+}
+
+/* Restaurant Card Inner Details */
+.card-name {
+    color: black;
+    font-size: x-large;
+}
+
+.thumbs img {
+    height: 30px;
+    width: auto;
+    float: right;
+}
+
+.imageSection img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+}
+
+.infoSection {
+    color: black;
+}
+
+.phoneLogo {
+    height: 20px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+/* Scroll Shadows */
