@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
 import { Redirect } from 'react-router-dom'
+import './MyEvents.css'
 
 const mapStateToProps = state => {
 	return {
@@ -18,6 +19,7 @@ function MyEvents(props) {
 	const [events, setEvents] = useState([]);
 	const [eventDate, setDate] = useState();
 	const [newEventCreated, setNewEventCreated] = useState(false);
+	const blob = '/yellowbloblogin.png';
 
 	const loadEvents = async() => {
 		const myEvents = await axios.get(props.urls.getHostEvents + props.userId);
@@ -42,23 +44,34 @@ function MyEvents(props) {
 
 	return (
 		<div>
-			<h1>My Events</h1>
-			<div>
-				{events && events.length > 0 ? 
-					<ul>
-						{events.map((e) => {
-							return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
-						})}
-					</ul>
-					:
-					<div>
-						<h3>No events scheduled.</h3>
-						<div>
-							<input type="datetime-local" onChange={handleDateChange}/>
-							<button id="schedule-new-event-button" onClick={handleNewEvent}>Schedule Event</button>
+			<div className='bgImg'>
+				<img src={blob} alt='Yellow Blob' className='blob' />
+			</div>
+			<div className='myEventsCard'>
+				<div className='myEventsInfo'>
+					<h1>My Events</h1>
+					{events && events.length > 0 ? <h5>You currently have {events.length} event{events.length === 1 ? "" : "s"} scheduled.</h5> : <span></span>}
+					<button>Add New Invite Link</button>
+				</div>
+				<div className='myEvents'>
+					{events && events.length > 0 ? 
+						<ul>
+							{events.map((e) => {
+								return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
+							})}
+						</ul>
+						:
+						<div className='noEvents'>
+							<h4>You currently have no events in your events page.</h4>
+							<div>To add events, you can create an event below or add a new invite link at the bottom left.</div>
+							<div className='createNewEventForm'>
+								<h5>Create a New Event</h5>
+								<input type="datetime-local" onChange={handleDateChange}/>
+								<button id="schedule-new-event-button" onClick={handleNewEvent}>Schedule Event</button>
+							</div>
 						</div>
-					</div>
-				}
+					}
+				</div>
 			</div>
 			{newEventCreated ? <Redirect to={'/nearme'}/> : <></>}
 		</div>
