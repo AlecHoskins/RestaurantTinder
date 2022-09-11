@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { element } from 'prop-types';
 import React, { useState } from 'react';
 import {connect} from 'react-redux';
 import {setEventDeadlineDate} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
-import './Event.css'
+import './EventCreation.css'
 
 const mapStateToProps = state => {
 	return {
@@ -19,6 +20,8 @@ function EventCreation(props) {
 	const [guestList, setGuestList] = useState("");
 	const [created, setCreated] = useState(false);
 	const [guests, setGuests] = useState([]);
+	const [formValues, setFormValues] = useState([{name: ""}]);
+	const blob = '/yellowblob.png'
 
 	const handleDeadlineChange = (event) => {
 		event.preventDefault();
@@ -95,47 +98,65 @@ function EventCreation(props) {
 
 	}
 
+	//Handles Guest List changes
+	let handleChange = (i, e) => {
+		let newFormValues = [...formValues];
+		newFormValues[i][e.target.name] = e.target.value;
+		setFormValues(newFormValues);
+	}
+
+	let addFormFields = () => {
+		setFormValues([...formValues, { name: ""}])
+	}
+
+	let removeFormFields = (i) => {
+		let newFormValues = [...formValues];
+		newFormValues.splice(i, 1);
+		setFormValues(newFormValues);
+	}
+
 	return (
 		<div className='event-details'>
 			{/* <p>{JSON.stringify(props.event)}</p> */}
 			{/* {created ? <h1>Created</h1> : <h1>Didn't work</h1>} */}
-			<h2>Event Details</h2>
-			<h3>{props.event.deadlineDate}</h3>
-			{!created ? <h4>Select Guests Decision Deadline: </h4> : <h4>Event Date: {props.event.deadlineDate}</h4>}
-			<form className='event-detail-form'>
-				<div>
-					<label className="label-date" htmlFor="deadline-date" >Guests Decision Deadline: <span className="tooltip">*Time zone is based on your local time.</span>
-					<input type="datetime-local" name="deadline-date" onChange={handleDeadlineChange} disabled={created ? true : false}/></label>
+			<div className='bgImg' >
+				<img src={blob} className='blob' alt='Yellow Blob'/>
+			</div>
+			<div className='eventCreation'>
+				<div className='eventDetails'>
+					<h2>Event Details</h2>
+					<div className='eventTitle'>
+						<h5>Event Title</h5>
+						<input type="text" required/>
+					</div>
+					<div className='eventDateTime'>
+						<h5>Event Date and Time</h5>
+						<input type="datetime-local" required/>
+					</div>
+					<div className='eventDecisionDeadline'>
+						<h5>Guests Decision Deadline</h5>
+						<input type="datetime-local" required/>
+					</div>
 				</div>
-				<div>
-					{!created ? 
-						<div className='guest-list'>
-							<button id="generate-links" onClick={generateLinks}>Generate Links</button>
-							<label className='label-guestlist' htmlFor='guest-list'>Guest List:</label>
-							<textarea name="guest-list" rows="10" cols="20" onChange={(e) => {setGuestList(e.target.value);}}/> 
+				<div className='eventGuests'>
+					<h5>Guest List:</h5>
+					{formValues.map((element, index) => (
+						<div className='form-inline'>
+							<h5>Guest Name:</h5>
+							<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
+							{
+								index ?
+									<button className='remove' onClick={() => removeFormFields(index)}>Remove</button>
+									: null
+							}
 						</div>
-					: 
-					<table id="links-table">
-						<thead>
-							
-						</thead>
-						<tbody>
-							<tr>
-								<th>Guest</th>
-								<th>Invitation Link</th>
-							</tr>
-						{guests.map((guest) => {
-							return (
-							<tr key={guest.id}>
-								<td>{guest.nickname}</td>
-								<td>{guest.inviteUrl}</td>
-							</tr>);
-						})}
-						</tbody>
-					</table>
-					}
+					))}
+					<div className='guestButtons'>
+							<button className='guestAdd' onClick={() => addFormFields()}>Add</button>
+					</div>
+					<button>Create Event</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	);
 }
