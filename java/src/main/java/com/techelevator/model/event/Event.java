@@ -13,7 +13,7 @@ public class Event {
     @NotEmpty
     private long hostId;
     private String eventTitle;
-    private String eventDaytime; // TODO - use LocalDate?
+    private String eventDayTime; // TODO - use LocalDate?
     private String decisionDeadline; // TODO - use LocalDate?
     private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
@@ -42,12 +42,12 @@ public class Event {
         this.hostId = hostId;
     }
 
-    public String getEventDaytime() {
-        return eventDaytime;
+    public String getEventDayTime() {
+        return eventDayTime;
     }
 
-    public void setEventDaytime(String eventDaytime) {
-        this.eventDaytime = eventDaytime;
+    public void setEventDayTime(String eventDayTime) {
+        this.eventDayTime = eventDayTime;
     }
 
     public String getDecisionDeadline() {
@@ -77,7 +77,7 @@ public class Event {
     public Event(long id, long hostId, String event_daytime, String decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle) {
         this.id = id;
         this.hostId = hostId;
-        this.eventDaytime = event_daytime;
+        this.eventDayTime = event_daytime;
         this.decisionDeadline = decision_deadline;
         this.eventRestaurants = eventRestaurants;
         this.guestList = guestList;

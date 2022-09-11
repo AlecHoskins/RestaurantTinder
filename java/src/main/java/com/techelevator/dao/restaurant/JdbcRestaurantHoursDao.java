@@ -21,7 +21,7 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
 
         for(Day day : days) {
             long hoursId = addDay(day);
-            if(hoursId > 1) {
+            if(hoursId >= 1) {
                 hoursIds.add(hoursId);
             }
         }
@@ -33,8 +33,8 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
     public long addDay(Day day) {
         String sql =
                 "INSERT INTO restaurant (restaurant_id, day_of_week, open_time, close_time) " +
-                        "VALUES (?, ?, ?, ?) " +
-                        "RETURNING hours_id;";
+                "VALUES (?, ?, ?, ?) " +
+                "RETURNING hours_id;";
         Long hoursId = jdbcTemplate.queryForObject(sql, Long.class,
                 day.getId(), day.getDay(), day.getStart(), day.getEnd());
 

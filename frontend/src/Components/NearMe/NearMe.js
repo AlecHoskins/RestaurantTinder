@@ -40,7 +40,7 @@ function NearMe(props) {
 		}
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
-		let open_at = timeToUnix(new Date(date)) 
+		// let open_at = timeToUnix(new Date(date)) 
 		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode);
 
 		//check to see if these restaurants have already been added

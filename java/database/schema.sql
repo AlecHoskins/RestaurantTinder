@@ -65,8 +65,9 @@ CREATE TABLE users (
 CREATE TABLE event (
    event_id int DEFAULT nextval('seq_event_id'::regclass) NOT NULL,
    event_time timestamp NOT NULL,
-   zipcode int NOT NULL,
+   event_title varchar(20) NOT NULL,
    host_id int NOT NULL,
+   decision_time timestamp NOT NULL,
    CONSTRAINT PK_event PRIMARY KEY (event_id),
    CONSTRAINT FK_host FOREIGN KEY (host_id) REFERENCES users(user_id)
 );
