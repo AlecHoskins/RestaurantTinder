@@ -5,18 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Day {
 
     private long id;
+    private String restaurantId;
     @JsonProperty("is_overnight")
     private boolean isOvernight;
     private String start;
     private String end;
     private int day;
-    private String restaurantId;
+
+    @Override
+    public String toString() {
+        return day + ": " + start + " - " + end;
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

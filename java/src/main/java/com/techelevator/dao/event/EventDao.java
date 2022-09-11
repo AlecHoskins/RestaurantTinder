@@ -1,4 +1,4 @@
-package com.techelevator.dao;
+package com.techelevator.dao.event;
 
 import com.techelevator.model.event.Event;
 

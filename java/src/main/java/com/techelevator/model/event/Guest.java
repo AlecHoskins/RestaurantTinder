@@ -1,20 +1,15 @@
 package com.techelevator.model.event;
 
+import java.util.List;
+
 public class Guest {
 
     private long id;
+    private long eventId;
     private String nickname;
     private String inviteUrl;
-    private String role;
     private long userId;
-
-    public Guest(long id, String nickname, String inviteUrl, String role, long userId) {
-        this.id = id;
-        this.nickname = nickname;
-        this.inviteUrl = inviteUrl;
-        this.role = role;
-        this.userId = userId;
-    }
+    private List<Vote> vote;
 
     public long getId() {
         return id;
@@ -22,6 +17,14 @@ public class Guest {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
     }
 
     public String getNickname() {
@@ -40,19 +43,31 @@ public class Guest {
         this.inviteUrl = inviteUrl;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public long getUserId() {
         return userId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public List<Vote> getVote() {
+        return vote;
+    }
+
+    public void setVote(List<Vote> vote) {
+        this.vote = vote;
+    }
+
+    public Guest(long id, long eventId, String nickname, String inviteUrl, long userId, List<Vote> vote) {
+        this.id = id;
+        this.eventId = eventId;
+        this.nickname = nickname;
+        this.inviteUrl = inviteUrl;
+        this.userId = userId;
+        this.vote = vote;
+    }
+
+    public Guest() {
     }
 }

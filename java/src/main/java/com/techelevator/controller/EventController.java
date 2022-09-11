@@ -1,7 +1,7 @@
 package com.techelevator.controller;
 
 
-import com.techelevator.dao.JdbcEventDao;
+import com.techelevator.dao.event.JdbcEventDao;
 import com.techelevator.model.event.Event;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;

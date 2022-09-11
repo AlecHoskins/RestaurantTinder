@@ -12,24 +12,18 @@ public class Event {
     private long id;
     @NotEmpty
     private long hostId;
-    private int day;
-    private String time;
-    private int decision;
+    private String eventTitle;
+    private String eventDaytime; // TODO - use LocalDate?
+    private String decisionDeadline; // TODO - use LocalDate?
     private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
 
-    public Event(long id, long hostId, int day, String time, int decision, List<Restaurant> eventRestaurants, List<Guest> guestList) {
-        this.id = id;
-        this.hostId = hostId;
-        this.day = day;
-        this.time = time;
-        this.decision = decision;
-        this.eventRestaurants = eventRestaurants;
-        this.guestList = guestList;
+    public String getEventTitle() {
+        return eventTitle;
     }
 
-    public Event() {
-
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
     }
 
     public long getId() {
@@ -48,28 +42,20 @@ public class Event {
         this.hostId = hostId;
     }
 
-    public int getDay() {
-        return day;
+    public String getEventDaytime() {
+        return eventDaytime;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setEventDaytime(String eventDaytime) {
+        this.eventDaytime = eventDaytime;
     }
 
-    public String getTime() {
-        return time;
+    public String getDecisionDeadline() {
+        return decisionDeadline;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public int getDecision() {
-        return decision;
-    }
-
-    public void setDecision(int decision) {
-        this.decision = decision;
+    public void setDecisionDeadline(String decisionDeadline) {
+        this.decisionDeadline = decisionDeadline;
     }
 
     public List<Restaurant> getEventRestaurants() {
@@ -86,6 +72,19 @@ public class Event {
 
     public void setGuestList(List<Guest> guestList) {
         this.guestList = guestList;
+    }
+
+    public Event(long id, long hostId, String event_daytime, String decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle) {
+        this.id = id;
+        this.hostId = hostId;
+        this.eventDaytime = event_daytime;
+        this.decisionDeadline = decision_deadline;
+        this.eventRestaurants = eventRestaurants;
+        this.guestList = guestList;
+        this.eventTitle = eventTitle;
+    }
+
+    public Event() {
     }
 }
 

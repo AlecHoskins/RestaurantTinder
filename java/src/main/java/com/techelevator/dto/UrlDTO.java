@@ -92,12 +92,12 @@ public class UrlDTO {
      * Method: POST
      * Body:
      * {
-     *     long id,
-     *     long hostId,
-     *     int day,
-     *     String time,
-     *     int decision,
-     *     List<Restaurant> eventRestaurants,
+     *     long id;
+     *     long hostId;
+     *     String eventTitle;
+     *     String eventDaytime;
+     *     String decisionDeadline;
+     *     List<Restaurant> eventRestaurants;
      *     List<Guest> guestList;
      * }
      * Authenticated: TRUE (disabled for testing)

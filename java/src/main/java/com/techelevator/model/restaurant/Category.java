@@ -2,12 +2,21 @@ package com.techelevator.model.restaurant;
 
 public class Category {
 
+    private long id;
     private String alias;
     private String title;
 
     @Override
     public String toString() {
         return "title: " + title;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getAlias() {
@@ -26,9 +35,10 @@ public class Category {
         this.title = title;
     }
 
-    public Category(String alias, String title) {
+    public Category(String alias, String title, long id) {
         this.alias = alias;
         this.title = title;
+        this.id = id;
     }
 
     public Category() {

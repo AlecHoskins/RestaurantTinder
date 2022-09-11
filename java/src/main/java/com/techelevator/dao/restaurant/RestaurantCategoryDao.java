@@ -15,6 +15,6 @@ public interface RestaurantCategoryDao {
     // Update n/a
 
     // Delete
-    boolean delete(long id);
+    boolean delete(String restaurantId, long categoryId);
 
 }

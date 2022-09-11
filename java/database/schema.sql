@@ -73,7 +73,8 @@ CREATE TABLE event (
 
 CREATE TABLE category (
    category_id int DEFAULT nextval('seq_category_id'::regclass) NOT NULL,
-   category varchar(50) NOT NULL,
+   alias varchar(50) NOT NULL,
+   title varchar(50) NOT NULL,
    CONSTRAINT PK_category PRIMARY KEY (category_id)
 );
 

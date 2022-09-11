@@ -1,23 +1,17 @@
 package com.techelevator.dao.restaurant;
 
+import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.restaurant.Location;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.List;
-
-@Component
-public class JdbcRestaurantDao implements RestaurantDao{
-
-    private final JdbcTemplate jdbcTemplate;
+@Repository
+public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
 
     public JdbcRestaurantDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        super(jdbcTemplate);
     }
 
     @Override
@@ -27,9 +21,9 @@ public class JdbcRestaurantDao implements RestaurantDao{
 
         if(result.next()) {
             return mapRowToRestaurant(result);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     @Override
@@ -65,25 +59,5 @@ public class JdbcRestaurantDao implements RestaurantDao{
                 newRestaurant.getPhone(), newRestaurant.getDisplayPhone());
 
         return restaurantId != null && restaurantId.equals(newRestaurant.getId());
-    }
-
-    private Restaurant mapRowToRestaurant(SqlRowSet rs) {
-        Restaurant restaurant = new Restaurant();
-
-        restaurant.setId(rs.getString("restaurant_id"));
-        restaurant.setName(rs.getString("restaurant_name"));
-        restaurant.setImageUrl(rs.getString("image_url"));
-        restaurant.setPhone(rs.getString("phone"));
-        restaurant.setDisplayPhone(rs.getString("display_phone"));
-
-        Location location = new Location();
-        location.setAddress1(rs.getString("address"));
-        location.setCity(rs.getString("city"));
-        location.setState(rs.getString("state"));
-        location.setZipCode(rs.getString("zip"));
-
-        restaurant.setLocation(location);
-
-        return restaurant;
     }
 }
