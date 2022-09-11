@@ -1,15 +1,19 @@
 package com.techelevator.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 public class UrlDTO {
 
+    @JsonProperty
     private final String BASE_URL = "http://localhost:8081/";
     /**UrlController
      * Method: GET
      * Authenticated: FALSE
      * */
 
+    @JsonProperty
     private final String login = BASE_URL + "login";
     /**AuthenticationController
      * Method: POST
@@ -21,6 +25,7 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
+    @JsonProperty
     private final String register = BASE_URL + "register";
     /**AuthenticationController
      * Method: POST
@@ -34,12 +39,14 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
+    @JsonProperty
     private final String getUsername = BASE_URL + "username";
     /**UserController
      * Method: GET
      * Authenticated: TRUE
      * */
 
+    @JsonProperty
     private final String yelp = BASE_URL + "yelp";
     /**YelpController
      * Method: GET
@@ -47,6 +54,7 @@ public class UrlDTO {
      * Authenticated: TRUE
      * */
 
+    @JsonProperty
     private final String yelpById = BASE_URL + "yelp/";
     /**YelpController
      * Method: GET
@@ -54,6 +62,7 @@ public class UrlDTO {
      * Authenticated: TRUE
      * */
 
+    @JsonProperty
     private final String getRestaurant = BASE_URL + "restaurant/";
     /**RestaurantController
      * Method: GET
@@ -61,6 +70,7 @@ public class UrlDTO {
      * Authenticated: TRUE (disabled for testing)
      * */
 
+    @JsonProperty
     private final String getEvent = BASE_URL + "event/";
     /**EventController
      * Method: GET
@@ -68,6 +78,7 @@ public class UrlDTO {
      * Authenticated: TRUE (disabled for testing)
      * */
 
+    @JsonProperty
     private final String getHostEvents = BASE_URL + "event/host/";
     /**EventController
      * Method: GET
@@ -75,6 +86,7 @@ public class UrlDTO {
      * Authenticated: TRUE (disabled for testing)
      * */
 
+    @JsonProperty
     private final String addEvent = BASE_URL + "event";
     /**EventController
      * Method: POST

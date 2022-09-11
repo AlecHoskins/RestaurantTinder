@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Service
 public class YelpBusinessService {
 
@@ -25,8 +24,8 @@ public class YelpBusinessService {
 
     static final int ONE_WEEK_IN_UNIX = 604800;
 
-    private RestTemplate restTemplate;
-    private HttpEntity<Void> authEntity;
+    private final RestTemplate restTemplate;
+    private final HttpEntity<Void> authEntity;
 
     public YelpBusinessService() {
         restTemplate = new RestTemplate();
