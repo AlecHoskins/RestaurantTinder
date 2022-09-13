@@ -120,6 +120,7 @@
     height: 30px;
     width: auto;
     float: right;
+	cursor: pointer;
 }
 
 .imageSection img {
