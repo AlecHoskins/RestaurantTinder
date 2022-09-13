@@ -50,3 +50,15 @@
     color: #fec63d;
     font-weight: 700;
 }
+
+@media only screen and (max-width: 800px){ 
+
+    .userInfo {
+        display: inline;
+    }
+
+    .welcomeCard {
+        margin-bottom: 10px;
+    }
+
+}
