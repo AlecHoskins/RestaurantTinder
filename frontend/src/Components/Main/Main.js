@@ -41,6 +41,7 @@ class Main extends Component {
 		axios.get(baseUrl).then((response) => {
 			this.props.setURLs(response.data);
 		})
+        
     }
 
     handleLogout = () => {
@@ -48,6 +49,8 @@ class Main extends Component {
         this.props.deleteUser()
 		this.props.deleteCurrentEvent();
     }
+
+
 
     render(){
         return(

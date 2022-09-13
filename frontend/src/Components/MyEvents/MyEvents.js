@@ -28,6 +28,7 @@ function MyEvents(props) {
 
 	useEffect(() => {
 		loadEvents();
+		document.title = "Restaurant Tinder - My Events"
 	}, []);
 
 	const handleNewEvent = () => {

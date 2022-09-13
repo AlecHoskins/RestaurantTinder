@@ -25,6 +25,7 @@ class Login extends Component {
             password: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        document.title = "Restaurant Tinder - Login"
     }
     
 

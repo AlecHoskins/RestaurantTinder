@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import './Home.css'
@@ -7,6 +8,11 @@ function Home(props) {
     let currUser = useSelector(state => state.user.username);
 
     const userBlob = './yellowblobuser.png'
+
+    useEffect(() => {
+        document.title = "Restaurant Tinder - Home"
+      }, [])
+
     
     return(
         <div>

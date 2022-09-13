@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { element } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import {setEventDeadlineDate} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
@@ -27,6 +27,10 @@ function EventCreation(props) {
 		event.preventDefault();
 		props.dispatch(setEventDeadlineDate(event.target.value))
 	}
+
+	useEffect(() => {
+        document.title = "Restaurant Tinder - Event Creation"
+      }, [])
 
 	const generateLinks = async() => {
 		//this is essentially a submit to create the event

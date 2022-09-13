@@ -24,7 +24,8 @@ class Register extends Component{
             password: '',
             confirmPassword: '',
 			created: false
-        }        
+        }
+        document.title = "Restaurant Tinder - Register"        
     }
 
     handleInputChange = (event) => {

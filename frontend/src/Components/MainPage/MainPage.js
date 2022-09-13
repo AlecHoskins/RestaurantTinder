@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import './MainPage.css';
 
@@ -6,6 +6,10 @@ function MainPage() {
     
     const foodPlate = "/foodplate.png";
     const blob = "/yellowblob.png";
+
+    useEffect(() => {
+        document.title = "Restaurant Tinder"
+      }, [])
 
     return(
         <div className="mainPage">

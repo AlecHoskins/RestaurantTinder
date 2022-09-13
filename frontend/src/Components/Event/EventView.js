@@ -31,6 +31,7 @@ function EventView(props) {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
 		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
+        document.title = "Restaurant Tinder - Event"
 	}, []);
 
 	const updateThumbsUp = (vote) => {
@@ -108,7 +109,7 @@ function EventView(props) {
     return (
         <div className="eventView">
             <div>
-                <img src={blob} className='blob' alt='Yellow Blob'/>
+                <img src={blob} className='eventBlob' alt='Yellow Blob'/>
             </div>
             <div className="eventCard">
                 <div className="eventInfo">

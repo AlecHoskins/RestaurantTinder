@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useSelector, connect} from 'react-redux';
 import './NearMe.css';
 import {setSelectedRestaurants, setEventDate} from '../../Redux/actionCreators'
@@ -24,6 +24,10 @@ function NearMe(props) {
 	//const [restaurantSelections, setRestaurantSelections] = useState([]);
 	// const [restaurantDetail, setRestaurantDetail] = useState();
 	// const [restaurantDetailId, setRestaurantDetailId] = useState();
+
+	useEffect(() => {
+        document.title = "Restaurant Tinder - New Event"
+      }, [])  
 
 	const timeToUnix = (time = new Date()) => {
 		return Math.floor(time.getTime() / 1000);

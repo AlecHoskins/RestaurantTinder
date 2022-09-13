@@ -15,11 +15,13 @@
     height: 77%;
     padding: 20px;
     transform: translate(-50%);
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
     display: grid;
     grid-template-columns: 30% 70%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .upcomingEvents {
