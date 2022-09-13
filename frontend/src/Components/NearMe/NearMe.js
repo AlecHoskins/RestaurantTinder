@@ -18,6 +18,7 @@ function NearMe(props) {
 	const urls = useSelector(state => state.urls.urls);
 
 	const phoneLogo = '/phone-icon.png';
+	const yellowBlob = '/yellowblobsignup.png'
 
 	const [searchData, setSearchData] = useState();
 	const [restaurantData, setRestaurantData] = useState();
@@ -204,29 +205,32 @@ function NearMe(props) {
 
 	return (
 		<div className='nearme'>
-			<form className="search-form">
-				<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
-				<input type="datetime-local" name="date" onChange={handleDateChange} defaultValue={props.date} /></label>
-				<label className="label-location" htmlFor="location">Location: 
-				<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
-				<label className="label-cuisine" htmlFor="cuisine">Cuisine: 
-				<select className="input-cuisine" name="cuisine" onChange={handleInputChange}>
-					<option value="restaurant">None</option>
-					<option value="french">French</option>
-					<option value="chinese">Chinese</option>
-					<option value="japanese">Japanese</option>
-					<option value="vietnamese">Vietnamese</option>
-					<option value="italian">Italian</option>
-					<option value="greek">Greek</option>
-					<option value="mexican">Mexican</option>
-					<option value="thai">Thai</option>
-					<option value="american">American</option>
-					<option value="pizza">Pizza</option>
-					<option value="burgers">Burgers</option>
-				</select></label>
-				<button id="search-button" onClick={searchHandler}>Search</button>
-			</form>
-			<div id="eventSelector">
+			<div>
+				<img src={yellowBlob} className='eventBlob' alt='Yellow Blob' />
+			</div>
+			<div className='eventSearch'>
+				<form className="search-form">
+					<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
+					<input type="datetime-local" name="date" onChange={handleDateChange} defaultValue={props.date} /></label>
+					<label className="label-location" htmlFor="location">Location: 
+					<input className="input-location" type="text" onChange={handleInputChange} name="location" required/></label>
+					<label className="label-cuisine" htmlFor="cuisine">Cuisine: 
+					<select className="input-cuisine" name="cuisine" onChange={handleInputChange}>
+						<option value="restaurant">None</option>
+						<option value="french">French</option>
+						<option value="chinese">Chinese</option>
+						<option value="japanese">Japanese</option>
+						<option value="vietnamese">Vietnamese</option>
+						<option value="italian">Italian</option>
+						<option value="greek">Greek</option>
+						<option value="mexican">Mexican</option>
+						<option value="thai">Thai</option>
+						<option value="american">American</option>
+						<option value="pizza">Pizza</option>
+						<option value="burgers">Burgers</option>
+					</select></label>
+					<button id="search-button" onClick={searchHandler}>Search</button>
+				</form>
 				<div className='restaurant-cardContainer'>
 					{(restaurantData) ? restarauntCards() : (<div></div>)}
 				</div>

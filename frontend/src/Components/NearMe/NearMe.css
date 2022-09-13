@@ -1,12 +1,31 @@
+.eventSearch {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 90%;
+    height: 77%;
+    padding: 20px;
+    transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 1fr 90%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    grid-template-areas: 
+        "form form"
+        "checkOut cards";
+}
+
 form {
-    padding: 10px;
+    grid-area: form;
+    padding-bottom: 10px;
     text-align: center;
-    background-color: white;
-    margin-bottom: 10px;
     position: sticky;
     top: 100px;
     z-index: 1;
-    box-shadow: 0px 2px 15px 0px black;
 }
 
 input {
@@ -72,9 +91,11 @@ select {
 /* Restaurant Cards Styling */
 
 .restaurant-cardContainer {
+    grid-area: cards;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: scroll;
 }
 
 .card {
@@ -85,7 +106,7 @@ select {
     box-shadow: 0px 0px 10px black;
     padding: 5px;
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 270px 1fr;
     grid-template-areas: 
         "title title"
         "image info";
@@ -104,8 +125,8 @@ select {
 }
 
 .card-img {
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
     object-fit: cover;
 }
 
@@ -173,39 +194,28 @@ select {
 	box-shadow: initial;
 }
 
-/* Structuring of the main content */
-
-#eventSelector {
-    display: grid;
-    grid-template-columns: 70% 30%;
-}
-
+/* Structuring of the Restaraunt Checkout */
 #eventCO {
-    position: fixed;
-    width: 30%;
-    height: 100%;
-    top: 170px;
-    right: 0;
-    box-shadow: -5px 0px 10px 0px #5e5e5e;
+    grid-area: checkOut;
 }
 
 #event-button {
     position: fixed;
-    bottom: 35px;
-    right: 20px;
+    bottom: 3%;
+    left: 20%;
 }
 
 .selected-restaurants {
     margin-top: 10px;
     overflow: auto;
-    height: 650px;
+    height: 86%;
 }
 
 /* Is Open Badge */
 
 .open-now {
     position: absolute;
-    top: 42px;
+    top: 48px;
     left: 10px;
     background: #fec63d;
     text-align: center;
