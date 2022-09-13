@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import './MyEvents.css'
 
 const mapStateToProps = state => {
@@ -42,6 +42,19 @@ function MyEvents(props) {
 	const handleDateChange = (event) => {
 		setDate(event.target.value);
 	}
+	
+	const getMapOfEventCards = (eventCards) => {
+		return (
+			eventCards.map((e) => {
+				return (<div className='upcomingCard'>
+					<Link to='/eventview'><button>Event Details {'>'}</button></Link>
+					<h5>{e.eventTitle}</h5>
+					<div>{e.eventDayTime}</div>
+					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}
+				</div>);
+				// return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
+			}));
+	}
 
 	return (
 		<div>
@@ -56,11 +69,9 @@ function MyEvents(props) {
 				</div>
 				<div className='myEvents'>
 					{events && events.length > 0 ? 
-						<ul>
-							{events.map((e) => {
-								return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
-							})}
-						</ul>
+							<div className='upcomingEvents'>
+								{getMapOfEventCards(events)}
+							</div>
 						:
 						<div className='noEvents'>
 							<h4>You currently have no events in your events page.</h4>

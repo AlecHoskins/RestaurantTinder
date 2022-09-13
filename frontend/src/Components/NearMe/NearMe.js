@@ -37,9 +37,9 @@ function NearMe(props) {
 	const searchHandler = async (event) => {
 		event.preventDefault();
 		//if searchData state is undefined, use the props instead
-		const date = (!searchData.date) ? props.date : searchData.date;
+		//const date = (!searchData.date) ? props.date : searchData.date;
 		
-		if (!searchData || !searchData.location || !date) {
+		if (!searchData || !searchData.location) {
 			alert("Please enter a location and date");
 			return;
 		}
