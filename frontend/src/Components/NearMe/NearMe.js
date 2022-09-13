@@ -128,6 +128,7 @@ function NearMe(props) {
 
 	const mapDays = (hour) => {
 		var curDay = null;
+		if (!hour.open) { return <span>No hours found</span> }
 		return hour.open.map((day, index) => {
 				const jsxDay = (
 					<tr key={index}>
