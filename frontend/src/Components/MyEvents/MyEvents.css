@@ -46,3 +46,11 @@
     width: auto;
     padding: 10px;
 }
+
+@media only screen and (max-width: 800px){ 
+
+    .myEventsCard {
+        display: inline;
+    }
+
+}
