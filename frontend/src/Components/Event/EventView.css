@@ -139,4 +139,23 @@
     margin-right: 2px;
 }
 
-/* Scroll Shadows */
+@media only screen and (max-width: 800px){ 
+
+    .eventCard {
+        display: inline;
+    }
+
+    .eventInfo {
+        margin-bottom: 10px;
+    }
+
+    .eventInfo .eventSubmit {
+        right: 1%;
+        bottom: 72%;
+    }
+
+    .eventRestaurants {
+        height: 71%;
+    }
+
+}
