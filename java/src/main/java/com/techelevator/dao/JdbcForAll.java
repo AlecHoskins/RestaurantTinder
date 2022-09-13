@@ -51,8 +51,8 @@ public abstract class JdbcForAll {
 
         day.setId(result.getLong("hours_id"));
         day.setRestaurantId(result.getString("restaurant_id"));
-        day.setStart(result.getString("open_time"));
-        day.setEnd(result.getString("close_time"));
+        day.setStart(result.getTimestamp("open_time"));
+        day.setEnd(result.getTimestamp("close_time"));
         day.setDay(result.getInt("day_of_week"));
 
         return day;
@@ -64,8 +64,8 @@ public abstract class JdbcForAll {
         event.setId(result.getLong("event_id"));
         event.setHostId(result.getLong("host_id"));
         event.setEventTitle(result.getString("event_title"));
-        event.setEventDayTime(result.getString("event_time"));
-        event.setDecisionDeadline(result.getString("decision_time"));
+        event.setEventDayTime(result.getTimestamp("event_time"));
+        event.setDecisionDeadline(result.getTimestamp("decision_time"));
 
         return event;
     }

@@ -4,6 +4,8 @@ import com.techelevator.model.restaurant.Restaurant;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,8 +15,8 @@ public class Event {
     @NotEmpty
     private long hostId;
     private String eventTitle;
-    private String eventDayTime; // TODO - use LocalDate?
-    private String decisionDeadline; // TODO - use LocalDate?
+    private Timestamp eventDayTime; // TODO - use LocalDate?
+    private Timestamp decisionDeadline; // TODO - use LocalDate?
     private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
 
@@ -42,19 +44,19 @@ public class Event {
         this.hostId = hostId;
     }
 
-    public String getEventDayTime() {
+    public Timestamp getEventDayTime() {
         return eventDayTime;
     }
 
-    public void setEventDayTime(String eventDayTime) {
+    public void setEventDayTime(Timestamp eventDayTime) {
         this.eventDayTime = eventDayTime;
     }
 
-    public String getDecisionDeadline() {
+    public Timestamp getDecisionDeadline() {
         return decisionDeadline;
     }
 
-    public void setDecisionDeadline(String decisionDeadline) {
+    public void setDecisionDeadline(Timestamp decisionDeadline) {
         this.decisionDeadline = decisionDeadline;
     }
 
@@ -74,7 +76,7 @@ public class Event {
         this.guestList = guestList;
     }
 
-    public Event(long id, long hostId, String event_daytime, String decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle) {
+    public Event(long id, long hostId, Timestamp event_daytime, Timestamp decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle) {
         this.id = id;
         this.hostId = hostId;
         this.eventDayTime = event_daytime;

@@ -17,7 +17,8 @@ public class Restaurant {
     private String phone;
     @JsonProperty("display_phone")
     private String displayPhone;
-    private List<Day> hours;
+    @JsonProperty("hours")
+    private List<Hours> hours;
 
     @Override
     public String toString() {
@@ -51,11 +52,11 @@ public class Restaurant {
         this.displayPhone = displayPhone;
     }
 
-    public List<Day> getHours() {
+    public List<Hours> getHours() {
         return hours;
     }
 
-    public void setHours(List<Day> hours) {
+    public void setHours(List<Hours> hours) {
         this.hours = hours;
     }
 
@@ -115,7 +116,7 @@ public class Restaurant {
         this.phone = phone;
     }
 
-    public Restaurant(String id, String name, String imageUrl, boolean isClosed, List<Category> categories, Location location, String phone, String displayPhone, List<Day> hours) {
+    public Restaurant(String id, String name, String imageUrl, boolean isClosed, List<Category> categories, Location location, String phone, String displayPhone, List<Hours> hours) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;

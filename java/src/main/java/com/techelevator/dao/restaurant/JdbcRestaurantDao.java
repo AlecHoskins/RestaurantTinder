@@ -41,7 +41,7 @@ public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
 
         String deleteRestaurantSql =
                 "DELETE FROM restaurant" +
-                "WHERE restarant_id = ?;";
+                "WHERE restaurant_id = ?;";
 
         return false;
     }

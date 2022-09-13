@@ -2,6 +2,7 @@ package com.techelevator.dao.restaurant;
 
 import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.restaurant.Day;
+import com.techelevator.model.restaurant.Hours;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -16,27 +17,28 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
     }
 
     @Override
-    public List<Long> addAllHours(List<Day> days) {
+    public List<Long> addAllHours(List<Hours> hours, String restaurantId) {
         List<Long> hoursIds = new ArrayList<>();
 
-        for(Day day : days) {
-            long hoursId = addDay(day);
-            if(hoursId >= 1) {
-                hoursIds.add(hoursId);
+        for(Hours hour: hours) {
+            for (Day day : hour.getOpen()) {
+                long hoursId = addDay(day, restaurantId);
+                if (hoursId >= 1) {
+                    hoursIds.add(hoursId);
+                }
             }
         }
-
         return hoursIds;
     }
 
     @Override
-    public long addDay(Day day) {
+    public long addDay(Day day, String id) {
         String sql =
-                "INSERT INTO restaurant (restaurant_id, day_of_week, open_time, close_time) " +
+                "INSERT INTO restaurant_hours (restaurant_id, day_of_week, open_time, close_time) " +
                 "VALUES (?, ?, ?, ?) " +
                 "RETURNING hours_id;";
         Long hoursId = jdbcTemplate.queryForObject(sql, Long.class,
-                day.getId(), day.getDay(), day.getStart(), day.getEnd());
+                id, day.getDay(), day.getStart(), day.getEnd());
 
         return hoursId != null ? hoursId : -1;
     }

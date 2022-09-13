@@ -2,14 +2,16 @@ package com.techelevator.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.Timestamp;
+
 public class Day {
 
     private long id;
     private String restaurantId;
     @JsonProperty("is_overnight")
     private boolean isOvernight;
-    private String start;
-    private String end;
+    private Timestamp start;
+    private Timestamp end;
     private int day;
 
     @Override
@@ -41,19 +43,19 @@ public class Day {
         isOvernight = overnight;
     }
 
-    public String getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Timestamp getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Timestamp end) {
         this.end = end;
     }
 
@@ -65,7 +67,7 @@ public class Day {
         this.day = day;
     }
 
-    public Day(boolean isOvernight, String start, String end, int day, String restaurantId, long id) {
+    public Day(boolean isOvernight, Timestamp start, Timestamp end, int day, String restaurantId, long id) {
         this.isOvernight = isOvernight;
         this.start = start;
         this.end = end;
