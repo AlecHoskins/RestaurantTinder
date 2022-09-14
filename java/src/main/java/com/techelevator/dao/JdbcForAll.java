@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.event.Event;
+import com.techelevator.model.event.Guest;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Day;
 import com.techelevator.model.restaurant.Location;
@@ -68,6 +69,17 @@ public abstract class JdbcForAll {
         event.setDecisionDeadline(result.getTimestamp("decision_time"));
 
         return event;
+    }
+
+    protected Guest mapRowTOGuest(SqlRowSet result) {
+        Guest guest = new Guest();
+
+        guest.setId((result.getLong(("guest_id"))));
+        guest.setEventId(result.getLong(("event_id")));
+        guest.setNickname(result.getString("nickname"));
+        guest.setInviteUrl(result.getString("url"));
+        guest.setUserId(result.getLong("user_id"));
+        return guest;
     }
 
 }
