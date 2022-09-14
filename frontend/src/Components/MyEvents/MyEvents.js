@@ -27,6 +27,8 @@ function MyEvents(props) {
 	}
 
 	useEffect(() => {
+		//in this page we should not be storing a 'current event'
+		props.dispatch(deleteCurrentEvent());
 		loadEvents();
 		document.title = "Restaurant Tinder - My Events"
 	}, []);
@@ -46,7 +48,7 @@ function MyEvents(props) {
 	const getMapOfEventCards = (eventCards) => {
 		return (
 			eventCards.map((e) => {
-				return (<div className='upcomingCard'>
+				return (<div key={e.eventTitle} className='upcomingCard'>
 					<Link to='/eventview'><button>Event Details {'>'}</button></Link>
 					<h5>{e.eventTitle}</h5>
 					<div>{e.eventDayTime}</div>
