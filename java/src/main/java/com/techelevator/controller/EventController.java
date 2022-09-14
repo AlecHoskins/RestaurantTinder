@@ -17,13 +17,9 @@ import java.util.List;
 public class EventController {
 
     private final EventService service;
-    private final RestaurantService restaurantService;
-    private final YelpBusinessService yelpBusinessService;
 
-    public EventController(EventService service, RestaurantService restaurantService, YelpBusinessService yelpBusinessService) {
+    public EventController(EventService service) {
         this.service = service;
-        this.restaurantService = restaurantService;
-        this.yelpBusinessService = yelpBusinessService;
     }
 
     @GetMapping("/{id}")
@@ -38,9 +34,6 @@ public class EventController {
 
     @PostMapping
     public boolean addEvent(@RequestBody Event newEvent) {
-        for (Restaurant restaurant: newEvent.getEventRestaurants()) {
-            restaurantService.addRestaurant(yelpBusinessService.getBusinessById(restaurant.getId()));
-        }
         return service.addEvent(newEvent);
     }
 

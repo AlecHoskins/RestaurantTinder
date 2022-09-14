@@ -92,7 +92,6 @@ public class UrlDTO {
      * Method: POST
      * Body:
      * {
-     *     long id;
      *     long hostId;
      *     String eventTitle;
      *     String eventDaytime;

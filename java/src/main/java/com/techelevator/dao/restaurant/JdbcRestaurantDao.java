@@ -48,6 +48,7 @@ public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
 
     @Override
     public boolean save(Restaurant newRestaurant) {
+
         String addRestaurantSql =
                 "INSERT INTO restaurant (restaurant_id, image_url, restaurant_name, address, city, state, zip, phone, display_phone) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
