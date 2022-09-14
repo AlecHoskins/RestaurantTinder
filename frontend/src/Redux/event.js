@@ -2,21 +2,27 @@ import * as ActionTypes from "./actionTypes";
 
 export const Event = (
   state = {
-    date: undefined,
-    deadlineDate: undefined,
+	eventTitle: undefined,
+    eventDayTime: undefined,
+    decisionDeadline: undefined,
     selectedRestaurants: [],
+	guestList: []
   },
   action
 ) => {
   switch (action.type) {
     case ActionTypes.SET_EVENT_DATE:
-      return { ...state, date: action.payload };
+      return { ...state, eventDayTime: action.payload };
     case ActionTypes.SET_SELECTED_RESTAURANTS:
       return { ...state, selectedRestaurants: action.payload };
     case ActionTypes.SET_EVENT_DEADLINE_DATE:
-      return { ...state, deadlineDate: action.payload };
+      return { ...state, decisionDeadline: action.payload };
 	case ActionTypes.DELETE_EVENT:
-		return {...state, date: undefined, deadlineDate: undefined, selectedRestaurants: []}
+		return {...state, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, selectedRestaurants: []}
+	case ActionTypes.SET_EVENT_TITLE: 
+		return {...state, eventTitle: action.payload}
+	case ActionTypes.SET_EVENT_GUESTS:
+		return {...state, guestList: action.payload}
     default:
       return state;
   }

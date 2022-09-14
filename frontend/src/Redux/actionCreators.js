@@ -37,3 +37,13 @@ export const setEventDeadlineDate = (date) => ({
 export const deleteCurrentEvent = () => ({
 	type:ActionTypes.DELETE_EVENT,
 })
+
+export const setEventTitle = (title) => ({
+	type:ActionTypes.SET_EVENT_TITLE,
+	payload: title
+})
+
+export const setEventGuests = (guests = []) => ({
+	type:ActionTypes.SET_EVENT_GUESTS,
+	payload: guests
+})

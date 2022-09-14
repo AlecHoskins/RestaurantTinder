@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { element } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
-import {setEventDeadlineDate} from '../../Redux/actionCreators'
+import { Redirect } from 'react-router-dom'
+import {setEventDeadlineDate, setEventTitle, setEventDate, setEventGuests} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
 import './EventCreation.css'
 
@@ -17,14 +17,11 @@ const mapStateToProps = state => {
 
 function EventCreation(props) {
 
-	const [guestList, setGuestList] = useState("");
 	const [created, setCreated] = useState(false);
-	const [guests, setGuests] = useState([]);
 	const [formValues, setFormValues] = useState([{name: ""}]);
 	const blob = '/yellowblob.png'
 
 	const handleDeadlineChange = (event) => {
-		event.preventDefault();
 		props.dispatch(setEventDeadlineDate(event.target.value))
 	}
 
@@ -32,73 +29,46 @@ function EventCreation(props) {
         document.title = "Restaurant Tinder - Event Creation"
       }, [])
 
-	const generateLinks = async() => {
+	const createEvent = async() => {
 		//this is essentially a submit to create the event
 		//so now build the event here
 
-		// const createRestaurantDTO = (restaurant) => {
-		// 	return {
-		// 		id: restaurant.id,
-		// 		name: restaurant.name,
-		// 		imageUrl: restaurant.image_url,
-		// 		isClosed: restaurant.is_closed,
-		// 		categories: restaurant.categories,
-		// 		location: restaurant.location,
-		// 		phone: restaurant.phone,
-		// 		displayPhone: restaurant.displayPhone,
-		// 		hours: restaurant.hours
-		// 	}
-		// }
-
 		const createGuestListDTO = () => {
-			let guests = guestList.split(',');
-			return guests.map((guest) => {
+			return formValues.map((guest) => {
 				return {
 					id: 0,
-					nickname: guest,
+					eventId: 0, // not known yet at time of creation
+					nickname: guest.name,
 					inviteUrl: '',
-					role: '',
-					userId: 0
+					userId: 0, //not known yet at time of creation
+					vote: []
 				}
 			})
 		}
+		let guestListDTO = createGuestListDTO();
+		props.dispatch(setEventGuests(guestListDTO));
 
 		let selectedRestaurants = [...props.event.selectedRestaurants];
+		//console.log(props.event);
 		let newEvent = {
 			id: 0, //we don't have an id for a new event
 			hostId: props.user.id,
-			day: (new Date(props.event.date).getDay()), // do we start with Sun = 0 or Mon = 0?  getDay() is sun = 0
-			time: (props.event.date),
-			decision: 0, //what is this
+			eventTitle: props.event.eventTitle,
+			eventDayTime: props.event.eventDayTime,
+			decisionDeadline: props.event.decisionDeadline,
 			eventRestaurants: selectedRestaurants,
-			guestList: createGuestListDTO()
+			guestList: props.event.guestList
 		}
 
-		//props.urls.createEvent - this isn't being used yet
-		//const response = await axios.put(baseUrl + '/event/', newEvent);
-		// if (response) {
-		// 	setCreated(true);
-		// }
+		//console.log(JSON.stringify(newEvent));
 
-		//Let's imagine it was successful
+		//props.urls.createEvent - this isn't being used yet
+		//const response = await axios.post(baseUrl + '/event/', newEvent);
+
+		//if (response && response.data === true) { setCreated(true); }
+
+		//assume it worked
 		setCreated(true);
-		let data = [
-			{
-				id: 1,
-				nickname: 'Fred',
-				inviteUrl: 'inviteurl',
-				role: 'not used anymore',
-				userId: 0
-			},
-			{
-				id: 2,
-				nickname: 'John',
-				inviteUrl: 'inviteurl2',
-				role: 'not used anymore',
-				userId: 0
-			}
-		];
-		setGuests(data);
 
 	}
 
@@ -131,15 +101,15 @@ function EventCreation(props) {
 					<h2>Event Details</h2>
 					<div className='eventTitle'>
 						<h5>Event Title</h5>
-						<input type="text" required/>
+						<input type="text" name="event-title" onChange={e => props.dispatch(setEventTitle(e.target.value))}required/>
 					</div>
 					<div className='eventDateTime'>
 						<h5>Event Date and Time</h5>
-						<input type="datetime-local" defaultValue={props.event.date} required/>
+						<input type="datetime-local" onChange={e => props.dispatch(setEventDate(e.target.value))} defaultValue={props.event.date} required/>
 					</div>
 					<div className='eventDecisionDeadline'>
 						<h5>Guests Decision Deadline</h5>
-						<input type="datetime-local" required/>
+						<input type="datetime-local" onChange={e => handleDeadlineChange(e)} required/>
 					</div>
 				</div>
 				<div className='eventGuests'>
@@ -158,7 +128,7 @@ function EventCreation(props) {
 					<div className='guestButtons'>
 							<button className='guestAdd' onClick={() => addFormFields()}>Add</button>
 					</div>
-					<button>Create Event</button>
+					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to="/EventView/" />}
 				</div>
 			</div>
 		</div>
