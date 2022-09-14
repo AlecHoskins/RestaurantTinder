@@ -159,7 +159,7 @@ nav {
       background: #69D2e7;
     }
 
-    label .hamburger::before {
+    label .hamburger:before {
       top: -10px;
     }
 
@@ -195,6 +195,11 @@ nav {
 
     label input:checked + .menu + ul {
       opacity: 1;
+    }
+
+    .hamburgerInput:checked + .hamburgerItems {
+      display: inline;
+      background-color: blue;
     }
 
     label ul {

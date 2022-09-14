@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class EventService {
 
+    @Autowired
     private RestaurantService restaurantService;
-    private Restaurant restaurant;
+    @Autowired
+    private YelpBusinessService yelpBusinessService;
+//    @Autowired
+//    private Restaurant restaurant;
 
     @Autowired
     private EventDao eventDao;
@@ -26,7 +30,15 @@ public class EventService {
     }
 
     public boolean addEvent(Event newEvent) {
-        eventDao.addEvent(newEvent);
-        return false;
+        for (Restaurant restaurant: newEvent.getEventRestaurants()) {
+            boolean isAdded = restaurantService.addRestaurant(yelpBusinessService.getBusinessById(restaurant.getId()));
+            if(!isAdded) {
+                return false;
+            }
+        }
+
+        long eventId = eventDao.addEvent(newEvent);
+
+        return eventId > 0;
     }
 }

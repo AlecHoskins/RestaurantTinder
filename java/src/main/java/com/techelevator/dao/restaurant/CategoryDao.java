@@ -10,6 +10,7 @@ public interface CategoryDao {
     // Read
     Category getCategoryByTitle(String title);
     Category getCategoryById(long id);
+    long getCategoryId(String alias, String title);
 
     // Update
     Category update(long id, Category updatedCategory);

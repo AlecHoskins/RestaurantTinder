@@ -10,6 +10,7 @@ import com.techelevator.model.restaurant.Hours;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,14 +39,26 @@ public class RestaurantService {
         return null;
     }
 
+    @Transactional
     public boolean addRestaurant(Restaurant restaurant) {
-
-        restaurantDao.save(restaurant);
-
-        for (Category category: restaurant.getCategories()) {
-            categoryDao.addCategory(category);
+        if(restaurantDao.findRestaurantById(restaurant.getId()) != null) {
+            return true;
         }
-        restaurantHoursDao.addAllHours(restaurant.getHours(), restaurant.getId());
+
+        if(restaurantDao.save(restaurant)) {
+            for (Category category : restaurant.getCategories()) {
+                long categoryId = categoryDao.getCategoryId(category.getAlias(), category.getTitle());
+
+                if (categoryId == -1) {
+                    categoryId = categoryDao.addCategory(category);
+                }
+
+                restaurantCategoryDao.addRestaurantCategory(restaurant.getId(), categoryId);
+            }
+            restaurantHoursDao.addAllHours(restaurant.getHours(), restaurant.getId());
+            return true;
+        }
+
         return false;
     }
 }

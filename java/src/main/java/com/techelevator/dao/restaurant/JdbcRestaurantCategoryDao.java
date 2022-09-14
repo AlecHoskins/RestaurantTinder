@@ -19,7 +19,7 @@ public class JdbcRestaurantCategoryDao extends JdbcForAll implements RestaurantC
     @Override
     public boolean addRestaurantCategory(String restaurantId, long categoryId) {
         String sql =
-                "INSERT INTO restaurant (restaurant_id, category_id) " +
+                "INSERT INTO restaurant_category (restaurant_id, category_id) " +
                 "VALUES (?, ?) " +
                 "RETURNING category_id;";
         Long dataCategoryId = jdbcTemplate.queryForObject(sql, Long.class, restaurantId, categoryId);

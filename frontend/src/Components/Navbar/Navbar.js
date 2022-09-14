@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 function Navbar(props) {
 
   const [checked, setCheckec] = useState(false);
+
   const handleLogout = () => {
     props.addToken("")
     props.deleteUser()
@@ -56,16 +57,22 @@ function Navbar(props) {
       </div>
       <div className="mobileView">
         <Link to="/home"><img src={logo} alt="logo"/></Link>
-        <label>
-          <input type="checkbox" checked={checked}/>
+        <label className="hamburgerLabel">
+          <input className="hamburgerInput" type="checkbox" checked={checked}/>
           <span className="menu" onClick={handleCheck}> <span className="hamburger"></span> </span>
-          <ul>
+          {checked ? <ul className="hamburgerItems">
             <li onClick={handleCheck}><Link to="/home">Home</Link></li>
             <li onClick={handleCheck}><Link to="/myevents">My Events</Link></li>
             <li onClick={handleCheck}>{!token ? (<Link to="/login">New Event</Link>) : (<Link to="/nearme">New Event</Link>)}</li>
             <li onClick={handleCheck}>{!token ? (<Link to="/login">Login</Link>) : (<span onClick={handleLogout}>Logout</span>) }</li>
             {!token ? (<li onClick={handleCheck}><Link to="/register">Sign Up</Link></li>) : <></> }
-          </ul>
+          </ul> : <ul className="hamburgerItems">
+            <li>Home</li>
+            <li>My Events</li>
+            <li >New Event</li>
+            <li>{!token ? "Login" : "Logout" }</li>
+            {!token ? <li>Sign Up</li> : <></> }
+          </ul>}
         </label>
       </div>
     </nav>

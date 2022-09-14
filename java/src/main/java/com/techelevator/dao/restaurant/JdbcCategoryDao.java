@@ -2,6 +2,7 @@ package com.techelevator.dao.restaurant;
 
 import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.restaurant.Category;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -43,6 +44,19 @@ public class JdbcCategoryDao extends JdbcForAll implements CategoryDao {
         }
 
         return null;
+    }
+
+    @Override
+    public long getCategoryId(String alias, String title) {
+        String sql = "SELECT category_id FROM category WHERE alias = ? AND title = ?;";
+        Long id = null;
+        try {
+            id = jdbcTemplate.queryForObject(sql, Long.class, alias, title);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return id != null ? id : -1;
     }
 
     @Override // TODO - is it worth it?
