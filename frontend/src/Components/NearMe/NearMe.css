@@ -241,3 +241,41 @@ select {
 #hoursInfo {
     margin-top: 3px;
 }
+
+@media only screen and (max-width: 800px){ 
+    .eventSearch {
+        display: inline;
+    }
+
+    .search-form input {
+        display: inline;
+    }
+
+    .label-cuisine, #search-button {
+        margin-top: 10px;
+    }
+
+    .restaurant-cardContainer {
+        overflow-x: scroll;
+        height: 85%;
+    }
+
+    #eventCO {
+        display: none;
+    }
+
+    .card {
+        grid-template-columns: 210px 1fr;
+    }
+
+    .imageSection img {
+        width: 200px !important;
+        height: 200px !important;
+    }
+}
+
+@media only screen and (max-width: 559px){ 
+    .label-location {
+        margin-top: 10px;
+    }
+}

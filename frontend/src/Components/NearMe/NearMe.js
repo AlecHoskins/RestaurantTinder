@@ -40,7 +40,7 @@ function NearMe(props) {
 		//const date = (!searchData.date) ? props.date : searchData.date;
 		
 		if (!searchData || !searchData.location) {
-			alert("Please enter a location and date");
+			alert("Please enter a location");
 			return;
 		}
 		let zipcode = searchData.location;
@@ -243,7 +243,8 @@ function NearMe(props) {
 							</li>
 						)}
 					</ul>
-					<Link to="/Event"><button id="event-button">Create Event</button></Link>
+					{props.selectedRestaurants && props.selectedRestaurants.length > 1 ? 
+						<Link to="/Event"><button id="event-button">Create Event</button></Link> : <></>}
 				</div>
 			</div>
 		</div>
