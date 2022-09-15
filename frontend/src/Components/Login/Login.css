@@ -5,7 +5,9 @@
     width: 500px;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: #004e63;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
     border-radius: 10px;
@@ -14,7 +16,7 @@
 .please {
     margin: 0 0 30px;
     padding: 0;
-    color: white;
+    color: #004e63;
     text-align: center;
 }
 
@@ -26,10 +28,10 @@
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: white;
+    color: #004e63;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid #004e63;
     outline: none;
     background: transparent;
     border-radius: 0px;
@@ -41,7 +43,7 @@
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: white;
+    color: #004e63;
     pointer-events: none;
     transition: .5s !important;
     overflow: visible;
@@ -52,14 +54,14 @@
 .loginPage .user-box input:valid ~ label {
   top: -20px;
   left: 0;
-  color: white;
+  color: #004e63;
   font-size: 12px;
 }
 
 .form-control:focus {
-    color: white;
+    color: #004e63;
     background-color: transparent;
-    border-color: white;
+    border-color: #004e63;
     outline: none;
     box-shadow: none;
 }
@@ -74,4 +76,12 @@
     position: fixed;
     bottom: 0;
     left: 0;
+}
+
+.loginPage a {
+    color: #004e63;
+}
+
+.loginPage a:hover {
+    color: #69D2e7;
 }
