@@ -32,8 +32,8 @@ public class EventController {
         return service.getEventsByHost(id);
     }
 
-    @PostMapping
-    public boolean addEvent(@RequestBody Event newEvent) {
+    @PostMapping // TODO : return Event object
+    public Event addEvent(@RequestBody Event newEvent) {
         return service.addEvent(newEvent);
     }
 

@@ -35,6 +35,8 @@ public class YelpBusinessService {
     /********************************** GETS THE DETAILS OF A BUSINESSES BY ID *******************************/
     //business id will appear as one of first properties in the business json in business search
     public Restaurant getBusinessById(String businessId) {
+
+
         String urlQuery = getIdUrl(businessId);
 
         Restaurant restaurant = null;
@@ -49,6 +51,8 @@ public class YelpBusinessService {
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println(e.getMessage());
         }
+
+
 
         return restaurant;
     }

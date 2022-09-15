@@ -1,11 +1,15 @@
 package com.techelevator.dao.restaurant;
 
 import com.techelevator.dao.JdbcForAll;
+import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Location;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
@@ -24,6 +28,24 @@ public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
         }
 
         return null;
+    }
+
+    @Override
+    public List<Restaurant> getEventRestaurants(long eventId) {
+        String sql =
+                "SELECT restaurant_id, restaurant_name, image_url, phone, display_phone, address, city, state, zip FROM restaurant " +
+                "JOIN event_restaurant USING(restaurant_id) " +
+                "WHERE event_id = ?;";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, eventId);
+
+        List<Restaurant> restaurants = new ArrayList<>();
+
+        while(result.next()) {
+            restaurants.add(mapRowToRestaurant(result));
+        }
+
+        return restaurants;
     }
 
     @Override

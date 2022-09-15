@@ -11,6 +11,7 @@ public interface RestaurantDao {
 
     // Read
     Restaurant findRestaurantById(String id);
+    List<Restaurant> getEventRestaurants(long eventId);
 
     // Update
     Restaurant update(Restaurant updatedRestaurant);

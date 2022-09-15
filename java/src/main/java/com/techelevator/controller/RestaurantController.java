@@ -18,15 +18,15 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping(path = "/{id}")
-    public Restaurant getRestaurant(@PathVariable String id) {
-        // TODO - refactor to call on a logic class which gets a completed restaurant model
-        return restaurantDao.findRestaurantById(id);
-    }
+//    @GetMapping(path = "/{id}")
+//    public Restaurant getRestaurant(@PathVariable String id) {
+//        // TODO - refactor to call on a logic class which gets a completed restaurant model
+//        return restaurantDao.findRestaurantById(id);
+//    }
 
-    @PostMapping
-    public boolean test(@RequestBody Restaurant newRestaurant) {
-        return restaurantService.addRestaurant(newRestaurant);
-    }
+//    @PostMapping
+//    public boolean test(@RequestBody Restaurant newRestaurant) {
+//        return restaurantService.addRestaurant(newRestaurant);
+//    }
 
 }

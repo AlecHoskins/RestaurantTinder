@@ -13,8 +13,8 @@ public class Event {
     @NotEmpty
     private long hostId;
     private String eventTitle;
-    private String eventDayTime; // TODO - use LocalDate?
-    private String decisionDeadline; // TODO - use LocalDate?
+    private String eventDayTime;
+    private String decisionDeadline;
     private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
 
