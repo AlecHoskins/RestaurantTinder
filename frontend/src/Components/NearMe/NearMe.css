@@ -95,7 +95,26 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: scroll;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.restaurant-cardContainer::-webkit-scrollbar {
+    width: 20px;
+}
+
+.restaurant-cardContainer::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+.restaurant-cardContainer::-webkit-scrollbar-thumb {
+    background: #004e63; 
+    border-radius: 10px;
+}
+
+.restaurant-cardContainer::-webkit-scrollbar-thumb:hover {
+    background: #003d4e; 
 }
 
 .card {
@@ -185,9 +204,14 @@ select {
 }
 
 .remove-restaurant {
-	background: white;
+	background: none;
+    border: none;
 	width: initial;
 	height: initial;
+}
+
+#eventCO ul {
+    padding-left: 1%;
 }
 
 .selected-restaurants li:hover {
@@ -207,8 +231,27 @@ select {
 
 .selected-restaurants {
     margin-top: 10px;
-    overflow: auto;
     height: 86%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.selected-restaurants::-webkit-scrollbar {
+    width: 20px;
+}
+
+.selected-restaurants::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+.selected-restaurants::-webkit-scrollbar-thumb {
+    background: #004e63; 
+    border-radius: 10px;
+}
+
+.selected-restaurants::-webkit-scrollbar-thumb:hover {
+    background: #003d4e; 
 }
 
 /* Is Open Badge */
@@ -256,8 +299,9 @@ select {
     }
 
     .restaurant-cardContainer {
-        overflow-x: scroll;
-        height: 85%;
+        overflow: scroll;
+        overflow-x: hidden;
+        height: 78%;
     }
 
     #eventCO {
