@@ -117,7 +117,7 @@ function EventCreation(props) {
 					<h3>Guest List:</h3>
 					<div className='guestForm'>
 						{formValues.map((element, index) => (
-							<div className='form-inline'>
+							<div className='form-inline' key={index}>
 								<label>Name:</label>
 								<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
 								<button className='addRemoveButtons' onClick={() => addFormFields()}>➕</button>
