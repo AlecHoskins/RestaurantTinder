@@ -29,7 +29,6 @@ export const Event = (
 		if (updateGuest) { updateGuest.votes = action.payload.guest.votes }
 		return {...state}
 	case ActionTypes.SET_EVENT:
-		console.log(action.payload);
 		return {
 			...state, 
 			id: action.payload.id,

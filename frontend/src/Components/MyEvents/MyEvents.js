@@ -22,8 +22,10 @@ function MyEvents(props) {
 	const blob = '/yellowbloblogin.png';
 
 	const loadEvents = async() => {
-		const myEvents = await axios.get(props.urls.getHostEvents + props.userId);
-		setEvents(myEvents.data);
+		const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
+			alert('There was an error while retrieving the events');
+		});
+		if (myEvents) { setEvents(myEvents.data); }
 	}
 
 	useEffect(() => {

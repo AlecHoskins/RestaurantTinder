@@ -32,7 +32,9 @@ function EventView(props) {
 	const [votes, setVotes] = useState([]);
 
 	const loadEvent = async() => {
-		const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id);
+		const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
+			alert('An error has occurred while attempting to retrieve the event details');
+		})
 		props.dispatch(setEvent(myEvents.data))
 	}
 
