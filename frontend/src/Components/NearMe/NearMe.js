@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const mapStateToProps = state => {
 	return {
 		date: state.event.eventDayTime,
-		selectedRestaurants: state.event.selectedRestaurants,
+		eventRestaurants: state.event.eventRestaurants,
 		dispatch: state.dispatch
 	}
 }
@@ -47,13 +47,15 @@ function NearMe(props) {
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
 		// let open_at = timeToUnix(new Date(date)) 
-		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode);
+		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode).catch((error) => {
+			alert('An error has occured while searching for restaurants');
+		})
 
 		//check to see if these restaurants have already been added
-		if (props.selectedRestaurants.length > 0 && restaurants.data && restaurants.data.length > 0) {
+		if (props.eventRestaurants.length > 0 && restaurants.data && restaurants.data.length > 0) {
 			console.log(JSON.stringify(restaurants.data))
 			restaurants.data.map((restaurant) => {
-				restaurant.added = (props.selectedRestaurants.find((selection) => (restaurant.id === selection.id)));
+				restaurant.added = (props.eventRestaurants.find((selection) => (restaurant.id === selection.id)));
 				return restaurant;
 			})
 		}
@@ -149,7 +151,7 @@ function NearMe(props) {
 	}
 
 	const handleRestaurantAddRemove = (card) => {
-		let restaurants = [...props.selectedRestaurants];
+		let restaurants = [...props.eventRestaurants];
 		if (!card.added) {
 			restaurants.push(card);
 		} else {
@@ -237,14 +239,14 @@ function NearMe(props) {
 				</div>
 				<div id="eventCO">
 					<ul className='selected-restaurants'>
-						{props.selectedRestaurants.map((card) => 
+						{props.eventRestaurants.map((card) => 
 							<li style={{color: "black"}} key={card.id}>
 								{card.name}
 								<button className="remove-restaurant" onClick={() => handleRestaurantAddRemove(card)}>❌</button>
 							</li>
 						)}
 					</ul>
-					{props.selectedRestaurants && props.selectedRestaurants.length > 1 ? 
+					{props.eventRestaurants && props.eventRestaurants.length > 1 ? 
 						<Link to="/Event"><button id="event-button">Create Event</button></Link> : <></>}
 				</div>
 			</div>
