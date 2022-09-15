@@ -2,15 +2,17 @@ import React from "react";
 import { useParams } from "react-router";
 import './EventView.css';
 import {connect} from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {setEventGuestVotes} from '../../Redux/actionCreators'
 
 const mapStateToProps = state => {
     return {
 		event: state.event,
         token: state.token,
-		urls: state.urls
+		urls: state.urls,
+		dispatch: state.dispatch,
     }
 }
 
@@ -32,7 +34,9 @@ function EventView(props) {
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
+		console.log(props);
 		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
+		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
 	}, []);
 
@@ -72,6 +76,12 @@ function EventView(props) {
 		} else {
 			return (thumbsup) ? tuBlack : tdBlack;
 		}
+	}
+
+	const voteSubmitHandler = async(event) => {
+		//do vote submission here - no URL for this yet
+		console.log("voted!");
+		props.dispatch(setEventGuestVotes(guest, votes))
 	}
 
 	//pull name as well in the link?
@@ -120,9 +130,9 @@ function EventView(props) {
 					: <></>
 					}
                     {/* */}
-                    <h1>Event Title</h1>
-                    <h2>Event Date and Time</h2>
-                    <h2>Event Due Date</h2>
+                    <h1>{props.event.eventTitle}</h1>
+                    <h2>Event Date and Time: {new Date(props.event.eventDayTime).toLocaleDateString('en-US')}</h2>
+                    <h2>Event Due Date: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US')}</h2>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(!guest && props.token) ? 
@@ -130,12 +140,13 @@ function EventView(props) {
 						: <></>
 					}
                     {/* */}
-                    <button className="eventSubmit">Submit</button>
+                    <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button>
                 </div>
                 <div className="eventRestaurants">
                     {eventRestaurantCards()}
                 </div>
             </div>
+			{props.event.eventTitle === undefined ? <Redirect to='/home/' /> : <></>}
         </div>
     )
 }
