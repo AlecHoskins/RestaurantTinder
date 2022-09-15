@@ -4,10 +4,12 @@ import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.event.Guest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcGuestDao extends JdbcForAll implements GuestDao {
 
     public JdbcGuestDao(JdbcTemplate jdbcTemplate) {
@@ -15,15 +17,16 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
     }
 
     @Override
-    public boolean addGuest(Guest newGuest) {
+    public boolean addGuest(Guest newGuest, long eventId) {
 
         String addGuestSql =
-                "INSERT INTO guest (event_id, url) " +
-                "VALUES(?, ?) " +
+                "INSERT INTO guest (event_id, url, nickname) " +
+                "VALUES(?, ?, ?) " +
                 "RETURNING guest_id";
 
+
         jdbcTemplate.queryForObject(addGuestSql, Long.class,
-                newGuest.getEventId(), newGuest.getInviteUrl());
+                eventId, newGuest.getInviteUrl(), newGuest.getNickname());
         return false;
     }
 
@@ -35,7 +38,7 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
 
         if(result.next()) {
-            return mapRowTOGuest(result);
+            return mapRowToGuest(result);
         }
 
         return null;
@@ -52,7 +55,7 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
         List<Guest> guests = new ArrayList<>();
 
         while(result.next()) {
-            guests.add(mapRowTOGuest(result));
+            guests.add(mapRowToGuest(result));
         }
         return guests;
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface GuestDao {
 
     // Create
-    boolean addGuest(Guest newGuest);
+    boolean addGuest(Guest newGuest, long eventId);
 
     // Read
     Guest getGuestById(long id);

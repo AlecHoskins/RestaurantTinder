@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
+import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Day;
 import com.techelevator.model.restaurant.Location;
@@ -71,7 +72,7 @@ public abstract class JdbcForAll {
         return event;
     }
 
-    protected Guest mapRowTOGuest(SqlRowSet result) {
+    protected Guest mapRowToGuest(SqlRowSet result) {
         Guest guest = new Guest();
 
         guest.setId((result.getLong(("guest_id"))));
@@ -82,4 +83,11 @@ public abstract class JdbcForAll {
         return guest;
     }
 
+    protected Vote mapRowToVote(SqlRowSet result) {
+        Vote vote = new Vote();
+
+        vote.setUpVote(result.getBoolean("up_vote"));
+        vote.setRestaurantId(result.getString("restaurant_id"));
+        return vote;
+    }
 }

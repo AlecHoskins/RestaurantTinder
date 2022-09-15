@@ -2,9 +2,11 @@ package com.techelevator.service;
 
 import com.techelevator.dao.event.EventDao;
 import com.techelevator.model.event.Event;
+import com.techelevator.model.event.Guest;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class EventService {
     private RestaurantService restaurantService;
     @Autowired
     private YelpBusinessService yelpBusinessService;
+    @Autowired
+    private GuestService guestService;
 //    @Autowired
 //    private Restaurant restaurant;
 
@@ -29,6 +33,7 @@ public class EventService {
         return eventDao.getEventsByHostId(id);
     }
 
+    @Transactional
     public boolean addEvent(Event newEvent) {
         for (Restaurant restaurant: newEvent.getEventRestaurants()) {
             boolean isAdded = restaurantService.addRestaurant(yelpBusinessService.getBusinessById(restaurant.getId()));
@@ -38,6 +43,10 @@ public class EventService {
         }
 
         long eventId = eventDao.addEvent(newEvent);
+
+        for (Guest guest: newEvent.getGuestList()) {
+            guestService.addGuest(guest, eventId);
+        }
 
         return eventId > 0;
     }
