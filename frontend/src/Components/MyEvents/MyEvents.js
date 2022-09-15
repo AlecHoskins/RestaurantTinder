@@ -48,8 +48,8 @@ function MyEvents(props) {
 	const getMapOfEventCards = (eventCards) => {
 		return (
 			eventCards.map((e) => {
-				return (<div key={e.eventTitle} className='upcomingCard'>
-					<Link to='/eventview'><button>Event Details {'>'}</button></Link>
+				return (<div key={e.id} className='upcomingCard'>
+					<Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
 					<h5>{e.eventTitle}</h5>
 					<div>{e.eventDayTime}</div>
 					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}

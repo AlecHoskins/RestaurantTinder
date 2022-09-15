@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {setEventGuestVotes} from '../../Redux/actionCreators'
+import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
 
 const mapStateToProps = state => {
     return {
@@ -31,10 +31,15 @@ function EventView(props) {
 	const [guest, setGuest] = useState();
 	const [votes, setVotes] = useState([]);
 
+	const loadEvent = async() => {
+		const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id);
+		props.dispatch(setEvent(myEvents.data))
+	}
+
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
-		console.log(props);
+		loadEvent();
 		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
 		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
@@ -146,7 +151,7 @@ function EventView(props) {
                     {eventRestaurantCards()}
                 </div>
             </div>
-			{props.event.eventTitle === undefined ? <Redirect to='/home/' /> : <></>}
+			{props.event.id === undefined ? <Redirect to='/home/' /> : <></>}
         </div>
     )
 }

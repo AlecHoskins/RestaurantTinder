@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const mapStateToProps = state => {
 	return {
-		date: state.event.date,
+		date: state.event.eventDayTime,
 		selectedRestaurants: state.event.selectedRestaurants,
 		dispatch: state.dispatch
 	}
@@ -27,6 +27,7 @@ function NearMe(props) {
 	// const [restaurantDetailId, setRestaurantDetailId] = useState();
 
 	useEffect(() => {
+		
         document.title = "Restaurant Tinder - New Event"
       }, [])  
 

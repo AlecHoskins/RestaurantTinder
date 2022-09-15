@@ -2,6 +2,7 @@ import * as ActionTypes from "./actionTypes";
 
 export const Event = (
   state = {
+	id: undefined,
 	eventTitle: undefined,
     eventDayTime: undefined,
     decisionDeadline: undefined,
@@ -27,6 +28,17 @@ export const Event = (
 		let updateGuest = state.guestList.find((guest) => guest.id === action.payload.guest.id);
 		if (updateGuest) { updateGuest.votes = action.payload.guest.votes }
 		return {...state}
+	case ActionTypes.SET_EVENT:
+		console.log(action.payload);
+		return {
+			...state, 
+			id: action.payload.id,
+			eventTitle: action.payload.eventTitle,
+			eventDayTime: action.payload.eventDayTime,
+			decisionDeadline: action.payload.decisionDeadline,
+			selectedRestaurants: (action.payload.selectedRestaurants) ? action.payload.selectedRestaurants : [],
+			guestList: (action.payload.guestList) ? action.payload.guestList : []
+		}
     default:
       return state;
   }

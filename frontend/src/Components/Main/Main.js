@@ -70,7 +70,7 @@ class Main extends Component {
 						<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
 						<Route path='/event' component={this.props.token.token !== undefined ? () => <EventCreation/> : () => <Login/>}/>
 						<Route path='/myevents' component={this.props.token.token !== undefined ? () => <MyEvents/> : () => <Login/>}/>
-						<Route path='/eventview/:guestcode?' component={() => <EventView />}/>
+						<Route path='/eventview/:id/:guestcode?' component={() => <EventView />}/>
 						<Redirect to='/home'/>
 					</Switch>
 				: 

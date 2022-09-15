@@ -60,15 +60,15 @@ function EventCreation(props) {
 			guestList: props.event.guestList
 		}
 
-		//console.log(JSON.stringify(newEvent));
+		console.log(JSON.stringify(newEvent));
 
 		//props.urls.createEvent - this isn't being used yet
-		//const response = await axios.post(baseUrl + '/event/', newEvent);
+		const response = await axios.post(baseUrl + '/event/', newEvent);
 
-		//if (response && response.data === true) { setCreated(true); }
+		if (response && response.data === true) { setCreated(true); }
 
 		//assume it worked
-		setCreated(true);
+		//setCreated(true);
 
 	}
 
