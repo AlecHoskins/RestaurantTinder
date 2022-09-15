@@ -8,7 +8,8 @@ html, body {
 
 nav {
     display: grid;
-    background: #004e63;
+    background: rgb(0,62,79);
+    background: linear-gradient(138deg, rgba(0,62,79,1) 0%, rgba(0,78,99,1) 35%, rgba(0,105,134,1) 100%);
     font-family: 'Roboto', sans-serif;
     height: 100px;
     position: sticky;
