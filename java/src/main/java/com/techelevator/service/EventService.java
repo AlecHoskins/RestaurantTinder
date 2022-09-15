@@ -47,7 +47,12 @@ public class EventService {
         for (Guest guest: newEvent.getGuestList()) {
             guestService.addGuest(guest, eventId);
         }
-
         return eventId > 0;
+    }
+
+    @Transactional
+    public Event getFullEventByHostId(long id) {
+
+        return null;
     }
 }

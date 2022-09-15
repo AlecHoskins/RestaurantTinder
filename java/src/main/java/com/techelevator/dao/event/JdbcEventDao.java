@@ -98,4 +98,5 @@ public class JdbcEventDao extends JdbcForAll implements EventDao {
         return eventId != null ? eventId : -1;
     }
 
+
 }

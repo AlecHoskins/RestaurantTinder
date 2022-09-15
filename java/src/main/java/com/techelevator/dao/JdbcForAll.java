@@ -66,8 +66,8 @@ public abstract class JdbcForAll {
         event.setId(result.getLong("event_id"));
         event.setHostId(result.getLong("host_id"));
         event.setEventTitle(result.getString("event_title"));
-        event.setEventDayTime(result.getTimestamp("event_time"));
-        event.setDecisionDeadline(result.getTimestamp("decision_time"));
+        event.setEventDayTime(result.getString("event_time"));
+        event.setDecisionDeadline(result.getString("decision_time"));
 
         return event;
     }
