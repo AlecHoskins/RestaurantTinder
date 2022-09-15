@@ -53,8 +53,8 @@ public abstract class JdbcForAll {
 
         day.setId(result.getLong("hours_id"));
         day.setRestaurantId(result.getString("restaurant_id"));
-        day.setStart(result.getTimestamp("open_time"));
-        day.setEnd(result.getTimestamp("close_time"));
+        day.setStart(result.getString("open_time"));
+        day.setEnd(result.getString("close_time"));
         day.setDay(result.getInt("day_of_week"));
 
         return day;

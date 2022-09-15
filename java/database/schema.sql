@@ -64,10 +64,10 @@ CREATE TABLE users (
 
 CREATE TABLE event (
    event_id int DEFAULT nextval('seq_event_id'::regclass) NOT NULL,
-   event_time timestamp NOT NULL,
+   event_time varchar(200) NOT NULL,
    event_title varchar(20) NOT NULL,
    host_id int NOT NULL,
-   decision_time timestamp NOT NULL,
+   decision_time varchar(200) NOT NULL,
    CONSTRAINT PK_event PRIMARY KEY (event_id),
    CONSTRAINT FK_host FOREIGN KEY (host_id) REFERENCES users(user_id)
 );
@@ -104,8 +104,8 @@ CREATE TABLE restaurant_hours (
    hours_id int DEFAULT nextval('seq_hours_id'::regclass) NOT NULL,
    restaurant_id varchar(200) NOT NULL,
    day_of_week int NOT NULL,
-   open_time time NOT NULL,
-   close_time time NOT NULL,
+   open_time varchar(200) NOT NULL,
+   close_time varchar(200) NOT NULL,
    CONSTRAINT PK_hours PRIMARY KEY (hours_id),
    CONSTRAINT FK_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id)
 );
