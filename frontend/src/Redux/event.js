@@ -6,7 +6,7 @@ export const Event = (
 	eventTitle: undefined,
     eventDayTime: undefined,
     decisionDeadline: undefined,
-    selectedRestaurants: [],
+    eventRestaurants: [],
 	guestList: []
   },
   action
@@ -15,11 +15,11 @@ export const Event = (
     case ActionTypes.SET_EVENT_DATE:
       return { ...state, eventDayTime: action.payload };
     case ActionTypes.SET_SELECTED_RESTAURANTS:
-      return { ...state, selectedRestaurants: action.payload };
+      return { ...state, eventRestaurants: action.payload };
     case ActionTypes.SET_EVENT_DEADLINE_DATE:
       return { ...state, decisionDeadline: action.payload };
 	case ActionTypes.DELETE_EVENT:
-		return {...state, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, selectedRestaurants: [], guestList: []};
+		return {...state, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, eventRestaurants: [], guestList: []};
 	case ActionTypes.SET_EVENT_TITLE: 
 		return {...state, eventTitle: action.payload}
 	case ActionTypes.SET_EVENT_GUESTS:
@@ -35,7 +35,7 @@ export const Event = (
 			eventTitle: action.payload.eventTitle,
 			eventDayTime: action.payload.eventDayTime,
 			decisionDeadline: action.payload.decisionDeadline,
-			selectedRestaurants: (action.payload.selectedRestaurants) ? action.payload.selectedRestaurants : [],
+			eventRestaurants: (action.payload.eventRestaurants) ? action.payload.eventRestaurants : [],
 			guestList: (action.payload.guestList) ? action.payload.guestList : []
 		}
     default:

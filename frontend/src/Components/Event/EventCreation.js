@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom'
-import {setEventDeadlineDate, setEventTitle, setEventDate, setEventGuests} from '../../Redux/actionCreators'
+import {setEventDeadlineDate, setEventTitle, setEventDate, setEventGuests, setEvent} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
 import './EventCreation.css'
 
@@ -48,7 +48,7 @@ function EventCreation(props) {
 		let guestListDTO = createGuestListDTO();
 		props.dispatch(setEventGuests(guestListDTO));
 
-		let selectedRestaurants = [...props.event.selectedRestaurants];
+		let eventRestaurants = [...props.event.eventRestaurants];
 		//console.log(props.event);
 		let newEvent = {
 			id: 0, //we don't have an id for a new event
@@ -56,7 +56,7 @@ function EventCreation(props) {
 			eventTitle: props.event.eventTitle,
 			eventDayTime: props.event.eventDayTime,
 			decisionDeadline: props.event.decisionDeadline,
-			eventRestaurants: selectedRestaurants,
+			eventRestaurants: eventRestaurants,
 			guestList: props.event.guestList
 		}
 
@@ -65,7 +65,14 @@ function EventCreation(props) {
 		//props.urls.createEvent - this isn't being used yet
 		const response = await axios.post(baseUrl + '/event/', newEvent);
 
-		if (response && response.data === true) { setCreated(true); }
+		if (response && response.data === true) { 
+			setCreated(true); 
+			//set the id to some number until we get the details back
+			//TODO: Update to use the updated event object returned back from the server
+			newEvent.id = 1;
+			console.log(newEvent);
+			props.dispatch(setEvent(newEvent));
+		}
 
 		//assume it worked
 		//setCreated(true);
@@ -111,7 +118,7 @@ function EventCreation(props) {
 						<h5>Guests Decision Deadline</h5>
 						<input type="datetime-local" onChange={e => handleDeadlineChange(e)} required/>
 					</div>
-					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to="/EventView/" />}
+					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to={`/EventView/${props.event.id}`} />}
 				</div>
 				<div className='eventGuests'>
 					<h3>Guest List:</h3>

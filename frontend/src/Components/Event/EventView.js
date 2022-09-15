@@ -32,16 +32,18 @@ function EventView(props) {
 	const [votes, setVotes] = useState([]);
 
 	const loadEvent = async() => {
-		const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
-			alert('An error has occurred while attempting to retrieve the event details');
-		})
-		props.dispatch(setEvent(myEvents.data))
+		if (props.event.id === undefined) {
+			const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
+				alert('An error has occurred while attempting to retrieve the event details');
+			})
+			if (myEvents) { props.dispatch(setEvent(myEvents.data)) }
+		}
 	}
 
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
-		loadEvent();
+		//loadEvent();
 		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
 		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
@@ -96,7 +98,7 @@ function EventView(props) {
     //Maps through restaurants to display on page
     const eventRestaurantCards = function() {
         return (
-            props.event.selectedRestaurants.map(card => (
+            props.event.eventRestaurants.map(card => (
                 <div className="restaurantCard" key={card.id}>
                     <div className="titleSection">
                         <h5 className="card-name">{card.name}</h5>
