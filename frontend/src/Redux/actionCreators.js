@@ -47,3 +47,8 @@ export const setEventGuests = (guests = []) => ({
 	type:ActionTypes.SET_EVENT_GUESTS,
 	payload: guests
 })
+
+export const setEventGuestVotes = (guest, votes = []) => ({
+	type:ActionTypes.SET_EVENT_GUEST_VOTES,
+	payload: {guest: guest, votes: votes}
+})
