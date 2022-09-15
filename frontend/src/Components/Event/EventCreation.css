@@ -1,0 +1,127 @@
+.createBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.eventCreation {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 90%;
+    height: 77%;
+    padding: 20px;
+    transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.eventDetails h5 {
+    margin-top: 10px;
+}
+
+.eventDetails button {
+    position: fixed;
+    bottom: 10px;
+    right: 70%;
+}
+
+.eventGuests {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.eventGuests::-webkit-scrollbar {
+    width: 20px;
+}
+
+.eventGuests::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+.eventGuests::-webkit-scrollbar-thumb {
+    background: #004e63; 
+    border-radius: 10px;
+}
+
+.eventGuests::-webkit-scrollbar-thumb:hover {
+    background: #003d4e; 
+}
+
+.form-inline label{
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.addRemoveButtons {
+	background: none;
+    border: none;
+	width: initial;
+	height: initial;
+}
+
+.addRemoveButtons:hover, .addRemoveButtons:focus {
+    transform: none;
+}
+
+#remove {
+    padding-left: 0px;
+    position: relative;
+    top: 1px;
+}
+
+@media only screen and (max-width: 800px){ 
+
+    .eventCreation {
+        display: inline;
+    }
+
+    .eventGuests h3 {
+        margin-top: 10px;
+    }
+
+    .eventDetails button {
+        right: 1%;
+        bottom: 1%;
+    }
+
+    .eventGuests {
+        height: 52%;
+        overflow-x: visible;
+        overflow: visible;
+    }
+
+    .guestForm {
+        overflow: scroll;
+        overflow-x: hidden;
+        height: 88%;
+    }
+    
+    .guestForm::-webkit-scrollbar {
+        width: 20px;
+    }
+    
+    .guestForm::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey; 
+        border-radius: 10px;
+    }
+    
+    .guestForm::-webkit-scrollbar-thumb {
+        background: #004e63; 
+        border-radius: 10px;
+    }
+    
+    .guestForm::-webkit-scrollbar-thumb:hover {
+        background: #003d4e; 
+    }
+
+}

@@ -94,7 +94,7 @@ function EventCreation(props) {
 			{/* <p>{JSON.stringify(props.event)}</p> */}
 			{/* {created ? <h1>Created</h1> : <h1>Didn't work</h1>} */}
 			<div className='bgImg' >
-				<img src={blob} className='blob' alt='Yellow Blob'/>
+				<img src={blob} className='createBlob' alt='Yellow Blob'/>
 			</div>
 			<div className='eventCreation'>
 				<div className='eventDetails'>
@@ -111,24 +111,24 @@ function EventCreation(props) {
 						<h5>Guests Decision Deadline</h5>
 						<input type="datetime-local" onChange={e => handleDeadlineChange(e)} required/>
 					</div>
+					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to="/EventView/" />}
 				</div>
 				<div className='eventGuests'>
-					<h5>Guest List:</h5>
-					{formValues.map((element, index) => (
-						<div className='form-inline'>
-							<h5>Guest Name:</h5>
-							<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
-							{
-								index ?
-									<button className='remove' onClick={() => removeFormFields(index)}>Remove</button>
-									: null
-							}
-						</div>
-					))}
-					<div className='guestButtons'>
-							<button className='guestAdd' onClick={() => addFormFields()}>Add</button>
+					<h3>Guest List:</h3>
+					<div className='guestForm'>
+						{formValues.map((element, index) => (
+							<div className='form-inline'>
+								<label>Name:</label>
+								<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
+								<button className='addRemoveButtons' onClick={() => addFormFields()}>➕</button>
+								{
+									index ?
+										<button className='addRemoveButtons' id='remove' onClick={() => removeFormFields(index)}>❌</button>
+										: null
+								}
+							</div>
+						))}
 					</div>
-					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to="/EventView/" />}
 				</div>
 			</div>
 		</div>
