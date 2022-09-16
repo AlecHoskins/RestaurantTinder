@@ -48,7 +48,11 @@ function EventCreation(props) {
 		let guestListDTO = createGuestListDTO();
 		props.dispatch(setEventGuests(guestListDTO));
 
+		
+
 		let eventRestaurants = [...props.event.eventRestaurants];
+
+		console.log(eventRestaurants)
 		//console.log(props.event);
 		let newEvent = {
 			id: 0, //we don't have an id for a new event
@@ -64,13 +68,14 @@ function EventCreation(props) {
 
 		//props.urls.createEvent - this isn't being used yet
 		const response = await axios.post(baseUrl + '/event/', newEvent);
-
-		if (response && response.data === true) { 
+		//console.log(response.data);
+		if (response && response.data) { 
+			newEvent.id = response.data.id;
+			newEvent.guestList = response.data.guestList;
+			newEvent.eventRestaurants = eventRestaurants; //TODO CHANGE THIS!!!!
+			newEvent.hostId = response.data.hostId;
+			// console.log(newEvent);
 			setCreated(true); 
-			//set the id to some number until we get the details back
-			//TODO: Update to use the updated event object returned back from the server
-			newEvent.id = 1;
-			console.log(newEvent);
 			props.dispatch(setEvent(newEvent));
 		}
 
