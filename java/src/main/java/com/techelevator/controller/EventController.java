@@ -37,4 +37,9 @@ public class EventController {
         return service.addEvent(newEvent);
     }
 
+    @PutMapping("/{id}")
+    public void vote() { // TODO: add request params to take in restaurant & vote
+        return;
+    }
+
 }

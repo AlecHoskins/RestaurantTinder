@@ -17,7 +17,7 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
     }
 
     @Override
-    public boolean addGuest(Guest newGuest, long eventId) {
+    public long addGuest(Guest newGuest, long eventId) {
 
         String addGuestSql =
                 "INSERT INTO guest (event_id, url, nickname) " +
@@ -25,9 +25,9 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
                 "RETURNING guest_id";
 
 
-        jdbcTemplate.queryForObject(addGuestSql, Long.class,
+        Long id = jdbcTemplate.queryForObject(addGuestSql, Long.class,
                 eventId, newGuest.getInviteUrl(), newGuest.getNickname());
-        return false;
+        return id != null ? id : -1;
     }
 
     @Override
