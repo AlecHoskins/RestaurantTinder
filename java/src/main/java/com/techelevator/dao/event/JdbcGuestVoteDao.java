@@ -19,14 +19,13 @@ public class JdbcGuestVoteDao extends JdbcForAll implements GuestVoteDao {
 
     @Override
     public boolean addGuestVote(long guestId, String restaurantId) {
-
         String sql =
                 "INSERT INTO guest_vote (guest_id, restaurant_id) " +
-                "VALUES (?, ?)";
+                "VALUES (?, ?);";
 
-        jdbcTemplate.queryForObject(sql, Long.class, guestId, restaurantId);
+        Long response = jdbcTemplate.queryForObject(sql, Long.class, guestId, restaurantId);
 
-        return false;
+        return response != null && response > 0;
     }
 
     @Override

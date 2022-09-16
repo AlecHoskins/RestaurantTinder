@@ -20,10 +20,11 @@ public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestauran
     public boolean addEventRestaurant(long eventId, String restaurantId) {
         String sql =
                 "INSERT INTO event_restaurant (restaurant_id, event_id) " +
-                "Values (?, ?)";
+                "Values (?, ?);";
 
-        jdbcTemplate.update(sql, restaurantId, eventId);
-        return false;
+        int response = jdbcTemplate.update(sql, restaurantId, eventId);
+
+        return response > 0;
     }
 
     @Override
