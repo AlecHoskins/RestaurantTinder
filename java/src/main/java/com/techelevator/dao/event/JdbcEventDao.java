@@ -6,12 +6,13 @@ import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Location;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Repository
 public class JdbcEventDao extends JdbcForAll implements EventDao {
 
     public JdbcEventDao(JdbcTemplate jdbcTemplate) {

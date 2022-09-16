@@ -4,10 +4,12 @@ import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestaurantDao {
 
     public JdbcEventRestaurantDao(JdbcTemplate jdbcTemplate) {
@@ -17,10 +19,10 @@ public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestauran
     @Override
     public boolean addEventRestaurant(long eventId, String restaurantId) {
         String sql =
-                "INSERT INTO event_restaurant (restaurant_id, event_id)" +
-                "Values (?, ?";
+                "INSERT INTO event_restaurant (restaurant_id, event_id) " +
+                "Values (?, ?)";
 
-        jdbcTemplate.queryForObject(sql, Long.class, eventId, restaurantId);
+        jdbcTemplate.queryForObject(sql, Long.class, restaurantId, eventId);
         return false;
     }
 
@@ -28,7 +30,7 @@ public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestauran
     public List<Restaurant> getEventRestaurants(long eventId) {
         String sql =
                 "Select restaurant_id, image_url, restaurant_name, address, city, state, zip, phone, display_phone FROM restaurant " +
-                "JOIN event_restaurant ON restaurant.restaurant_id = event_restaurant.restaurant_id" +
+                "JOIN event_restaurant ON restaurant.restaurant_id = event_restaurant.restaurant_id " +
                 "WHERE event_id = ?;";
 
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, eventId);

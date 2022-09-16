@@ -4,10 +4,12 @@ import com.techelevator.dao.JdbcForAll;
 import com.techelevator.model.event.Vote;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcGuestVoteDao extends JdbcForAll implements GuestVoteDao {
 
 
