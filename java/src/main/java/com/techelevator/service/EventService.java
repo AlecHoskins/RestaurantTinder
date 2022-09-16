@@ -69,6 +69,7 @@ public class EventService {
         long eventId = eventDao.addEvent(newEvent);
 
         for (Restaurant restaurant: newEvent.getEventRestaurants()) {
+            // TODO : check if restaurant hours already exists
             boolean isAdded = addRestaurant(yelpBusinessService.getBusinessById(restaurant.getId()));
             if(isAdded) {
                 isAdded = eventRestaurantDao.addEventRestaurant(eventId, restaurant.getId());
