@@ -72,7 +72,7 @@ function EventCreation(props) {
 		if (response && response.data) { 
 			newEvent.id = response.data.id;
 			newEvent.guestList = response.data.guestList;
-			newEvent.eventRestaurants = eventRestaurants; //TODO CHANGE THIS!!!!
+			newEvent.eventRestaurants = response.data.eventRestaurants;
 			newEvent.hostId = response.data.hostId;
 			// console.log(newEvent);
 			setCreated(true); 
