@@ -1,6 +1,7 @@
 package com.techelevator.service;
 
 import com.techelevator.dao.event.EventDao;
+import com.techelevator.dao.event.EventRestaurantDao;
 import com.techelevator.dao.event.GuestDao;
 import com.techelevator.dao.event.GuestVoteDao;
 import com.techelevator.dao.restaurant.CategoryDao;
@@ -25,9 +26,13 @@ public class EventService {
     private YelpBusinessService yelpBusinessService;
 
     @Autowired
+    private EventDao eventDao;
+    @Autowired
     private GuestDao guestDao;
     @Autowired
-    private EventDao eventDao;
+    private GuestVoteDao guestVoteDao;
+    @Autowired
+    private EventRestaurantDao eventRestaurantDao;
     @Autowired
     private RestaurantDao restaurantDao;
     @Autowired
@@ -36,8 +41,6 @@ public class EventService {
     private RestaurantCategoryDao restaurantCategoryDao;
     @Autowired
     private RestaurantHoursDao restaurantHoursDao;
-    @Autowired
-    private GuestVoteDao guestVoteDao;
 
     public Event getEvent(long id) {
         Event event = eventDao.getEventById(id);
@@ -63,21 +66,24 @@ public class EventService {
 
     @Transactional
     public Event addEvent(Event newEvent) {
+        long eventId = eventDao.addEvent(newEvent);
+
         for (Restaurant restaurant: newEvent.getEventRestaurants()) {
             boolean isAdded = addRestaurant(yelpBusinessService.getBusinessById(restaurant.getId()));
-            // TODO : add to event_restaurant table
+            if(isAdded) {
+                isAdded = eventRestaurantDao.addEventRestaurant(eventId, restaurant.getId());
+            }
             if(!isAdded) {
-                return null;
+                return null; // TODO : check rollback
             }
         }
 
-        long eventId = eventDao.addEvent(newEvent);
-
-        for (Guest guest: newEvent.getGuestList()) {
-            addGuest(guest, eventId);
+        for (Guest guest : newEvent.getGuestList()) {
+            boolean isAdded = addGuest(guest, eventId);
+            if(!isAdded) {
+                return null; // TODO : check rollback
+            }
         }
-
-        // TODO : finish new guest logic
 
         return getEvent(eventId);
     }
@@ -107,10 +113,18 @@ public class EventService {
 
     @Transactional
     public boolean addGuest(Guest guest, long eventId) {
+        boolean isAdded = guestDao.addGuest(guest, eventId);
 
+        if(isAdded) {
+            for(Restaurant restaurant : eventDao.getEventById(eventId).getEventRestaurants()) {
+                isAdded = guestVoteDao.addGuestVote(guest.getId(), restaurant.getId());
+                if(!isAdded) {
+                    return false;
+                }
+            }
+        }
 
-
-        return guestDao.addGuest(guest, eventId);
+        return isAdded;
     }
 
 }
