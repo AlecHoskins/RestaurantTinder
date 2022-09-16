@@ -22,7 +22,7 @@ public class JdbcEventDao extends JdbcForAll implements EventDao {
     @Override
     public Event getEventById(long eventId) {
 
-        String sql = "SELECT * FROM event WHERE event_id = ?";
+        String sql = "SELECT event_id, event_time, event_title, host_id, decision_time FROM event WHERE event_id = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, eventId);
 
         if(result.next()) {

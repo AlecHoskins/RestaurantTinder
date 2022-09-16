@@ -35,7 +35,7 @@ public class JdbcCategoryDao extends JdbcForAll implements CategoryDao {
     @Override
     public Category getCategoryById(long id) {
         String sql =
-                "SELECT * FROM category " +
+                "SELECT category_id, alias, title FROM category " +
                 "WHERE category_id = ?;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
 

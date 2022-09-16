@@ -46,7 +46,7 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
     @Override
     public List<Day> getHoursByRestaurant(String restaurantId) {
         String sql =
-                "SELECT * FROM restaurant_hours " +
+                "SELECT hours_id, restaurant_id, day_of_week, open_time, close_time FROM restaurant_hours " +
                 "WHERE restaurant_id = ?;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, restaurantId);
 

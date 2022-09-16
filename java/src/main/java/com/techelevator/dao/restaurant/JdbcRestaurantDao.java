@@ -20,7 +20,7 @@ public class JdbcRestaurantDao extends JdbcForAll implements RestaurantDao{
 
     @Override
     public Restaurant findRestaurantById(String restaurantId) {
-        String sql = "SELECT * FROM restaurant WHERE restaurant_id = ?;";
+        String sql = "SELECT restaurant_id, image_url, restaurant_name, address, city, state, zip, phone, display_phone FROM restaurant WHERE restaurant_id = ?;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, restaurantId);
 
         if(result.next()) {

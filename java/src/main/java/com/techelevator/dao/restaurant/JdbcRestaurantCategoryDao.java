@@ -30,7 +30,7 @@ public class JdbcRestaurantCategoryDao extends JdbcForAll implements RestaurantC
     @Override
     public List<Category> getCategoriesByRestaurant(String restaurantId) {
         String sql =
-                "SELECT * FROM category " +
+                "SELECT category_id, alias, title FROM category " +
                 "JOIN restaurant_category USING(category_id) " +
                 "WHERE restaurant_id = ?;";
 
