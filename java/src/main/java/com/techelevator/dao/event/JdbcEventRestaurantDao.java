@@ -22,7 +22,7 @@ public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestauran
                 "INSERT INTO event_restaurant (restaurant_id, event_id) " +
                 "Values (?, ?)";
 
-        jdbcTemplate.queryForObject(sql, Long.class, restaurantId, eventId);
+        jdbcTemplate.update(sql, restaurantId, eventId);
         return false;
     }
 
