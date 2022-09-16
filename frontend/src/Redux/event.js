@@ -19,7 +19,7 @@ export const Event = (
     case ActionTypes.SET_EVENT_DEADLINE_DATE:
       return { ...state, decisionDeadline: action.payload };
 	case ActionTypes.DELETE_EVENT:
-		return {...state, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, eventRestaurants: [], guestList: []};
+		return {...state, id: undefined, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, eventRestaurants: [], guestList: []};
 	case ActionTypes.SET_EVENT_TITLE: 
 		return {...state, eventTitle: action.payload}
 	case ActionTypes.SET_EVENT_GUESTS:

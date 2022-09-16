@@ -117,7 +117,7 @@ function EventCreation(props) {
 					</div>
 					<div className='eventDateTime'>
 						<h5>Event Date and Time</h5>
-						<input type="datetime-local" onChange={e => props.dispatch(setEventDate(e.target.value))} defaultValue={props.event.date} required/>
+						<input type="datetime-local" onChange={e => props.dispatch(setEventDate(e.target.value))} defaultValue={props.event.eventDayTime} required/>
 					</div>
 					<div className='eventDecisionDeadline'>
 						<h5>Guests Decision Deadline</h5>

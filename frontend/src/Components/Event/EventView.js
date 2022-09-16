@@ -36,14 +36,16 @@ function EventView(props) {
 			const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
-			if (myEvents) { props.dispatch(setEvent(myEvents.data)) }
+			if (myEvents) { 
+				props.dispatch(setEvent(myEvents.data)) 
+			}
 		}
 	}
 
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
-		//loadEvent();
+		loadEvent();
 		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
 		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
@@ -155,7 +157,7 @@ function EventView(props) {
                     {eventRestaurantCards()}
                 </div>
             </div>
-			{props.event.id === undefined ? <Redirect to='/home/' /> : <></>}
+			{/* {loaded && props.event.id === undefined ? <Redirect to='/home/' /> : <></>} */}
         </div>
     )
 }
