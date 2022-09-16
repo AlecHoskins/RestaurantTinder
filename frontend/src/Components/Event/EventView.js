@@ -151,7 +151,7 @@ function EventView(props) {
 						: <></>
 					}
                     {/* */}
-                    {new Date(props.event.decisionDeadline) <= new Date() ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
+                    {new Date(props.event.decisionDeadline) >= new Date() ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
                 <div className="eventRestaurants">
                     {eventRestaurantCards()}
