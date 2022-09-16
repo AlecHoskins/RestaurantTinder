@@ -80,8 +80,8 @@ public class EventService {
         }
 
         for (Guest guest : newEvent.getGuestList()) {
-            boolean isAdded = addGuest(guest, eventId);
-            if(!isAdded) {
+            long id = addGuest(guest, eventId);
+            if(id < 0) {
                 return null; // TODO : check rollback
             }
         }
@@ -113,19 +113,21 @@ public class EventService {
     }
 
     @Transactional
-    public boolean addGuest(Guest guest, long eventId) {
-        boolean isAdded = guestDao.addGuest(guest, eventId);
+    public long addGuest(Guest guest, long eventId) {
+        long guestId = guestDao.addGuest(guest, eventId);
 
-        if(isAdded) {
+        // TODO : generate guest URL & update database
+
+        if(guestId > 0) {
             for(Restaurant restaurant : eventDao.getEventById(eventId).getEventRestaurants()) {
-                isAdded = guestVoteDao.addGuestVote(guest.getId(), restaurant.getId());
+                boolean isAdded = guestVoteDao.addGuestVote(guest.getId(), restaurant.getId());
                 if(!isAdded) {
-                    return false;
+                    return -1;
                 }
             }
         }
 
-        return isAdded;
+        return guestId;
     }
 
 }
