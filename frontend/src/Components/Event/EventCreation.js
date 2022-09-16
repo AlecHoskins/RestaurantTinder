@@ -97,7 +97,11 @@ function EventCreation(props) {
 
 	let removeFormFields = (i) => {
 		let newFormValues = [...formValues];
-		newFormValues.splice(i, 1);
+		if (formValues.length > 1) {
+			newFormValues.splice(i, 1);
+		} else {
+			newFormValues[0].name = "";
+		}
 		setFormValues(newFormValues);
 	}
 
@@ -134,9 +138,7 @@ function EventCreation(props) {
 								<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
 								<button className='addRemoveButtons' onClick={() => addFormFields()}>➕</button>
 								{
-									index ?
-										<button className='addRemoveButtons' id='remove' onClick={() => removeFormFields(index)}>❌</button>
-										: null
+									<button className='addRemoveButtons' id='remove' onClick={() => removeFormFields(index)}>❌</button>
 								}
 							</div>
 						))}
