@@ -47,7 +47,7 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
     @Override
     public List<Guest> getEventGuests(long eventId) {
         String sql =
-                "SELECT guest_id, event_id, nickname, url, user_id FROM guest" +
+                "SELECT guest_id, event_id, nickname, url, user_id FROM guest " +
                 "WHERE event_id = ?;";
 
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, eventId);
