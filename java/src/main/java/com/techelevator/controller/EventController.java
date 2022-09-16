@@ -32,7 +32,7 @@ public class EventController {
         return service.getEventsByHost(id);
     }
 
-    @PostMapping // TODO : return Event object
+    @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
         return service.addEvent(newEvent);
     }
