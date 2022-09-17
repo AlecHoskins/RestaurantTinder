@@ -57,6 +57,24 @@ public class JdbcGuestVoteDao extends JdbcForAll implements GuestVoteDao {
         while(result.next()) {
             votes.add(mapRowToVote(result));
         }
+
+        return votes;
+    }
+
+    @Override
+    public List<Vote> getUpVotesOnly() {
+        String sql =
+                "SELECT restaurant_id, up_vote FROM guest_vote " +
+                "WHERE up_vote IS NOT false;";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
+
+        List<Vote> votes = new ArrayList<>();
+
+        while(result.next()) {
+            votes.add(mapRowToVote(result));
+        }
+
         return votes;
     }
 

@@ -8,8 +8,10 @@ import com.techelevator.dao.restaurant.CategoryDao;
 import com.techelevator.dao.restaurant.RestaurantCategoryDao;
 import com.techelevator.dao.restaurant.RestaurantDao;
 import com.techelevator.dao.restaurant.RestaurantHoursDao;
+import com.techelevator.dto.FinalistDTO;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
+import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -165,6 +165,36 @@ public class EventService {
         }
 
         return guestId;
+    }
+
+    public List<FinalistDTO> getFinalists() {
+        List<FinalistDTO> finalists = new ArrayList<>();
+        Map<String, Integer> voteTally = new HashMap<>();
+        List<Vote> upVotes = guestVoteDao.getUpVotesOnly();
+
+        for (Vote vote : upVotes) {
+            if(!voteTally.containsKey(vote.getRestaurantId())) {
+                voteTally.put(vote.getRestaurantId(), 0);
+            }
+
+            int count = voteTally.get(vote.getRestaurantId());
+
+            if(vote.getUpVote() != null && vote.getUpVote()) {
+                voteTally.put(vote.getRestaurantId(), count + 1);
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : voteTally.entrySet()) {
+            Restaurant restaurant = restaurantDao.findRestaurantById(entry.getKey());
+            restaurant.setCategories(restaurantCategoryDao.getCategoriesByRestaurant(restaurant.getId()));
+            restaurant.setHours(restaurantHoursDao.getHoursByRestaurant(restaurant.getId()));
+
+            finalists.add(new FinalistDTO(restaurant, entry.getValue()));
+        }
+
+        Collections.sort(finalists);
+
+        return finalists;
     }
 
 }

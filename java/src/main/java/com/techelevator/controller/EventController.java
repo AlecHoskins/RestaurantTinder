@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.dto.FinalistDTO;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.service.EventService;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,15 +37,15 @@ public class EventController {
         return service.getEventsByHost(id);
     }
 
-    @GetMapping("/user/{id}") // TODO : Order by event date
+    @GetMapping("/user/{id}")
     public List<Event> getEventsByUser(@PathVariable long id) {
         return service.getEventsByUser(id);
     }
 
     // TODO : add to UrlDTO
-    @GetMapping("")
-    public void getFinalists() {
-
+    @GetMapping("/finalists")
+    public List<FinalistDTO> getFinalists() {
+        return service.getFinalists();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -84,6 +84,12 @@ public class UrlDTO {
      * Authenticated: TRUE
      * */
 
+    @JsonProperty private final String getFinalists = BASE_URL + "event/finalists";
+    /**EventController
+     * Method: GET
+     * Authenticated: TRUE
+     * */
+
     @JsonProperty private final String addEvent = BASE_URL + "event";
     /**EventController
      * Method: POST
@@ -99,20 +105,20 @@ public class UrlDTO {
      * Authenticated: TRUE (disabled for testing)
      * */
 
-    @JsonProperty private final String getGuest = BASE_URL + "guest/"; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String getGuest = BASE_URL + "guest/";
     /**GuestController
      * Method: GET
      * Path variables: guest/{url}
      * Authenticated: FALSE
      * */
 
-    @JsonProperty private final String getGuestEvent = BASE_URL + "guest/event/"; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String getGuestEvent = BASE_URL + "guest/event/";
     /**GuestController
      * Path variables: guest/event/{url}
      * Authenticated: FALSE
      * */
 
-    @JsonProperty private final String updateVote = BASE_URL + "guest/vote"; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String updateVote = BASE_URL + "guest/vote";
     /**GuestController
      * Method: PUT
      * Body:
@@ -123,12 +129,15 @@ public class UrlDTO {
      *              {
      *                  String restaurantId,
      *                  Boolean upVote (optional)
+     *              },
+     *              {
+     *                  String restaurantId,
+     *                  Boolean upVote (optional)
      *              }
      *         ]
      *     }
      * }
      * Authenticated: FALSE
      * */
-
 
 }

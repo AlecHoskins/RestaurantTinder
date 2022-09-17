@@ -32,11 +32,13 @@ public class GuestController {
     @PutMapping(path = "/vote")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void vote(@RequestBody Guest guest) {
-        try {
-            service.vote(guest);
-        } catch (TransactionRollbackException e) {
-            System.out.println("GuestController exception: " + e.getMessage());
-        }
+//        try {
+//
+//        } catch (TransactionRollbackException e) {
+//            System.out.println("GuestController exception: " + e.getMessage());
+//        }
+
+        service.vote(guest);
     }
 
 }
