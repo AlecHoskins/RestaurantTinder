@@ -70,7 +70,7 @@ public class GuestService {
         for(Vote vote: guest.getVote()) {
             pass = guestVoteDao.updateVote(guest.getId(), vote);
             if (!pass) {
-                throw new TransactionRollbackException();
+                throw new TransactionRollbackException("vote failed, rollback.");
             }
         }
     }

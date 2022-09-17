@@ -87,7 +87,7 @@ public class EventService {
                 isAdded = eventRestaurantDao.addEventRestaurant(eventId, restaurant.getId());
             }
             if(!isAdded) {
-                throw new TransactionRollbackException();
+                throw new TransactionRollbackException("addEvent failed, rollback.");
             }
         }
 
@@ -96,7 +96,7 @@ public class EventService {
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
             if(id < 0) {
-                throw new TransactionRollbackException();
+                throw new TransactionRollbackException("addEvent failed, rollback.");
             }
         }
 
@@ -118,7 +118,7 @@ public class EventService {
                 }
 
                 if (categoryId == -1) {
-                    throw new TransactionRollbackException();
+                    throw new TransactionRollbackException("addRestaurant failed, rollback.");
                 }
 
                 restaurantCategoryDao.addRestaurantCategory(restaurant.getId(), categoryId);
@@ -128,7 +128,7 @@ public class EventService {
             }
             return true;
         } else {
-            throw new TransactionRollbackException();
+            throw new TransactionRollbackException("addRestaurant failed, rollback.");
         }
     }
 
@@ -137,7 +137,7 @@ public class EventService {
         long guestId = guestDao.addGuest(guest, eventId);
 
         if(guestId == -1) {
-            throw new TransactionRollbackException();
+            throw new TransactionRollbackException("addGuest failed, rollback.");
         }
 
         if(guestId > 0) {
@@ -147,7 +147,7 @@ public class EventService {
 
             boolean isUpdated = guestDao.updateGuest(guest);
             if(!isUpdated) {
-                throw new TransactionRollbackException();
+                throw new TransactionRollbackException("addGuest failed, rollback.");
             }
 
             Event event = getEvent(eventId);
@@ -156,7 +156,7 @@ public class EventService {
             for(Restaurant restaurant : restaurants) {
                 boolean isAdded = guestVoteDao.addGuestVote(guestId, restaurant.getId());
                 if(!isAdded) {
-                    throw new TransactionRollbackException();
+                    throw new TransactionRollbackException("addGuest failed, rollback.");
                 }
             }
         }
