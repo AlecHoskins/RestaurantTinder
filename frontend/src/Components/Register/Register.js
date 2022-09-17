@@ -70,9 +70,9 @@ class Register extends Component{
                     <img src={signupBlob} alt="Yellow Blob" id="signupBlob" />
                 </motion.div>
                 <motion.div className='registerPage'
-                    initial={{ left: "-300px", transition: { duration: .4 } }}
-                    animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
-                    exit={{ left: "-300px", transition: { duration: .4 }}}
+                    initial={{ left: "2000px", opacity: 1, transition: { duration: .4 } }}
+                    animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
+                    exit={{ left: "-1000px", opacity: 1, transition: { duration: .4 }}}
                 >
                     <h1 className='please'>Create Account</h1>
                     <div className='user-box'>
