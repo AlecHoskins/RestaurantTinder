@@ -27,10 +27,10 @@ public class GuestController {
         return service.getEvent(url);
     }
 
-    @PutMapping(path = "/{url}")
+    @PutMapping(path = "/vote")
 //    @ResponseStatus() TODO : implement response statuses
-    public void vote(@PathVariable String url, @RequestBody Vote vote) {
-        service.vote(url, vote);
+    public void vote(@RequestBody Guest guest) {
+        service.vote(guest);
     }
 
 }

@@ -14,6 +14,7 @@ import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -67,10 +68,22 @@ public class GuestService {
 
     public Guest updateUserId(long id) {
         // TODO : implement updateUserId
-        return null;
+        Guest guest = guestDao.getGuestById(id);
+        guestDao.updateGuest(guest);
+        return guest;
     }
 
-    public boolean vote(String url, Vote updatedVote) {
-        return guestVoteDao.updateVote(getGuestByUrl(url).getId(), updatedVote);
+    @Transactional
+    public boolean vote(Guest guest) {
+
+        boolean pass;
+
+        for(Vote vote: guest.getVote()) {
+            pass = guestVoteDao.updateVote(guest.getId(), vote);
+            if (!pass) {
+                return false;
+            }
+        }
+        return true;
     }
 }
