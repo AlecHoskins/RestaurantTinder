@@ -96,7 +96,21 @@ function EventView(props) {
 		props.dispatch(setEventGuestVotes(guest, votes))
 	}
 
-	//pull name as well in the link?
+	const mapDays = (hour) => {
+		var curDay = null;
+		if (!hour.open) { return <span>No hours found</span> }
+		return hour.open.map((day, index) => {
+				const jsxDay = (
+					<tr key={index}>
+						<th>{curDay !== day.day && numDayToString(day.day)}</th>
+						<td>{militaryTimeToStandardTime(day.start)} - {militaryTimeToStandardTime(day.end)}</td>
+					</tr>
+				);
+				curDay = day.day;
+				return jsxDay;
+			}
+		)
+	}
 
     //Maps through restaurants to display on page
     const eventRestaurantCards = function() {
@@ -125,6 +139,15 @@ function EventView(props) {
                         <div className="categories">
                             {(card.categories.map((e) => (<span className="category" key={e.alias}>{e.title}</span>)))}
                         </div>
+						<div id="hoursInfo">{card.hours && card.hours.map((hour, index) => {
+						return (
+							<table key={index}>
+								<tbody>
+									{mapDays(hour)}
+								</tbody>
+							</table>
+						)
+						})}</div>
                     </div>
                 </div> 
         )))
