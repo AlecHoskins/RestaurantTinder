@@ -29,6 +29,7 @@ function NearMe(props) {
 	useEffect(() => {
 		
         document.title = "Restaurant Tinder - New Event"
+		props.dispatch(setSelectedRestaurants([]));
       }, [])  
 
 	const timeToUnix = (time = new Date()) => {
