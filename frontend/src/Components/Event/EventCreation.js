@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { motion } from "framer-motion"
 import {connect} from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {setEventDeadlineDate, setEventTitle, setEventDate, setEventGuests, setEvent} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
 import './EventCreation.css'
@@ -138,10 +139,18 @@ function EventCreation(props) {
 		<div className='event-details'>
 			{/* <p>{JSON.stringify(props.event)}</p> */}
 			{/* {created ? <h1>Created</h1> : <h1>Didn't work</h1>} */}
-			<div className='bgImg' >
+			<motion.div className='bgImg' 
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+			>
 				<img src={blob} className='createBlob' alt='Yellow Blob'/>
-			</div>
-			<div className='eventCreation'>
+			</motion.div>
+			<motion.div className='eventCreation'
+				initial={{ left: "-300px", transition: { duration: .4 } }}
+				animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
+				exit={{ left: "-300px", transition: { duration: .4 }}}
+			>
 				<div className='eventDetails'>
 					<h2>Event Details</h2>
 					<div className='eventTitle'>
@@ -156,7 +165,7 @@ function EventCreation(props) {
 						<h5>Guests Decision Deadline</h5>
 						<input type="datetime-local" onChange={e => handleDeadlineChange(e)} required/>
 					</div>
-					{(!eventID) ? <button onClick={createEvent}>Create Event</button> : <Redirect to={`/EventView/${props.event.id}`} />}
+					{(!eventID) ? <button onClick={createEvent}>Create Event</button> : <Navigate to={`/EventView/${props.event.id}`} />}
 				</div>
 				<div className='eventGuests'>
 					<h3>Guest List:</h3>
@@ -173,7 +182,7 @@ function EventCreation(props) {
 						))}
 					</div>
 				</div>
-			</div>
+			</motion.div>
 		</div>
 	);
 }

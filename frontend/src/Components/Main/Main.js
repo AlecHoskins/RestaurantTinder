@@ -16,6 +16,7 @@ import baseUrl from '../../Shared/baseUrl'
 import EventView from '../Event/EventView'
 import axios from 'axios'
 import ErrorPage from '../ErrorPage/ErrorPage'
+import AnimatedRoutes from '../Animations/AnimatedRoutes'
 
 const mapStateToProps = state => {
     return {
@@ -56,35 +57,13 @@ class Main extends Component {
     render(){
 
         return(
-			(this.props.urls && this.props.urls.urls) ? 
-				<div>
-					<Navbar />
-					{/* {this.props.token.token !== undefined ?
-								<Redirect to='/home'/>
-						: 
-						<Redirect to='/home'/>  
-					} */}
-					{this.props.urls ? 
-						<Switch>
-							<Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-							<Route path='/login' component={this.props.token.token !== undefined ? () => <Redirect to='/home' /> : () => <Login/>}/>
-							<Route path='/register'component={() => <Register/>}/>
-							<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
-							<Route path='/event' component={this.props.token.token !== undefined ? () => <EventCreation/> : () => <Login/>}/>
-							<Route path='/myevents' component={this.props.token.token !== undefined ? () => <MyEvents/> : () => <Login/>}/>
-							<Route path='/eventview/:id/:guestcode?' component={() => <EventView />}/>
-							<Redirect to='/home'/>
-						</Switch>
-					: 
-						<Switch>
-						<Route path='/errorpage/' component={() => <ErrorPage />} />
-						<Redirect to='/errorpage/' />
-						</Switch>}
-					<Footer />
-				</div>
-				: <></>
+            <div>
+				<Navbar />
+                <AnimatedRoutes />
+				<Footer />
+            </div>
         )
     }
 } 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

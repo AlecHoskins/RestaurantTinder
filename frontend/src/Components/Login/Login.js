@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import { motion } from "framer-motion"
 import {addToken, addUser} from '../../Redux/actionCreators'
 import axios from 'axios'
 import './Login.css'
@@ -53,10 +53,18 @@ class Login extends Component {
     render(){
         return(
             <div>
-                <div>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                >
                     <img src={loginBlob} alt="Yellow Blob" id="loginBlob" />
-                </div>
-                <div className='loginPage'>
+                </motion.div>
+                <motion.div className='loginPage'
+                    initial={{ left: "-300px", transition: { duration: .4 } }}
+                    animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
+                    exit={{ left: "-300px", transition: { duration: .4 }}}
+                >
                     <div>
                     <h1 className='please'>Please Sign In</h1>
                     <div className="user-box">
@@ -86,10 +94,10 @@ class Login extends Component {
                     <Link to="/register">Need an account?</Link>
                     <button type="submit" onClick={this.handleLogin}>Sign in</button>
                     </div>
-                </div>
+                </motion.div>
             </div>
         )
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Login));
+export default connect(mapStateToProps)(Login);

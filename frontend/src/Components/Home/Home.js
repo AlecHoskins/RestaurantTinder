@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
+import { motion } from "framer-motion"
 import axios from 'axios';
 import './Home.css'
 
@@ -76,10 +77,18 @@ function Home(props) {
     
     return(
         <div>
-            <div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
                 <img src={userBlob} alt="Yellow Blob" id='homeBlob' />
-            </div>
-            <div className='userInfo'>
+            </motion.div>
+            <motion.div className='userInfo'
+                initial={{ left: "-1000px", transition: { duration: .4 } }}
+                animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
+                exit={{ left: "-1000px", transition: { duration: .4 }}}
+            >
                 <div className='welcomeCard'>
                     <h3>Welcome, {currUser}</h3>
                     <h5>You have <span id="yellow">{getNumberOfUpcomingEvents(events)}</span> upcoming events {'>'}</h5>
@@ -89,7 +98,7 @@ function Home(props) {
                 <div className='upcomingEvents'>
                     {getMapOfUpcomingEvents(events)}
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 }

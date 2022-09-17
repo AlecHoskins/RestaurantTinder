@@ -1,7 +1,7 @@
 import React from "react";
 import './EventView.css';
 import {connect} from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
@@ -37,14 +37,14 @@ function EventView(props) {
 	
 	const eventId = props.event.id;
 	const userId = props.userId;
-	const params = props.match.params;
+	const { id, guestcode } = useParams();
 	const getEventUrl = props.urls.urls.getEvent;
 	const dispatch = props.dispatch;
 	const token = props.token.token;
 
 	const loadEvent = useCallback(async() => {
 		if (eventId === undefined) {
-			const myEvents = await axios.get(getEventUrl + params.id).catch((error) => {
+			const myEvents = await axios.get(getEventUrl + id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
 			const data = myEvents.data;
@@ -55,7 +55,7 @@ function EventView(props) {
 					if(token /* the user is logged in */) {
 						currentGuest = data.guestList.find((guest) => guest.userId === userId);
 					} else { /* the user is not logged in */
-						const guestId = params.guestcode;
+						const guestId = guestcode;
 						currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
 					}
 					if (currentGuest) {
@@ -69,14 +69,12 @@ function EventView(props) {
 				}
 			}
 		}
-	}, [eventId, getEventUrl, params.guestcode, params.id, dispatch, token, userId]);
+	}, [eventId, getEventUrl, guestcode, id, dispatch, token, userId]);
 
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
 		loadEvent();
-		//setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
-		//setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
 		console.log('useEffect');
         document.title = "Restaurant Tinder - Event"
 	},[]);
@@ -224,4 +222,4 @@ function EventView(props) {
     )
 }
 
-export default withRouter(connect(mapStateToProps)(EventView));
+export default connect(mapStateToProps)(EventView);

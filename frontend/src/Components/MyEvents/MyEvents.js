@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import {connect} from 'react-redux';
 import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
-import { Redirect, Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { motion } from "framer-motion"
 import './MyEvents.css'
 
 const mapStateToProps = state => {
@@ -67,10 +68,18 @@ function MyEvents(props) {
 
 	return (
 		<div>
-			<div className='bgImg'>
+			<motion.div className='bgImg'
+				initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+			>
 				<img src={blob} alt='Yellow Blob' className='blob' />
-			</div>
-			<div className='myEventsCard'>
+			</motion.div>
+			<motion.div className='myEventsCard'
+				initial={{ left: "-1000px", transition: { duration: .4 } }}
+                animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
+                exit={{ left: "-1000px", transition: { duration: .4 }}}
+			>
 				<div className='myEventsInfo'>
 					<h1>My Events</h1>
 					{events && events.length > 0 ? <h5>You currently have {events.length} event{events.length === 1 ? "" : "s"} scheduled.</h5> : <span></span>}
@@ -91,8 +100,8 @@ function MyEvents(props) {
 							</div>
 						</div>
 					}
-			</div>
-			{newEventCreated ? <Redirect to={'/nearme'}/> : <></>}
+			</motion.div>
+			{newEventCreated ? <Navigate to={'/nearme'}/> : <></>}
 		</div>
 	);
 }

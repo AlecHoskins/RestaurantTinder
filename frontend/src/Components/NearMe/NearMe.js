@@ -5,6 +5,7 @@ import './NearMe.css';
 import {setSelectedRestaurants, setEventDate} from '../../Redux/actionCreators'
 import { Link } from 'react-router-dom';
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
+import { motion } from "framer-motion"
 
 const mapStateToProps = state => {
 	return {
@@ -168,10 +169,18 @@ function NearMe(props) {
 
 	return (
 		<div className='nearme'>
-			<div>
+			<motion.div
+				initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+			>
 				<img src={yellowBlob} className='eventBlob' alt='Yellow Blob' />
-			</div>
-			<div className='eventSearch'>
+			</motion.div>
+			<motion.div className='eventSearch'
+				initial={{ left: "-1000px", transition: { duration: .4 } }}
+                animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
+                exit={{ left: "-1000px", transition: { duration: .4 }}}
+			>
 				<form className="search-form">
 					<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>
 					<input type="datetime-local" name="date" onChange={handleDateChange} defaultValue={props.date} /></label>
@@ -209,7 +218,7 @@ function NearMe(props) {
 					{props.eventRestaurants && props.eventRestaurants.length > 1 ? 
 						<Link to="/Event"><button id="event-button">Create Event</button></Link> : <></>}
 				</div>
-			</div>
+			</motion.div>
 		</div>
 	);
 }
