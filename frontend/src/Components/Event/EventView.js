@@ -1,9 +1,8 @@
 import React from "react";
-import { useParams } from "react-router";
 import './EventView.css';
 import {connect} from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { withRouter } from 'react-router-dom';
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
@@ -35,38 +34,47 @@ function EventView(props) {
 	const [guest, setGuest] = useState();
 	const [isGuest, setIsGuest] = useState(false);
 	const [votes, setVotes] = useState([]);
+	
+	const eventId = props.event.id;
+	const userId = props.userId;
+	const params = props.match.params;
+	const getEventUrl = props.urls.urls.getEvent;
+	const dispatch = props.dispatch;
+	const token = props.token;
 
-	const loadEvent = async() => {
-		if (props.event.id === undefined) {
-			const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
+	const loadEvent = useCallback(async() => {
+		console.log('load event callback');
+		if (eventId === undefined) {
+			const myEvents = await axios.get(getEventUrl + params.id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
 			const data = myEvents.data;
 			if (data) { 
-				await props.dispatch(setEvent(data)) 
-				//set as guest if the host Id is not the logged in user
-				setIsGuest((data.hostId !== props.userId));
+				await dispatch(setEvent(data)) 
 				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
 					let currentGuest = null;
 					console.log("guestlist has guests");
 					console.log(data.guestList);
-					if(props.token /* the user is logged in */) {
+					if(token /* the user is logged in */) {
 						console.log("guest is logged in");
 						console.log(data.guestList);
-						currentGuest = data.guestList.find((guest) => guest.userId === props.userId);
+						currentGuest = data.guestList.find((guest) => guest.userId === userId);
 					} else { /* the user is not logged in */
-						const guestId = props.match.params.guestcode;
+						const guestId = params.guestcode;
 						currentGuest = data.guestList.find((guest) => guest.id === guestId);
 					}
-					console.log("Current guest: " + currentGuest);
+					console.log("Current guest: " + JSON.stringify(currentGuest));
 					if (currentGuest) {
 						setGuest(currentGuest);
-						setVotes(currentGuest.votes);
+						setVotes(currentGuest.vote);
 					}
+					//set as guest if the host Id is not the logged in user
+					setIsGuest((data.hostId !== userId && currentGuest));
+					console.log(currentGuest);
 				}
 			}
 		}
-	}
+	}, [eventId, getEventUrl, params.guestcode, params.id, dispatch, token, userId]);
 
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
@@ -74,8 +82,9 @@ function EventView(props) {
 		loadEvent();
 		//setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
 		//setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
+		console.log('useEffect');
         document.title = "Restaurant Tinder - Event"
-	}, []);
+	}, [loadEvent]);
 
 	const updateThumbsUp = (vote) => {
 		//figure out the index of the vote for this restaurant if it exists
@@ -106,9 +115,9 @@ function EventView(props) {
 
 	const getThumbImage = (card, thumbsup = true) => {
 		const vote = votes.find((vote) => card.id === vote.restaurantId);
-		if (vote && vote.upVote && thumbsup) {
+		if (vote && vote.upVote === true && thumbsup) {
 			return tuGreen;
-		} else if (vote && !vote.upVote && !thumbsup) {
+		} else if (vote && vote.upVote === false && !thumbsup) {
 			return tdRed;
 		} else {
 			return (thumbsup) ? tuBlack : tdBlack;
@@ -116,8 +125,16 @@ function EventView(props) {
 	}
 
 	const voteSubmitHandler = async(event) => {
-		//do vote submission here - no URL for this yet
+		//do vote submission here
 		console.log("voted!");
+		//as of right now will have to make an axios call for each restaurant
+		//just try to update the first vote for now
+		//TODO: UPDATE THIS URL WHEN THE URLSDTO GETS UPDATED
+		votes.forEach((vote) => {
+			axios.put(props.urls.urls.updateVote + 'guest/' + guest.id, vote).catch((error) => {
+				alert('Votes failed to update.');
+			})
+		})
 		props.dispatch(setEventGuestVotes(guest, votes))
 	}
 
