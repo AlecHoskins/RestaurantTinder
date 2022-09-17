@@ -309,12 +309,35 @@ select {
     }
 
     .card {
-        grid-template-columns: 210px 1fr;
+        grid-template-columns: 65% 1fr;
+        grid-template-areas: 
+            "title title"
+            "image image"
+            "info info";
+    }
+
+    .titleSection {
+        min-height: 55px;
+    }
+
+    .titleSection h5 {
+        max-width: 65%;
+        margin-top: 10px;
+        overflow-wrap: normal;
+    }
+
+    .imageSection {
+        margin-top: -20px;
     }
 
     .imageSection img {
-        width: 200px !important;
-        height: 200px !important;
+        width: 200px;
+        height: 200px;
+    }
+
+    .open-now {
+        position: relative;
+        top: 38px;
     }
 }
 

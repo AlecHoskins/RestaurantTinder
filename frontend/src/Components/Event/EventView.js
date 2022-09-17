@@ -28,8 +28,11 @@ function EventView(props) {
     const tdRed = '/thumbsdownred.png';
     const phoneLogo = '/phone-icon.png';
     const blob = '/yellowblobsignup.png';
+	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const timeOptions = { timeStyle: 'short'};
 
 	const [guest, setGuest] = useState();
+	const [isGuest, setIsGuest] = useState(false);
 	const [votes, setVotes] = useState([]);
 
 	const loadEvent = async() => {
@@ -161,13 +164,13 @@ function EventView(props) {
             <div className="eventCard">
                 <div className="eventInfo">
                     {/* If a User is a guest*/}
-					{(guest) ? <h1>Welcome, {guest.nickname}!</h1>
+					{isGuest ? <h1>Welcome, {guest.nickname}!</h1>
 					: <></>
 					}
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
-                    <h2>Event Date and Time: {new Date(props.event.eventDayTime).toLocaleString('en-US')}</h2>
-                    <h2>Event Due Date: {new Date(props.event.decisionDeadline).toLocaleString('en-US')}</h2>
+                    <h2>{new Date(props.event.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</h2>
+                    <h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(!guest && props.token) ? 
