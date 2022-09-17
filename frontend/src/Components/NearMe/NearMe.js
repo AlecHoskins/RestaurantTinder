@@ -17,6 +17,7 @@ const mapStateToProps = state => {
 function NearMe(props) {
 
 	const urls = useSelector(state => state.urls.urls);
+	const dispatch = props.dispatch;
 
 	const phoneLogo = '/phone-icon.png';
 	const yellowBlob = '/yellowblobsignup.png'
@@ -30,8 +31,9 @@ function NearMe(props) {
 	useEffect(() => {
 		
         document.title = "Restaurant Tinder - New Event"
-		props.dispatch(setSelectedRestaurants([]));
-      }, [])  
+		dispatch(setSelectedRestaurants([]));
+		console.log('useEffect');
+      }, [dispatch])  
 
 	const searchHandler = async (event) => {
 		event.preventDefault();
@@ -62,7 +64,7 @@ function NearMe(props) {
 	}
 
 	const handleDateChange = (event) => {
-		props.dispatch(setEventDate(event.target.value));
+		dispatch(setEventDate(event.target.value));
 		handleInputChange(event);
 	}
 
@@ -119,7 +121,7 @@ function NearMe(props) {
 		}
 		card.added = (!card.added) ? true : false;
 		//setting this to the redux store so event js can access it
-		props.dispatch(setSelectedRestaurants(restaurants));
+		dispatch(setSelectedRestaurants(restaurants));
 		//setRestaurantSelections(restaurants);
 	}
 

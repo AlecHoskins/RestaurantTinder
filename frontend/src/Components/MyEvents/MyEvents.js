@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {connect} from 'react-redux';
 import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
 import { Redirect, Link } from 'react-router-dom'
@@ -22,20 +22,23 @@ function MyEvents(props) {
 	const blob = '/yellowbloblogin.png';
 	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { timeStyle: 'short'};
+	const dispatch = props.dispatch;
 
-	const loadEvents = async() => {
-		const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
-			alert('There was an error while retrieving the events');
-		});
-		if (myEvents) { setEvents(myEvents.data); }
-	}
+	const loadEvents = useCallback(async() => {
+		if (props.userId) {
+			const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
+				alert('There was an error while retrieving the events');
+			});
+			if (myEvents) { setEvents(myEvents.data); }
+		}
+	}, [props.urls.getHostEvents, props.userId]);
 
 	useEffect(() => {
 		//in this page we should not be storing a 'current event'
-		props.dispatch(deleteCurrentEvent());
+		dispatch(deleteCurrentEvent());
 		loadEvents();
 		document.title = "Restaurant Tinder - My Events"
-	}, []);
+	}, [loadEvents, dispatch]);
 
 	const handleNewEvent = () => {
 
