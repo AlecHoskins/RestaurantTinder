@@ -177,9 +177,9 @@ function NearMe(props) {
 				<img src={yellowBlob} className='eventBlob' alt='Yellow Blob' />
 			</motion.div>
 			<motion.div className='eventSearch'
-				initial={{ left: "-1000px", transition: { duration: .4 } }}
-                animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
-                exit={{ left: "-1000px", transition: { duration: .4 }}}
+				initial={{ left: "3300px", opacity: 1, transition: { duration: .4 } }}
+                animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
+                exit={{ left: "-1000px", opacity: 0, transition: { duration: .4 }}}
 			>
 				<form className="search-form">
 					<label className="label-date" htmlFor="date">Date for Event*: <span className="tooltip">*Time zone is based on your local time.</span>

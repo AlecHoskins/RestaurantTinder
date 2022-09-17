@@ -34,16 +34,19 @@ function EventView(props) {
 	const [guest, setGuest] = useState(null);
 	const [isGuest, setIsGuest] = useState(true);
 	const [votes, setVotes] = useState([]);
+	const [loaded, setLoaded] = useState(false);
 	
 	const eventId = props.event.id;
 	const userId = props.userId;
-	const { id, guestcode } = useParams();
-	const getEventUrl = props.urls.urls.getEvent;
+	const {id} = useParams();
+	const {guestid} = useParams();
+	const getEventUrl = (props.urls.urls) ? props.urls.urls.getEvent : null;
 	const dispatch = props.dispatch;
 	const token = props.token.token;
 
 	const loadEvent = useCallback(async() => {
-		if (eventId === undefined) {
+		console.log("loading");
+		if (eventId === undefined && getEventUrl !== null) {
 			const myEvents = await axios.get(getEventUrl + id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
@@ -55,7 +58,7 @@ function EventView(props) {
 					if(token /* the user is logged in */) {
 						currentGuest = data.guestList.find((guest) => guest.userId === userId);
 					} else { /* the user is not logged in */
-						const guestId = guestcode;
+						const guestId = guestid;
 						currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
 					}
 					if (currentGuest) {
@@ -65,11 +68,11 @@ function EventView(props) {
 					//set as guest if the host Id is not the logged in user
 					setIsGuest((data.hostId !== userId && currentGuest));
 
-					console.log(isGuest + ", " + JSON.stringify(guest));
+					setLoaded(true);
 				}
 			}
 		}
-	}, [eventId, getEventUrl, guestcode, id, dispatch, token, userId]);
+	}, [eventId, getEventUrl, guestid, id, dispatch, token, userId]);
 
 	useEffect(() => {
 		//const guestInfo = axios.get('some url to get');
@@ -77,7 +80,7 @@ function EventView(props) {
 		loadEvent();
 		console.log('useEffect');
         document.title = "Restaurant Tinder - Event"
-	},[]);
+	},[loadEvent]);
 
 	const updateThumbsUp = (vote) => {
 		//figure out the index of the vote for this restaurant if it exists
@@ -119,7 +122,8 @@ function EventView(props) {
 
 	const voteSubmitHandler = async(event) => {
 		//do vote submission here
-		console.log("voted!");
+		if (!guest) { console.log('did not vote'); return; }
+		console.log('voted');
 		//as of right now will have to make an axios call for each restaurant
 		//just try to update the first vote for now
 		//TODO: UPDATE THIS URL WHEN THE URLSDTO GETS UPDATED
@@ -190,7 +194,7 @@ function EventView(props) {
 
     return (
         <div className="eventView">
-			{/* {(!token && !guest) ? <Redirect to="/login" /> : <></>} */}
+			{(loaded && !token && !guest) ? <Navigate to="/login" /> : <></>}
             <div>
                 <img src={blob} className='eventBlob' alt='Yellow Blob'/>
             </div>
