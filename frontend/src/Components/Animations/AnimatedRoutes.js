@@ -26,6 +26,7 @@ function AnimatedRoutes(props) {
             <AnimatePresence>
                     {props.urls ? 
                         <Routes location={location} key={location.pathname}>
+							<Route path='/' element={<Navigate to='/home' />} />
                             <Route path='/home' element={props.token.token !== undefined ? <Home/> : <MainPage/>}/>
                             <Route path='/login' element={props.token.token !== undefined ? <Navigate to='/home' /> : <Login/>}/>
                             <Route path='/register'element={<Register/>}/>
