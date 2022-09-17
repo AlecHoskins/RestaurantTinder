@@ -6,6 +6,7 @@ import com.techelevator.service.EventService;
 import com.techelevator.service.RestaurantService;
 import com.techelevator.service.TransactionRollbackException;
 import com.techelevator.service.YelpBusinessService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
@@ -39,14 +40,10 @@ public class EventController {
         return service.getEventsByUser(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
-        try {
-            return service.addEvent(newEvent);
-        } catch(TransactionRollbackException e) {
-            System.out.println("EventController exception: " + e.getMessage());
-            return null;
-        }
+        return service.addEvent(newEvent);
     }
 
 }

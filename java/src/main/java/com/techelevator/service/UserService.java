@@ -16,7 +16,7 @@ public class UserService {
 
         boolean isUpdated = guestDao.updateGuest(guest);
         if(!isUpdated) {
-            throw new TransactionRollbackException();
+            throw new TransactionRollbackException("updateUserId failed, rollback.");
         }
 
         return guest;
