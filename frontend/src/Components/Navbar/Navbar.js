@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect, useSelector } from 'react-redux'
 import { motion } from "framer-motion";
 import {addToken, deleteUser, deleteCurrentEvent } from '../../Redux/actionCreators'
@@ -23,13 +23,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 function Navbar(props) {
 
+  const navigate = useNavigate()
   const [checked, setCheckec] = useState(false);
 
   const handleLogout = () => {
     props.addToken("")
     props.deleteUser()
 	props.deleteCurrentEvent();
-	props.history.push("/home");
+	navigate('/home');
   }
 
   const handleCheck = () => {

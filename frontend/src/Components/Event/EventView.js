@@ -4,8 +4,9 @@ import {connect} from 'react-redux'
 import { Navigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
+import {setEventGuestVotes, setEvent, setURLs} from '../../Redux/actionCreators'
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
+import baseUrl from '../../Shared/baseUrl'
 
 const mapStateToProps = state => {
     return {
@@ -40,47 +41,45 @@ function EventView(props) {
 	const userId = props.userId;
 	const {id} = useParams();
 	const {guestid} = useParams();
-	const getEventUrl = (props.urls.urls) ? props.urls.urls.getEvent : null;
 	const dispatch = props.dispatch;
 	const token = props.token.token;
+	const urlRoot = "http://localhost:3000";
 
-	const loadEvent = useCallback(async() => {
+	const loadEvent = async(urls) => {
 		console.log("loading");
-		if (eventId === undefined && getEventUrl !== null) {
-			const myEvents = await axios.get(getEventUrl + id).catch((error) => {
-				alert('An error has occurred while attempting to retrieve the event details');
-			})
-			const data = myEvents.data;
-			if (data) { 
-				await dispatch(setEvent(data)) 
-				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
-					let currentGuest = null;
-					if(token /* the user is logged in */) {
-						currentGuest = data.guestList.find((guest) => guest.userId === userId);
-					} else { /* the user is not logged in */
-						const guestId = guestid;
-						currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
-					}
-					if (currentGuest) {
-						setGuest(currentGuest);
-						setVotes(currentGuest.vote);
-					}
-					//set as guest if the host Id is not the logged in user
-					setIsGuest((data.hostId !== userId && currentGuest));
-
-					setLoaded(true);
-				}
-			}
+		const myEvents = await axios.get(urls.getEvent + id).catch((error) => {
+			alert('An error has occurred while attempting to retrieve the event details');
+		})
+		const data = myEvents.data;
+		await dispatch(setEvent(data)) 
+		let currentGuest = null;
+		if(token /* the user is logged in */) {
+			currentGuest = data.guestList.find((guest) => guest.userId === userId);
+		} else { /* the user is not logged in */
+			const guestId = guestid;
+			currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
 		}
-	}, [eventId, getEventUrl, guestid, id, dispatch, token, userId]);
+		if (currentGuest) {
+			setGuest(currentGuest);
+			setVotes(currentGuest.vote);
+		}
+		//set as guest if the host Id is not the logged in user
+		setIsGuest((data.hostId !== userId && currentGuest));
+		setLoaded(true);
+	}
 
 	useEffect(() => {
-		//const guestInfo = axios.get('some url to get');
-		//setGuest(guestInfo);
-		loadEvent();
-		console.log('useEffect');
+		if (!props.urls.urls) {
+			axios.get(baseUrl).then((response) => {
+				dispatch(setURLs(response.data))
+				loadEvent(response.data);
+			})
+		} else {
+			loadEvent(props.urls.urls);
+		}
         document.title = "Restaurant Tinder - Event"
-	},[loadEvent]);
+
+	},[]);
 
 	const updateThumbsUp = (vote) => {
 		//figure out the index of the vote for this restaurant if it exists
@@ -210,10 +209,29 @@ function EventView(props) {
                     <h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
-					{/* {(!guest && props.token) ? 
-						<button className="eventEdit">Edit Event</button>
-						: <></>
-					} */}
+					{(loaded && token && props.event.hostId === props.userId) ? 
+						<table>
+						<thead>
+							<tr>
+								<th>Guest nickname: </th>
+								<th>Guest invite url: </th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						{props.event.guestList.map((guest) => {
+							return (
+								<tr key={guest.id}>
+									<th>{guest.nickname}</th>
+									<td>{urlRoot + "/eventview/" + props.event.id + "/" + guest.inviteUrl}</td>
+								</tr>
+							);
+						})}
+						</tbody>
+						</table>
+						:
+						<></>
+					}
                     {/* */}
                     {new Date(props.event.decisionDeadline) >= new Date() ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
