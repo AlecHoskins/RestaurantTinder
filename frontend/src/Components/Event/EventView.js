@@ -45,7 +45,7 @@ function EventView(props) {
 			if (data) { 
 				await props.dispatch(setEvent(data)) 
 				//set as guest if the host Id is not the logged in user
-				setIsGuest((props.event.hostId !== props.userId));
+				setIsGuest((data.hostId !== props.userId));
 				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
 					let currentGuest = null;
 					console.log("guestlist has guests");
