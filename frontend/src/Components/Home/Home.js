@@ -85,9 +85,9 @@ function Home(props) {
                 <img src={userBlob} alt="Yellow Blob" id='homeBlob' />
             </motion.div>
             <motion.div className='userInfo'
-                initial={{ left: "-1000px", transition: { duration: .4 } }}
-                animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
-                exit={{ left: "-1000px", transition: { duration: .4 }}}
+                initial={{ left: "3300px", opacity: 1, transition: { duration: .4 } }}
+                animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
+                exit={{ left: "-1000px", opacity: 0, transition: { duration: .4 }}}
             >
                 <div className='welcomeCard'>
                     <h3>Welcome, {currUser}</h3>
