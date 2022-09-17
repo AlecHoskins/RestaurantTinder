@@ -53,7 +53,7 @@ public class JdbcCategoryDao extends JdbcForAll implements CategoryDao {
         try {
             id = jdbcTemplate.queryForObject(sql, Long.class, alias, title);
         } catch (EmptyResultDataAccessException e) {
-            System.out.println(e.getMessage());
+            System.out.println("JdbcCategoryDao exception: " + e.getMessage());
         }
 
         return id != null ? id : -1;

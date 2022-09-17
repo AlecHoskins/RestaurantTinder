@@ -49,7 +49,7 @@ public class YelpBusinessService {
             );
             restaurant = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
-            System.out.println(e.getMessage());
+            System.out.println("YelpBusinessService exception: " + e.getMessage());
         }
 
 
@@ -87,7 +87,7 @@ public class YelpBusinessService {
             );
             searchResults = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
-            System.out.println(e.getMessage());
+            System.out.println("YelpBusinessService exception: " + e.getMessage());
         }
 
         return searchResults;
