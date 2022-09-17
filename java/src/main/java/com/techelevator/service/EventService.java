@@ -13,6 +13,7 @@ import com.techelevator.model.event.Guest;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,7 +144,9 @@ public class EventService {
         if(guestId > 0) {
             guest.setId(guestId);
             // TODO : add eventId to guest
-            guest.setInviteUrl(guestId + "");
+
+            String password_hash = new BCryptPasswordEncoder().encode(guestId + "");
+            guest.setInviteUrl(password_hash);
 
             boolean isUpdated = guestDao.updateGuest(guest);
             if(!isUpdated) {

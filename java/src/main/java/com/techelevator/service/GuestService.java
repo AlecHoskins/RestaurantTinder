@@ -13,6 +13,7 @@ import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +62,6 @@ public class GuestService {
 
         return event;
     }
-
 
     @Transactional(rollbackFor = TransactionRollbackException.class)
     public void vote(Guest guest) throws TransactionRollbackException {

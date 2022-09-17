@@ -40,6 +40,12 @@ public class EventController {
         return service.getEventsByUser(id);
     }
 
+    // TODO : add to UrlDTO
+    @GetMapping("")
+    public void getFinalists() {
+
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
