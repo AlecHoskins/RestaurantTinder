@@ -17,8 +17,9 @@ const mapStateToProps = state => {
 
 function EventCreation(props) {
 
-	const [created, setCreated] = useState(false);
+	// const [created, setCreated] = useState(false);
 	const [formValues, setFormValues] = useState([{name: ""}]);
+	const [eventID, setEventID] = useState();
 	const blob = '/yellowblob.png'
 
 	const handleDeadlineChange = (event) => {
@@ -91,8 +92,9 @@ function EventCreation(props) {
 			newEvent.eventRestaurants = response.data.eventRestaurants;
 			newEvent.hostId = response.data.hostId;
 			// console.log(newEvent);
-			setCreated(true); 
+			//setCreated(true); 
 			props.dispatch(setEvent(newEvent));
+			setEventID(newEvent.id);
 		}
 
 		//assume it worked
@@ -143,7 +145,7 @@ function EventCreation(props) {
 						<h5>Guests Decision Deadline</h5>
 						<input type="datetime-local" onChange={e => handleDeadlineChange(e)} required/>
 					</div>
-					{!created ? <button onClick={createEvent}>Create Event</button> : <Redirect to={`/EventView/${props.event.id}`} />}
+					{(!eventID) ? <button onClick={createEvent}>Create Event</button> : <Redirect to={`/EventView/${props.event.id}`} />}
 				</div>
 				<div className='eventGuests'>
 					<h3>Guest List:</h3>
