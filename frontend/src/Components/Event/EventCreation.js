@@ -36,7 +36,6 @@ function EventCreation(props) {
 
 		//validate form:
 		let validation = '';
-		console.log(props.event)
 		if (props.event.eventTitle === undefined) { validation += '-Event title must not be empty \n'}
 		let emptyGuest = formValues.find((guest) => guest.name === '');
 		if (emptyGuest) { validation += '-Guest names must not be empty. Please enter a guest name.\n' }
@@ -77,13 +76,11 @@ function EventCreation(props) {
 			userId: props.user.id,
 			vote: []
 		})
-		props.dispatch(setEventGuests(guestListDTO));
-
 		
+		await props.dispatch(setEventGuests(guestListDTO));
 
 		let eventRestaurants = [...props.event.eventRestaurants];
 
-		console.log(eventRestaurants)
 		//console.log(props.event);
 		let newEvent = {
 			id: 0, //we don't have an id for a new event
@@ -92,7 +89,7 @@ function EventCreation(props) {
 			eventDayTime: props.event.eventDayTime,
 			decisionDeadline: props.event.decisionDeadline,
 			eventRestaurants: eventRestaurants,
-			guestList: props.event.guestList
+			guestList: guestListDTO
 		}
 
 		console.log(JSON.stringify(newEvent));
