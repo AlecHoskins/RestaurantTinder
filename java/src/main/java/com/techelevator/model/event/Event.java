@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
-public class Event {
+public class Event implements Comparable {
     @NotEmpty
     private long id;
     @NotEmpty
@@ -17,6 +17,12 @@ public class Event {
     private String decisionDeadline;
     private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
+
+    @Override
+    public int compareTo(Object o) {
+        Event e = ((Event)o); // type cast
+        return this.getEventDayTime().compareTo(e.getEventDayTime());
+    }
 
     public String getEventTitle() {
         return eventTitle;
@@ -86,6 +92,8 @@ public class Event {
 
     public Event() {
     }
+
+
 }
 
 

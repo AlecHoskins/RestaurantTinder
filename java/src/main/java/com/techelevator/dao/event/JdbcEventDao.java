@@ -35,10 +35,11 @@ public class JdbcEventDao extends JdbcForAll implements EventDao {
     @Override
     public List<Event> getEventsByUserId(long userId) {
         String sql =
-                "SELECT event_id, event_title, event_time, decision_time, host_id, user_id FROM event " +
-                "JOIN guest USING(event_id) " +
-                "JOIN users USING(user_id) " +
-                "WHERE user_id = ? OR host_id = ?;";
+                "SELECT event_id, event_title, event_time, decision_time, host_id FROM event " +
+                "LEFT JOIN guest USING(event_id) " +
+                "LEFT JOIN users USING(user_id) " +
+                "WHERE user_id = ? OR host_id = ? " +
+                "GROUP BY event_id;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
 
@@ -55,7 +56,7 @@ public class JdbcEventDao extends JdbcForAll implements EventDao {
     public List<Event> getEventsByHostId(long hostId) {
         String sql =
                 "SELECT event_id, event_title, event_time, decision_time, host_id FROM event " +
-                "WHERE host_id = ?";
+                "WHERE host_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, hostId);
 
         List<Event> events = new ArrayList<>();

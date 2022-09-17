@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -54,11 +56,23 @@ public class EventService {
     }
 
     public List<Event> getEventsByHost(long id) {
-        return eventDao.getEventsByHostId(id);
+        return getProcessedEventList(eventDao.getEventsByHostId(id));
     }
 
     public List<Event> getEventsByUser(long id) {
-        return eventDao.getEventsByUserId(id);
+        return getProcessedEventList(eventDao.getEventsByUserId(id));
+    }
+
+    private List<Event> getProcessedEventList(List<Event> oldEvents) {
+        List<Event> bigEvents = new ArrayList<>();
+
+        Collections.sort(oldEvents);
+
+        for(Event event : oldEvents) {
+            bigEvents.add(getEvent(event.getId()));
+        }
+
+        return bigEvents;
     }
 
     @Transactional
