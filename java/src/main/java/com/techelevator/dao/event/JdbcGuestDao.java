@@ -21,10 +21,11 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
         String addGuestSql =
                 "INSERT INTO guest (event_id, url, nickname) " +
                 "VALUES(?, ?, ?) " +
-                "RETURNING guest_id";
+                "RETURNING guest_id;";
 
         Long id = jdbcTemplate.queryForObject(addGuestSql, Long.class,
-                eventId, newGuest.getUrl(), newGuest.getNickname());
+                eventId, newGuest.getInviteUrl(), newGuest.getNickname());
+
         return id != null ? id : -1;
     }
 
@@ -80,7 +81,7 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
                 "WHERE guest_id = ?;";
 
         int numberOfRowsUpdated = jdbcTemplate.update(sql,
-                updatedGuest.getNickname(), updatedGuest.getUrl(), updatedGuest.getUserId(),
+                updatedGuest.getNickname(), updatedGuest.getInviteUrl(), updatedGuest.getUserId(),
                 updatedGuest.getId());
 
         return numberOfRowsUpdated == 1;

@@ -40,6 +40,7 @@ public class EventController {
 
     @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
+        System.out.println(newEvent);
         return service.addEvent(newEvent);
     }
 

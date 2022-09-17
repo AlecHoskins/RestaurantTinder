@@ -78,7 +78,7 @@ public abstract class JdbcForAll {
         guest.setId((result.getLong(("guest_id"))));
         guest.setEventId(result.getLong(("event_id")));
         guest.setNickname(result.getString("nickname"));
-        guest.setUrl(result.getString("url"));
+        guest.setInviteUrl(result.getString("url"));
         guest.setUserId(result.getLong("user_id"));
 
         return guest;
@@ -87,8 +87,11 @@ public abstract class JdbcForAll {
     protected Vote mapRowToVote(SqlRowSet result) {
         Vote vote = new Vote();
 
-        vote.setUpVote(result.getBoolean("up_vote"));
+        String upVote = result.getString("up_vote");
+        vote.setUpVote(upVote == null ? null : Boolean.parseBoolean(upVote));
+
         vote.setRestaurantId(result.getString("restaurant_id"));
+
         return vote;
     }
 }

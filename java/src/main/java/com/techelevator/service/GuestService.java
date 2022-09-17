@@ -35,9 +35,11 @@ public class GuestService {
     public Guest getGuestByUrl(String url) {
         Guest guest = guestDao.getGuestByUrl(url);
 
-        System.out.println(guest);
+//        System.out.println(guest);
 
         guest.setVote(guestVoteDao.getVotesByGuest(guest.getId()));
+
+//        System.out.println(guest);
 
         return guest;
     }
@@ -49,7 +51,7 @@ public class GuestService {
         List<Guest> guests = guestDao.getEventGuests(id);
         for(Guest guest : guests) {
             guest.setVote(guestVoteDao.getVotesByGuest(guest.getId()));
-            guest.setUrl(null); // DON'T LET THEM SEE IT
+            guest.setInviteUrl(null); // DON'T LET THEM SEE IT
         }
         event.setGuestList(guests);
 

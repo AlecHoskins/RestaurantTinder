@@ -24,6 +24,9 @@ public class JdbcEventRestaurantDao extends JdbcForAll implements EventRestauran
 
         int response = jdbcTemplate.update(sql, restaurantId, eventId);
 
+        // TODO : sout
+        System.out.println(response);
+
         return response > 0;
     }
 

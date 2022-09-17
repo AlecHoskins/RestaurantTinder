@@ -5,6 +5,14 @@ public class Vote {
     private String restaurantId;
     private Boolean upVote;
 
+    @Override
+    public String toString() {
+        return (
+                "restaurantId: " + restaurantId + "\n" +
+                "upVote: " + upVote + "\n"
+        );
+    }
+
     public String getRestaurantId() {
         return restaurantId;
     }

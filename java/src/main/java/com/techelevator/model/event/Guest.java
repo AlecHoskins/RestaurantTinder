@@ -7,8 +7,8 @@ public class Guest {
     private long id;
     private long eventId;
     private String nickname;
-    private String url;
-    private long userId;
+    private String inviteUrl;
+    private Long userId;
     private List<Vote> vote;
 
     @Override
@@ -17,8 +17,9 @@ public class Guest {
                 "id: " + id + "\n" +
                 "eventId: " + eventId + "\n" +
                 "nickname: " + nickname + "\n" +
-                "url: " + url + "\n" +
-                "userId: " + userId + "\n"
+                "url: " + inviteUrl + "\n" +
+                "userId: " + userId + "\n" +
+                "votes: " + vote + "\n"
                 );
     }
 
@@ -46,19 +47,19 @@ public class Guest {
         this.nickname = nickname;
     }
 
-    public String getUrl() {
-        return url;
+    public String getInviteUrl() {
+        return inviteUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setInviteUrl(String inviteUrl) {
+        this.inviteUrl = inviteUrl;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -70,11 +71,11 @@ public class Guest {
         this.vote = vote;
     }
 
-    public Guest(long id, long eventId, String nickname, String inviteUrl, long userId, List<Vote> vote) {
+    public Guest(long id, long eventId, String nickname, String inviteUrl, Long userId, List<Vote> vote) {
         this.id = id;
         this.eventId = eventId;
         this.nickname = nickname;
-        this.url = inviteUrl;
+        this.inviteUrl = inviteUrl;
         this.userId = userId;
         this.vote = vote;
     }

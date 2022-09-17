@@ -77,10 +77,12 @@ public class EventService {
         }
 
         // TODO : Add host as guest
+        System.out.println(newEvent.getGuestList());
 
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
             if(id < 0) {
+//                System.out.println("guestId: " + id);
                 return null; // TODO : check rollback
             }
         }
@@ -118,11 +120,12 @@ public class EventService {
     @Transactional
     public long addGuest(Guest guest, long eventId) {
         long guestId = guestDao.addGuest(guest, eventId);
+//        System.out.println(guestId);
 
         if(guestId > 0) {
             guest.setId(guestId);
-
-            guest.setUrl(guestId + "");
+            // TODO : add eventId to guest
+            guest.setInviteUrl(guestId + "");
 
             guestDao.updateGuest(guest);
 
