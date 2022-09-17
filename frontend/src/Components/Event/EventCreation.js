@@ -65,11 +65,7 @@ function EventCreation(props) {
 		const createGuestListDTO = () => {
 			return formValues.map((guest) => {
 				return {
-					id: 0,
-					eventId: 0, // not known yet at time of creation
 					nickname: guest.name,
-					inviteUrl: '',
-					userId: 0, //not known yet at time of creation
 					vote: []
 				}
 			})
@@ -77,10 +73,7 @@ function EventCreation(props) {
 		let guestListDTO = createGuestListDTO();
 		//add the current user to the guest list
 		guestListDTO.push({
-			id: 0,
-			eventId: 0,
 			nickname: props.user.username,
-			inviteUrl: '',
 			userId: props.user.id,
 			vote: []
 		})
