@@ -57,41 +57,11 @@ class Main extends Component {
     render(){
 
         return(
-<<<<<<< HEAD
-			(this.props.urls && this.props.urls.urls) ? 
-				<div>
-					<Navbar />
-					{/* {this.props.token.token !== undefined ?
-								<Redirect to='/home'/>
-						: 
-						<Redirect to='/home'/>  
-					} */}
-					{this.props.urls ? 
-						<Switch>
-							<Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-							<Route path='/login' component={this.props.token.token !== undefined ? () => <Redirect to='/home' /> : () => <Login/>}/>
-							<Route path='/register'component={() => <Register/>}/>
-							<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
-							<Route path='/event' component={this.props.token.token !== undefined ? () => <EventCreation/> : () => <Login/>}/>
-							<Route path='/myevents' component={this.props.token.token !== undefined ? () => <MyEvents/> : () => <Login/>}/>
-							<Route path='/eventview/:id/:guestcode?' component={() => <EventView />}/>
-							<Redirect to='/home'/>
-						</Switch>
-					: 
-						<Switch>
-						<Route path='/errorpage/' component={() => <ErrorPage />} />
-						<Redirect to='/errorpage/' />
-						</Switch>}
-					<Footer />
-				</div>
-				: <></>
-=======
             <div>
 				<Navbar />
                 <AnimatedRoutes />
 				<Footer />
             </div>
->>>>>>> 6cf9a229d57489e90e6289267ce41d52d9d1588b
         )
     }
 } 
