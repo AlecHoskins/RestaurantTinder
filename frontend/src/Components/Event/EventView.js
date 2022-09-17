@@ -191,6 +191,11 @@ function EventView(props) {
         )))
     }
 
+	const handleLinkCopy = (guest) => {
+		const link = urlRoot + "/eventview/" + props.event.id + "/" + guest.inviteUrl;
+		navigator.clipboard.writeText(link);
+	}
+
     return (
         <div className="eventView">
 			{(loaded && !token && !guest) ? <Navigate to="/login" /> : <></>}
@@ -220,11 +225,12 @@ function EventView(props) {
 						<tbody>
 							
 						{props.event.guestList.map((guest) => {
-							return (
+							return (guest.id !== props.event.hostId ? 
 								<tr key={guest.id}>
 									<th>{guest.nickname}</th>
-									<td>{urlRoot + "/eventview/" + props.event.id + "/" + guest.inviteUrl}</td>
+									<td><button className="link-copy" onClick={() => handleLinkCopy(guest)}>link</button></td>
 								</tr>
+								: null
 							);
 						})}
 						</tbody>
