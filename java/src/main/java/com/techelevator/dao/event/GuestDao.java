@@ -11,6 +11,7 @@ public interface GuestDao {
 
     // Read
     Guest getGuestById(long id);
+    Guest getGuestByUrl(String url);
     List<Guest> getEventGuests(long eventId);
 
     // Update

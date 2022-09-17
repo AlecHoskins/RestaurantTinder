@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/yelp")
 //@PreAuthorize("isAuthenticated()")
 public class YelpController {
     @Autowired
     YelpBusinessService yelpBusinessService;
 
-    @GetMapping(path = "/yelp")
+    @GetMapping()
     public Restaurant[] search(
             @RequestParam (defaultValue = "restaurant") String term,
             @RequestParam (defaultValue = "78229") String location,
@@ -27,7 +28,7 @@ public class YelpController {
         return search.getRestaurants();
     }
 
-    @GetMapping(path = "/yelp/{id}")
+    @GetMapping(path = "/{id}")
     public Restaurant restaurant(@PathVariable String id) {
         return yelpBusinessService.getBusinessById(id);
     }

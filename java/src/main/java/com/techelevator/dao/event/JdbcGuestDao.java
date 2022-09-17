@@ -18,15 +18,13 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
 
     @Override
     public long addGuest(Guest newGuest, long eventId) {
-
         String addGuestSql =
                 "INSERT INTO guest (event_id, url, nickname) " +
                 "VALUES(?, ?, ?) " +
                 "RETURNING guest_id";
 
-
         Long id = jdbcTemplate.queryForObject(addGuestSql, Long.class,
-                eventId, newGuest.getInviteUrl(), newGuest.getNickname());
+                eventId, newGuest.getUrl(), newGuest.getNickname());
         return id != null ? id : -1;
     }
 
@@ -36,6 +34,20 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
                 "SELECT guest_id, event_id, nickname, url, user_id FROM guest " +
                 "WHERE guest_id = ?;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+
+        if(result.next()) {
+            return mapRowToGuest(result);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Guest getGuestByUrl(String url) {
+        String sql =
+                "SELECT guest_id, event_id, nickname, url, user_id FROM guest " +
+                "WHERE url = ?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, url);
 
         if(result.next()) {
             return mapRowToGuest(result);
@@ -62,7 +74,16 @@ public class JdbcGuestDao extends JdbcForAll implements GuestDao {
 
     @Override
     public boolean updateGuest(Guest updatedGuest) {
-        return false;
+        String sql =
+                "UPDATE guest " +
+                "SET nickname = ?, url = ?, user_id = ? " +
+                "WHERE guest_id = ?;";
+
+        int numberOfRowsUpdated = jdbcTemplate.update(sql,
+                updatedGuest.getNickname(), updatedGuest.getUrl(), updatedGuest.getUserId(),
+                updatedGuest.getId());
+
+        return numberOfRowsUpdated == 1;
     }
 
     @Override

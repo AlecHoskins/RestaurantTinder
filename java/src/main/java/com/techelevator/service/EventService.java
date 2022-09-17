@@ -16,31 +16,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EventService {
 
-    @Autowired
-    private YelpBusinessService yelpBusinessService;
+    @Autowired private YelpBusinessService yelpBusinessService;
 
-    @Autowired
-    private EventDao eventDao;
-    @Autowired
-    private GuestDao guestDao;
-    @Autowired
-    private GuestVoteDao guestVoteDao;
-    @Autowired
-    private EventRestaurantDao eventRestaurantDao;
-    @Autowired
-    private RestaurantDao restaurantDao;
-    @Autowired
-    private CategoryDao categoryDao;
-    @Autowired
-    private RestaurantCategoryDao restaurantCategoryDao;
-    @Autowired
-    private RestaurantHoursDao restaurantHoursDao;
+    @Autowired private EventDao eventDao;
+    @Autowired private EventRestaurantDao eventRestaurantDao;
+
+    @Autowired private GuestDao guestDao;
+    @Autowired private GuestVoteDao guestVoteDao;
+
+    @Autowired private RestaurantDao restaurantDao;
+    @Autowired private CategoryDao categoryDao;
+    @Autowired private RestaurantCategoryDao restaurantCategoryDao;
+    @Autowired private RestaurantHoursDao restaurantHoursDao;
 
     public Event getEvent(long id) {
         Event event = eventDao.getEventById(id);
@@ -65,6 +57,10 @@ public class EventService {
         return eventDao.getEventsByHostId(id);
     }
 
+    public List<Event> getEventsByUser(long id) {
+        return eventDao.getEventsByUserId(id);
+    }
+
     @Transactional
     public Event addEvent(Event newEvent) {
         long eventId = eventDao.addEvent(newEvent);
@@ -80,12 +76,16 @@ public class EventService {
             }
         }
 
+        // TODO : Add host as guest
+
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
             if(id < 0) {
                 return null; // TODO : check rollback
             }
         }
+
+
 
         return getEvent(eventId);
     }
@@ -106,7 +106,9 @@ public class EventService {
 
                 restaurantCategoryDao.addRestaurantCategory(restaurant.getId(), categoryId);
             }
-            restaurantHoursDao.addAllHours(restaurant.getHours(), restaurant.getId());
+            if(restaurant.getHours() != null) {
+                restaurantHoursDao.addAllHours(restaurant.getHours(), restaurant.getId());
+            }
             return true;
         }
 
@@ -117,9 +119,12 @@ public class EventService {
     public long addGuest(Guest guest, long eventId) {
         long guestId = guestDao.addGuest(guest, eventId);
 
-        // TODO : generate guest URL & update database
-
         if(guestId > 0) {
+            guest.setId(guestId);
+
+            guest.setUrl(guestId + "");
+
+            guestDao.updateGuest(guest);
 
             Event event = getEvent(eventId);
             List<Restaurant> restaurants = event.getEventRestaurants();

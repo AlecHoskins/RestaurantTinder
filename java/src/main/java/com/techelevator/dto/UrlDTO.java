@@ -6,15 +6,13 @@ import org.springframework.stereotype.Repository;
 
 public class UrlDTO {
 
-    @JsonProperty
-    private final String BASE_URL = "http://localhost:8081/";
+    @JsonProperty private final String BASE_URL = "http://localhost:8081/";
     /**UrlController
      * Method: GET
      * Authenticated: FALSE
      * */
 
-    @JsonProperty
-    private final String login = BASE_URL + "login";
+    @JsonProperty private final String login = BASE_URL + "login";
     /**AuthenticationController
      * Method: POST
      * Body:
@@ -25,8 +23,7 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
-    @JsonProperty
-    private final String register = BASE_URL + "register";
+    @JsonProperty private final String register = BASE_URL + "register";
     /**AuthenticationController
      * Method: POST
      * Body:
@@ -39,55 +36,55 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
-    @JsonProperty
-    private final String getUsername = BASE_URL + "username";
+    @JsonProperty private final String getUsername = BASE_URL + "username";
     /**UserController
      * Method: GET
      * Authenticated: TRUE
      * */
 
-    @JsonProperty
-    private final String yelp = BASE_URL + "yelp";
+    @JsonProperty private final String yelp = BASE_URL + "yelp";
     /**YelpController
      * Method: GET
      * Parameters: String term, String location, int eventUnixTime
      * Authenticated: TRUE
      * */
 
-    @JsonProperty
-    private final String yelpById = BASE_URL + "yelp/";
+    @JsonProperty private final String yelpById = BASE_URL + "yelp/";
     /**YelpController
      * Method: GET
      * Path variables: yelp/{id}
      * Authenticated: TRUE
      * */
 
-    @JsonProperty
-    private final String getRestaurant = BASE_URL + "restaurant/";
+//    @JsonProperty private final String getRestaurant = BASE_URL + "restaurant/";
     /**RestaurantController
      * Method: GET
      * Path variables: restaurant/{id}
      * Authenticated: TRUE (disabled for testing)
      * */
 
-    @JsonProperty
-    private final String getEvent = BASE_URL + "event/";
+    @JsonProperty private final String getEvent = BASE_URL + "event/";
     /**EventController
      * Method: GET
      * Path variables: event/{id}
      * Authenticated: TRUE (disabled for testing)
      * */
 
-    @JsonProperty
-    private final String getHostEvents = BASE_URL + "event/host/";
+    @JsonProperty private final String getHostEvents = BASE_URL + "event/host/";
     /**EventController
      * Method: GET
      * Path variables: event/host/{id}
-     * Authenticated: TRUE (disabled for testing)
+     * Authenticated: TRUE
      * */
 
-    @JsonProperty
-    private final String addEvent = BASE_URL + "event";
+    @JsonProperty private final String getUserEvents = BASE_URL + "event/user/";
+    /**EventController
+     * Method: GET
+     * Path variables: event/user/{id}
+     * Authenticated: TRUE
+     * */
+
+    @JsonProperty private final String addEvent = BASE_URL + "event";
     /**EventController
      * Method: POST
      * Body:
@@ -101,5 +98,32 @@ public class UrlDTO {
      * }
      * Authenticated: TRUE (disabled for testing)
      * */
+
+    @JsonProperty private final String getGuest = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    /**GuestController
+     * Method: GET
+     * Path variables: ?????
+     * Authenticated: FALSE
+     * */
+
+    @JsonProperty private final String getGuestEvent = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    /**GuestController
+     * Path variables: ?????
+     * Authenticated: FALSE
+     * */
+
+
+    @JsonProperty private final String updateVote = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    /**GuestController
+     * Method: PUT
+     * Path variables: ?????
+     * Body:
+     * {
+     *     String restaurantId;
+     *     Boolean upVote;
+     * }
+     * Authenticated: FALSE
+     * */
+
 
 }

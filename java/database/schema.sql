@@ -120,7 +120,7 @@ CREATE TABLE guest (
    guest_id int DEFAULT nextval('seq_guest_id'::regclass) NOT NULL,
    event_id int NOT NULL,
    nickname varchar(50) NOT NULL,
-   url varchar(200) NOT NULL,
+   url varchar(200),
    user_id int,
    CONSTRAINT PK_guest PRIMARY KEY (guest_id),
    CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id),

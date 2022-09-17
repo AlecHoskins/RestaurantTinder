@@ -78,7 +78,7 @@ public abstract class JdbcForAll {
         guest.setId((result.getLong(("guest_id"))));
         guest.setEventId(result.getLong(("event_id")));
         guest.setNickname(result.getString("nickname"));
-        guest.setInviteUrl(result.getString("url"));
+        guest.setUrl(result.getString("url"));
         guest.setUserId(result.getLong("user_id"));
 
         return guest;

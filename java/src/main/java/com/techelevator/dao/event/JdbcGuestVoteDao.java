@@ -62,7 +62,16 @@ public class JdbcGuestVoteDao extends JdbcForAll implements GuestVoteDao {
 
     @Override
     public boolean updateVote(long guestId, Vote updatedVote) {
-        return false;
+        String sql =
+                "UPDATE guest_vote " +
+                "SET up_vote = ? " +
+                "WHERE guest_id = ? AND restaurant_id = ?;";
+
+        int numberOfRowsUpdated = jdbcTemplate.update(sql,
+                updatedVote.getUpVote(),
+                guestId, updatedVote.getRestaurantId());
+
+        return numberOfRowsUpdated == 1;
     }
 
     @Override

@@ -56,10 +56,10 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
             days.add(mapRowToDay(result));
         }
 
-        List<Hours> hours = new ArrayList<>();
         Hours hoursObj = new Hours();
         hoursObj.setOpen(days);
 
+        List<Hours> hours = new ArrayList<>();
         hours.add(hoursObj);
 
         return hours;

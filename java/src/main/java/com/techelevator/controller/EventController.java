@@ -5,6 +5,7 @@ import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.service.EventService;
 import com.techelevator.service.RestaurantService;
 import com.techelevator.service.YelpBusinessService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -32,14 +33,14 @@ public class EventController {
         return service.getEventsByHost(id);
     }
 
+    @GetMapping("/user/{id}") // TODO : Order by event date
+    public List<Event> getEventsByUser(@PathVariable long id) {
+        return service.getEventsByUser(id);
+    }
+
     @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
         return service.addEvent(newEvent);
-    }
-
-    @PutMapping("/{id}")
-    public void vote() { // TODO: add request params to take in restaurant & vote
-        return;
     }
 
 }

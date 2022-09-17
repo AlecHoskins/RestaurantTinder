@@ -32,13 +32,13 @@ public class JdbcEventDao extends JdbcForAll implements EventDao {
         return null;
     }
 
-     // WIP
     @Override
     public List<Event> getEventsByUserId(long userId) {
         String sql =
                 "SELECT event_id, event_title, event_time, decision_time, host_id, user_id FROM event " +
-                "JOIN guest USING(event_id) JOIN users USING(user_id) " +
-                "WHERE user_id = ? AND host_id = ?;";
+                "JOIN guest USING(event_id) " +
+                "JOIN users USING(user_id) " +
+                "WHERE user_id = ? OR host_id = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
 
