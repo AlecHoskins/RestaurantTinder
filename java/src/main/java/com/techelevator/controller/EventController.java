@@ -44,7 +44,7 @@ public class EventController {
         try {
             return service.addEvent(newEvent);
         } catch(TransactionRollbackException e) {
-            System.out.println(e.getMessage());
+            System.out.println("EventController exception: " + e.getMessage());
             return null;
         }
     }

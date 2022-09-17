@@ -34,7 +34,7 @@ public class GuestController {
         try {
             service.vote(guest);
         } catch (TransactionRollbackException e) {
-            System.out.println(e.getMessage());
+            System.out.println("GuestController exception: " + e.getMessage());
         }
     }
 
