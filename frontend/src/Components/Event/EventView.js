@@ -225,11 +225,12 @@ function EventView(props) {
 						<tbody>
 							
 						{props.event.guestList.map((guest) => {
-							return (
+							return (guest.id !== props.event.hostId ? 
 								<tr key={guest.id}>
 									<th>{guest.nickname}</th>
 									<td><button className="link-copy" onClick={() => handleLinkCopy(guest)}>link</button></td>
 								</tr>
+								: null
 							);
 						})}
 						</tbody>
