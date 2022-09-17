@@ -1,8 +1,13 @@
 import React from "react";
 import './EventView.css';
 import {connect} from 'react-redux'
+<<<<<<< HEAD
 import { Redirect, withRouter } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
+=======
+import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+>>>>>>> 6cf9a229d57489e90e6289267ce41d52d9d1588b
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
@@ -224,4 +229,4 @@ function EventView(props) {
     )
 }
 
-export default withRouter(connect(mapStateToProps)(EventView));
+export default connect(mapStateToProps)(EventView);

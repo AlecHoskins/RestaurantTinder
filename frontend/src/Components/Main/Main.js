@@ -16,6 +16,7 @@ import baseUrl from '../../Shared/baseUrl'
 import EventView from '../Event/EventView'
 import axios from 'axios'
 import ErrorPage from '../ErrorPage/ErrorPage'
+import AnimatedRoutes from '../Animations/AnimatedRoutes'
 
 const mapStateToProps = state => {
     return {
@@ -56,6 +57,7 @@ class Main extends Component {
     render(){
 
         return(
+<<<<<<< HEAD
 			(this.props.urls && this.props.urls.urls) ? 
 				<div>
 					<Navbar />
@@ -83,8 +85,15 @@ class Main extends Component {
 					<Footer />
 				</div>
 				: <></>
+=======
+            <div>
+				<Navbar />
+                <AnimatedRoutes />
+				<Footer />
+            </div>
+>>>>>>> 6cf9a229d57489e90e6289267ce41d52d9d1588b
         )
     }
 } 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

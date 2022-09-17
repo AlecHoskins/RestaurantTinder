@@ -81,4 +81,4 @@ function Navbar(props) {
 
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
