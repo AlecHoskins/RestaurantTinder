@@ -99,24 +99,23 @@ public class UrlDTO {
      * Authenticated: TRUE (disabled for testing)
      * */
 
-    @JsonProperty private final String getGuest = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String getGuest = BASE_URL + "guest/"; // TODO : Ask frontend how they want these URLs
     /**GuestController
      * Method: GET
-     * Path variables: ?????
+     * Path variables: guest/{url}
      * Authenticated: FALSE
      * */
 
-    @JsonProperty private final String getGuestEvent = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String getGuestEvent = BASE_URL + "guest/event/"; // TODO : Ask frontend how they want these URLs
     /**GuestController
-     * Path variables: ?????
+     * Path variables: guest/event/{url}
      * Authenticated: FALSE
      * */
 
-
-    @JsonProperty private final String updateVote = BASE_URL + ""; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String updateVote = BASE_URL + "guest/"; // TODO : Ask frontend how they want these URLs
     /**GuestController
      * Method: PUT
-     * Path variables: ?????
+     * Path variables: guest/{url}
      * Body:
      * {
      *     String restaurantId;

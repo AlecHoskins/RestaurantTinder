@@ -77,7 +77,7 @@ public class EventService {
         }
 
         // TODO : Add host as guest
-        System.out.println(newEvent.getGuestList());
+//        System.out.println(newEvent.getGuestList());
 
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
