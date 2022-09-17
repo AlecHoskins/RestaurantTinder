@@ -32,7 +32,9 @@ function AnimatedRoutes(props) {
                             <Route path='/nearme'element={props.token.token !== undefined ? <NearMe/> : <Login/>}/>
                             <Route path='/event' element={props.token.token !== undefined ? <EventCreation/> : <Login/>}/>
                             <Route path='/myevents' element={props.token.token !== undefined ? <MyEvents/> : <Login/>}/>
-                            <Route path='/eventview/:id' element={<EventView />}/>
+                            <Route path='/eventview/:id' element={<EventView />}>
+								<Route path='/eventview/:id/:guestid' element={<EventView />} />
+							</Route>
                         </Routes>
                     : 
                         <Routes>

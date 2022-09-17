@@ -1,21 +1,10 @@
 import {Component} from 'react'
-import {Switch, Route, Redirect} from 'react-router-dom'
-import Login from '../Login/Login'
-import Register from '../Register/Register'
-import Home from '../Home/Home'
 import {addToken, deleteUser, setURLs, deleteCurrentEvent} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
-import NearMe from '../NearMe/NearMe'
-import MainPage from '../MainPage/MainPage'
-import EventCreation from '../Event/EventCreation'
-import MyEvents from '../MyEvents/MyEvents'
 import baseUrl from '../../Shared/baseUrl'
-import EventView from '../Event/EventView'
 import axios from 'axios'
-import ErrorPage from '../ErrorPage/ErrorPage'
 import AnimatedRoutes from '../Animations/AnimatedRoutes'
 
 const mapStateToProps = state => {
@@ -40,11 +29,15 @@ class Main extends Component {
     constructor(props){
         super(props);
 
+		this.getUrls();
+        
+    }
+
+	getUrls = () => {
 		axios.get(baseUrl).then((response) => {
 			this.props.setURLs(response.data);
 		})
-        
-    }
+	}
 
     handleLogout = () => {
         this.props.addToken("")
@@ -55,6 +48,11 @@ class Main extends Component {
 
 
     render(){
+
+		if (!this.props.urls.urls) {
+			console.log('reget urls');
+			this.getUrls();
+		}
 
         return(
             <div>
