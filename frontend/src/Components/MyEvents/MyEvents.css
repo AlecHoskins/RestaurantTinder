@@ -7,6 +7,32 @@
     z-index: -1;
 }
 
+.myEvents {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.myEvents::-webkit-scrollbar {
+    width: 20px;
+}
+
+.myEvents::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+.myEvents::-webkit-scrollbar-thumb {
+    background: #004e63; 
+    border-radius: 10px;
+}
+
+.myEvents::-webkit-scrollbar-thumb:hover {
+    background: #003d4e; 
+}
+
 .myEventsCard {
     position: absolute;
     top: 15%;

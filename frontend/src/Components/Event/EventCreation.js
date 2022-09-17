@@ -36,19 +36,36 @@ function EventCreation(props) {
 
 		//validate form:
 		let validation = '';
-		if (props.event.eventTitle === '') { validation += '-Event title must not be empty \n'}
+		console.log(props.event)
+		if (props.event.eventTitle === undefined) { validation += '-Event title must not be empty \n'}
 		let emptyGuest = formValues.find((guest) => guest.name === '');
 		if (emptyGuest) { validation += '-Guest names must not be empty. Please enter a guest name.\n' }
+		let todaysDate = new Date();
+		let eventDate;
+		let decisionDate;
+		let isEventDateEmpty = false;
+		let isDecisionDateEmpty = false;
+		if (props.event.eventDayTime === '') {
+			validation += '-Event Date must not be empty \n';
+			isEventDateEmpty = true;
+		} else {
+			eventDate = new Date(props.event.eventDayTime);
+		}
+		if (props.event.decisionDeadline === undefined) {
+			validation += '-Guest Decision Deadline must not be empty \n';
+			isDecisionDateEmpty = true;
+		} else {
+			decisionDate = new Date(props.event.decisionDeadline);
+		}
+		if((eventDate <= todaysDate) && !isEventDateEmpty) { validation += '-Event must be for a future date \n'}
+		if((decisionDate <= todaysDate) && !isDecisionDateEmpty) { validation += '-Guest Decision Deadline must be for a future date \n'}
+		if((decisionDate >= eventDate) && !isDecisionDateEmpty) { validation += '-Guest Decision Deadline must occur before the Event date \n'}
 		if (validation.length > 0) { alert(validation); return; }
 
 		const createGuestListDTO = () => {
 			return formValues.map((guest) => {
 				return {
-					id: 0,
-					eventId: 0, // not known yet at time of creation
 					nickname: guest.name,
-					inviteUrl: '',
-					userId: 0, //not known yet at time of creation
 					vote: []
 				}
 			})
@@ -56,10 +73,7 @@ function EventCreation(props) {
 		let guestListDTO = createGuestListDTO();
 		//add the current user to the guest list
 		guestListDTO.push({
-			id: 0,
-			eventId: 0,
 			nickname: props.user.username,
-			inviteUrl: '',
 			userId: props.user.id,
 			vote: []
 		})

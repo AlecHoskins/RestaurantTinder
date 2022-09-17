@@ -10,6 +10,7 @@ import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeForma
 
 const mapStateToProps = state => {
     return {
+		userId: (state.user) ? state.user.id : 0,
 		event: state.event,
         token: state.token,
 		urls: state.urls,
@@ -28,8 +29,11 @@ function EventView(props) {
     const tdRed = '/thumbsdownred.png';
     const phoneLogo = '/phone-icon.png';
     const blob = '/yellowblobsignup.png';
+	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const timeOptions = { timeStyle: 'short'};
 
 	const [guest, setGuest] = useState();
+	const [isGuest, setIsGuest] = useState(false);
 	const [votes, setVotes] = useState([]);
 
 	const loadEvent = async() => {
@@ -37,8 +41,29 @@ function EventView(props) {
 			const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
-			if (myEvents) { 
-				props.dispatch(setEvent(myEvents.data)) 
+			const data = myEvents.data;
+			if (data) { 
+				await props.dispatch(setEvent(data)) 
+				//set as guest if the host Id is not the logged in user
+				setIsGuest((data.hostId !== props.userId));
+				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
+					let currentGuest = null;
+					console.log("guestlist has guests");
+					console.log(data.guestList);
+					if(props.token /* the user is logged in */) {
+						console.log("guest is logged in");
+						console.log(data.guestList);
+						currentGuest = data.guestList.find((guest) => guest.userId === props.userId);
+					} else { /* the user is not logged in */
+						const guestId = props.match.params.guestcode;
+						currentGuest = data.guestList.find((guest) => guest.id === guestId);
+					}
+					console.log("Current guest: " + currentGuest);
+					if (currentGuest) {
+						setGuest(currentGuest);
+						setVotes(currentGuest.votes);
+					}
+				}
 			}
 		}
 	}
@@ -47,8 +72,8 @@ function EventView(props) {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
 		loadEvent();
-		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
-		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
+		//setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
+		//setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
 	}, []);
 
@@ -161,13 +186,13 @@ function EventView(props) {
             <div className="eventCard">
                 <div className="eventInfo">
                     {/* If a User is a guest*/}
-					{(guest) ? <h1>Welcome, {guest.nickname}!</h1>
+					{isGuest ? <h1>Welcome, {guest.nickname}!</h1>
 					: <></>
 					}
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
-                    <h2>Event Date and Time: {new Date(props.event.eventDayTime).toLocaleString('en-US')}</h2>
-                    <h2>Event Due Date: {new Date(props.event.decisionDeadline).toLocaleString('en-US')}</h2>
+                    <h2>{new Date(props.event.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</h2>
+                    <h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(!guest && props.token) ? 

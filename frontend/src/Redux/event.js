@@ -3,6 +3,7 @@ import * as ActionTypes from "./actionTypes";
 export const Event = (
   state = {
 	id: undefined,
+	hostId: undefined,
 	eventTitle: undefined,
     eventDayTime: undefined,
     decisionDeadline: undefined,
@@ -19,7 +20,7 @@ export const Event = (
     case ActionTypes.SET_EVENT_DEADLINE_DATE:
       return { ...state, decisionDeadline: action.payload };
 	case ActionTypes.DELETE_EVENT:
-		return {...state, id: undefined, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, eventRestaurants: [], guestList: []};
+		return {...state, hostId: undefined, id: undefined, eventDayTime: undefined, decisionDeadline: undefined, eventTitle: undefined, eventRestaurants: [], guestList: []};
 	case ActionTypes.SET_EVENT_TITLE: 
 		return {...state, eventTitle: action.payload}
 	case ActionTypes.SET_EVENT_GUESTS:
@@ -31,6 +32,7 @@ export const Event = (
 	case ActionTypes.SET_EVENT:
 		return {
 			...state, 
+			hostId: action.payload.hostId,
 			id: action.payload.id,
 			eventTitle: action.payload.eventTitle,
 			eventDayTime: action.payload.eventDayTime,

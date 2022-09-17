@@ -73,9 +73,8 @@ function MyEvents(props) {
 					{events && events.length > 0 ? <h5>You currently have {events.length} event{events.length === 1 ? "" : "s"} scheduled.</h5> : <span></span>}
 					<button>Add New Invite Link</button>
 				</div>
-				<div className='myEvents'>
 					{events && events.length > 0 ? 
-							<div className='upcomingEvents'>
+							<div className='myEvents'>
 								{getMapOfEventCards(events)}
 							</div>
 						:
@@ -89,7 +88,6 @@ function MyEvents(props) {
 							</div>
 						</div>
 					}
-				</div>
 			</div>
 			{newEventCreated ? <Redirect to={'/nearme'}/> : <></>}
 		</div>

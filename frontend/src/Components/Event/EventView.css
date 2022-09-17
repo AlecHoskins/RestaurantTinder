@@ -88,7 +88,7 @@
     opacity: 1.0;
     color: white;
     display: grid;
-    grid-template-columns: 270px 1fr 1fr;
+    grid-template-columns: 280px 1fr 1fr;
     grid-template-areas: 
         "title title thumbs"
         "image info info";
@@ -124,8 +124,8 @@
 }
 
 .imageSection img {
-    height: 250px;
-    width: 250px;
+    height: 260px;
+    width: 260px;
     object-fit: cover;
 }
 
@@ -157,6 +157,19 @@
 
     .eventRestaurants {
         height: 71%;
+    }
+
+    .restaurantCard {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "title thumbs"
+            "image image"
+            "info info";
+    }
+
+    .imageSection img {
+        height: 300px;
+        width: 100%;
     }
 
 }
