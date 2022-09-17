@@ -53,7 +53,7 @@ function MyEvents(props) {
 				return (<div key={e.id} className='upcomingCard'>
 					<Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
 					<h5>{e.eventTitle}</h5>
-					<div>{new Date(e.eventDayTime).toLocaleDateString('en-US')}</div>
+					<div>{new Date(e.eventDayTime).toLocaleString('en-US')}</div>
 					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}
 				</div>);
 				// return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)

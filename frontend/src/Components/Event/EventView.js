@@ -6,6 +6,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
+import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
 
 const mapStateToProps = state => {
     return {
@@ -142,8 +143,8 @@ function EventView(props) {
 					}
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
-                    <h2>Event Date and Time: {new Date(props.event.eventDayTime).toLocaleDateString('en-US')}</h2>
-                    <h2>Event Due Date: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US')}</h2>
+                    <h2>Event Date and Time: {new Date(props.event.eventDayTime).toLocaleString('en-US')}</h2>
+                    <h2>Event Due Date: {new Date(props.event.decisionDeadline).toLocaleString('en-US')}</h2>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(!guest && props.token) ? 
