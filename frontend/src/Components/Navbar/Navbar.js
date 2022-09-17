@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect, useSelector } from 'react-redux'
+import { motion } from "framer-motion";
 import {addToken, deleteUser, deleteCurrentEvent } from '../../Redux/actionCreators'
-import { withRouter } from 'react-router-dom';
 import './Navbar.css';
 
 const mapStateToProps = state => {
@@ -36,6 +36,34 @@ function Navbar(props) {
     setCheckec(old => !old)
   }
 
+  const variants = {
+    open: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 }
+      }
+    },
+    closed: { 
+      opacity: 0, 
+      y: 50,
+      transition: {
+        y: { stiffness: 1000 }
+      } 
+    }
+  }
+
+  const variantsChildren = {
+    open: {
+      opacity: 1,
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    },
+    closed: {
+      opacity: 0,
+      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    }
+  }
+
 	let token = useSelector(state => state.token.token);
   return (
     <nav sticky="top">
@@ -60,19 +88,25 @@ function Navbar(props) {
         <label className="hamburgerLabel">
           <input className="hamburgerInput" type="checkbox" checked={checked}/>
           <span className="menu" onClick={handleCheck}> <span className="hamburger"></span> </span>
-          {checked ? <ul className="hamburgerItems">
-            <li onClick={handleCheck}><Link to="/home">Home</Link></li>
-            <li onClick={handleCheck}><Link to="/myevents">My Events</Link></li>
-            <li onClick={handleCheck}>{!token ? (<Link to="/login">New Event</Link>) : (<Link to="/nearme">New Event</Link>)}</li>
-            <li onClick={handleCheck}>{!token ? (<Link to="/login">Login</Link>) : (<span onClick={handleLogout}>Logout</span>) }</li>
-            {!token ? (<li onClick={handleCheck}><Link to="/register">Sign Up</Link></li>) : <></> }
-          </ul> : <ul className="hamburgerItems">
-            <li>Home</li>
-            <li>My Events</li>
-            <li >New Event</li>
-            <li>{!token ? "Login" : "Logout" }</li>
-            {!token ? <li>Sign Up</li> : <></> }
-          </ul>}
+          {checked ? <motion.ul className="hamburgerItems"
+            animate={ checked ? "open" : "closed" }
+            variants={variantsChildren}
+          >
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={handleCheck}><Link to="/home">Home</Link></motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={handleCheck}><Link to="/myevents">My Events</Link></motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={handleCheck}>{!token ? (<Link to="/login">New Event</Link>) : (<Link to="/nearme">New Event</Link>)}</motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={handleCheck}>{!token ? (<Link to="/login">Login</Link>) : (<span onClick={handleLogout}>Logout</span>) }</motion.li>
+            {!token ? (<motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={handleCheck}><Link to="/register">Sign Up</Link></motion.li>) : <></> }
+          </motion.ul> : <motion.ul className="hamburgerItems"
+            animate={ checked ? "open" : "closed" }
+            variants={variantsChildren}
+          >
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} >Home</motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>My Events</motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>New Event</motion.li>
+            <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>{!token ? "Login" : "Logout" }</motion.li>
+            {!token ? <motion.li variants={variants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>Sign Up</motion.li> : <></> }
+          </motion.ul>}
         </label>
       </div>
     </nav>
