@@ -44,7 +44,7 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
     }
 
     @Override
-    public List<Day> getHoursByRestaurant(String restaurantId) {
+    public List<Hours> getHoursByRestaurant(String restaurantId) {
         String sql =
                 "SELECT hours_id, restaurant_id, day_of_week, open_time, close_time FROM restaurant_hours " +
                 "WHERE restaurant_id = ?;";
@@ -56,7 +56,13 @@ public class JdbcRestaurantHoursDao extends JdbcForAll implements RestaurantHour
             days.add(mapRowToDay(result));
         }
 
-        return days;
+        List<Hours> hours = new ArrayList<>();
+        Hours hoursObj = new Hours();
+        hoursObj.setOpen(days);
+
+        hours.add(hoursObj);
+
+        return hours;
     }
 
     @Override

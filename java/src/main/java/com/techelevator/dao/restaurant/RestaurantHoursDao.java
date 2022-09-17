@@ -13,7 +13,7 @@ public interface RestaurantHoursDao {
     long addDay(Day day, String id);
 
     // Read
-    List<Day> getHoursByRestaurant(String restaurantId);
+    List<Hours> getHoursByRestaurant(String restaurantId);
 
     // Update n/a
 

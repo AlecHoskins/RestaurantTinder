@@ -54,6 +54,7 @@ public class EventService {
         List<Restaurant> restaurants = restaurantDao.getEventRestaurants(id);
         for(Restaurant restaurant : restaurants) {
             restaurant.setCategories(restaurantCategoryDao.getCategoriesByRestaurant(restaurant.getId()));
+            restaurant.setHours(restaurantHoursDao.getHoursByRestaurant(restaurant.getId()));
         }
         event.setEventRestaurants(restaurants);
 
@@ -119,8 +120,12 @@ public class EventService {
         // TODO : generate guest URL & update database
 
         if(guestId > 0) {
-            for(Restaurant restaurant : eventDao.getEventById(eventId).getEventRestaurants()) {
-                boolean isAdded = guestVoteDao.addGuestVote(guest.getId(), restaurant.getId());
+
+            Event event = getEvent(eventId);
+            List<Restaurant> restaurants = event.getEventRestaurants();
+
+            for(Restaurant restaurant : restaurants) {
+                boolean isAdded = guestVoteDao.addGuestVote(guestId, restaurant.getId());
                 if(!isAdded) {
                     return -1;
                 }

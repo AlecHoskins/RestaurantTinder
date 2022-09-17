@@ -23,15 +23,15 @@ public class JdbcGuestVoteDao extends JdbcForAll implements GuestVoteDao {
                 "INSERT INTO guest_vote (guest_id, restaurant_id) " +
                 "VALUES (?, ?);";
 
-        Long response = jdbcTemplate.queryForObject(sql, Long.class, guestId, restaurantId);
+        int response = jdbcTemplate.update(sql, guestId, restaurantId);
 
-        return response != null && response > 0;
+        return response > 0;
     }
 
     @Override
     public List<Vote> getVotesByGuest(long guestId) {
         String sql =
-                "SELECT guest_id, restaurant_id FROM guest_vote " +
+                "SELECT guest_id, restaurant_id, up_vote FROM guest_vote " +
                 "WHERE guest_id = ?;";
 
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, guestId);
