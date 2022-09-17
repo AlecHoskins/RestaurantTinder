@@ -135,8 +135,8 @@ nav {
       height: 200px;
       background: white;
       border-radius: 50% 50% 50% 50%;
-      -webkit-transition: .5s ease-in-out;
-      transition: .5s ease-in-out;
+      -webkit-transition: .75s ease-in-out;
+      transition: .75s ease-in-out;
       box-shadow: 0 0 0 0 white, 0 0 0 0 white;
       cursor: pointer;
     }
@@ -241,6 +241,10 @@ nav {
       text-decoration: none;
       text-transform: uppercase;
       font-size: x-large;
+    }
+
+    .hamburgerItems li:hover {
+      box-shadow: none;
     }
 
     label li span:hover {
