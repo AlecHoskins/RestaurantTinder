@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import './EventView.css';
 import {connect} from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
@@ -211,4 +211,4 @@ function EventView(props) {
     )
 }
 
-export default withRouter(connect(mapStateToProps)(EventView));
+export default connect(mapStateToProps)(EventView);
