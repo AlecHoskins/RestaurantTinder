@@ -112,14 +112,20 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
-    @JsonProperty private final String updateVote = BASE_URL + "guest/"; // TODO : Ask frontend how they want these URLs
+    @JsonProperty private final String updateVote = BASE_URL + "guest/vote"; // TODO : Ask frontend how they want these URLs
     /**GuestController
      * Method: PUT
-     * Path variables: guest/{url}
      * Body:
      * {
-     *     String restaurantId;
-     *     Boolean upVote;
+     *     guest: {
+     *         long id,
+     *         vote: [
+     *              {
+     *                  String restaurantId,
+     *                  Boolean upVote (optional)
+     *              }
+     *         ]
+     *     }
      * }
      * Authenticated: FALSE
      * */
