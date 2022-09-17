@@ -20,6 +20,8 @@ function MyEvents(props) {
 	const [eventDate, setDate] = useState();
 	const [newEventCreated, setNewEventCreated] = useState(false);
 	const blob = '/yellowbloblogin.png';
+	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const timeOptions = { timeStyle: 'short'};
 
 	const loadEvents = async() => {
 		const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
@@ -53,7 +55,7 @@ function MyEvents(props) {
 				return (<div key={e.id} className='upcomingCard'>
 					<Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
 					<h5>{e.eventTitle}</h5>
-					<div>{new Date(e.eventDayTime).toLocaleString('en-US')}</div>
+					<div>{new Date(e.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(e.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</div>
 					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}
 				</div>);
 				// return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
