@@ -1,17 +1,62 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import axios from 'axios';
 import './Home.css'
+
+const mapStateToProps = state => {
+	return {
+		userId: state.user.id,
+		urls: state.urls.urls,
+		dispatch: state.dispatch,
+		eventDate: state.event.date
+	}
+}
 
 function Home(props) {
     
     let currUser = useSelector(state => state.user.username);
 
+    const [events, setEvents] = useState([]);
     const userBlob = './yellowblobuser.png'
 
     useEffect(() => {
         document.title = "Restaurant Tinder - Home"
+        loadEvents();
       }, [])
+
+    const loadEvents = async() => {
+        console.log(props.userId)
+	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
+			alert('There was an error while retrieving the events');
+		});
+		if (myEvents) { setEvents(myEvents.data); }
+	}
+
+
+    const getMapOfUpcomingEvents = (eventCards) => {
+        const numWeeks = 2;
+        const now = new Date();
+        now.setDate(now.getDate() + numWeeks * 7);
+        console.log(now);
+        console.log(eventCards);
+        return (
+            eventCards.map((e) => {
+                const newDate = new Date(e.eventDayTime)
+                console.log('HEREEEEE');
+                if(newDate <= now) {
+                    return (
+                        <div key={e.id} className='upcomingCard'>
+                            <Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
+                            <h5>{e.eventTitle}</h5>
+                            <div>{newDate.toLocaleDateString('en-US')}</div>
+                        </div>
+                    ) 
+                }
+            })
+        )
+    }  
 
     
     return(
@@ -27,22 +72,11 @@ function Home(props) {
                     <Link to='/nearme'><button>New Event</button></Link>
                 </div>
                 <div className='upcomingEvents'>
-                    <div className='upcomingCard'>
-                        <Link to='/eventview'><button>Event Details {'>'}</button></Link>
-                        <h5>Emilia's 15th Birthday Party</h5>
-                        <div>Saturday, September 17th, 2022 6:00PM</div>
-                        <div>Current winning restaraunt: Papa Mario's Pizza</div>
-                    </div>
-                    <div className='upcomingCard'>
-                        <Link to='/eventview'><button>Event Details {'>'}</button></Link>
-                        <h5>Work Lunch Meeting</h5>
-                        <div>Thursday, September 22nd, 2022 6:00PM</div>
-                        <div>Current winning restaraunt: Texas Roadhouse</div>
-                    </div>
+                    {getMapOfUpcomingEvents(events)}
                 </div>
             </div>
         </div>
     )
 }
 
-export default Home;
+export default connect(mapStateToProps)(Home);
