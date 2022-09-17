@@ -10,6 +10,7 @@ import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeForma
 
 const mapStateToProps = state => {
     return {
+		userId: (state.user) ? state.user.id : 0,
 		event: state.event,
         token: state.token,
 		urls: state.urls,
@@ -40,8 +41,29 @@ function EventView(props) {
 			const myEvents = await axios.get(props.urls.urls.getEvent + props.match.params.id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
 			})
-			if (myEvents) { 
-				props.dispatch(setEvent(myEvents.data)) 
+			const data = myEvents.data;
+			if (data) { 
+				await props.dispatch(setEvent(data)) 
+				//set as guest if the host Id is not the logged in user
+				setIsGuest((props.event.hostId !== props.userId));
+				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
+					let currentGuest = null;
+					console.log("guestlist has guests");
+					console.log(data.guestList);
+					if(props.token /* the user is logged in */) {
+						console.log("guest is logged in");
+						console.log(data.guestList);
+						currentGuest = data.guestList.find((guest) => guest.userId === props.userId);
+					} else { /* the user is not logged in */
+						const guestId = props.match.params.guestcode;
+						currentGuest = data.guestList.find((guest) => guest.id === guestId);
+					}
+					console.log("Current guest: " + currentGuest);
+					if (currentGuest) {
+						setGuest(currentGuest);
+						setVotes(currentGuest.votes);
+					}
+				}
 			}
 		}
 	}
@@ -50,8 +72,8 @@ function EventView(props) {
 		//const guestInfo = axios.get('some url to get');
 		//setGuest(guestInfo);
 		loadEvent();
-		setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
-		setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
+		//setGuest({nickname: 'John', id: 1, inviteUrl: props.match.params.guestcode, vote: [], eventId: 1});
+		//setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
         document.title = "Restaurant Tinder - Event"
 	}, []);
 
