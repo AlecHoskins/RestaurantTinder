@@ -36,11 +36,7 @@ public class GuestService {
     public Guest getGuestByUrl(String url) {
         Guest guest = guestDao.getGuestByUrl(url);
 
-//        System.out.println(guest);
-
         guest.setVote(guestVoteDao.getVotesByGuest(guest.getId()));
-
-//        System.out.println(guest);
 
         return guest;
     }
@@ -66,24 +62,16 @@ public class GuestService {
         return event;
     }
 
-    public Guest updateUserId(long id) {
-        // TODO : implement updateUserId
-        Guest guest = guestDao.getGuestById(id);
-        guestDao.updateGuest(guest);
-        return guest;
-    }
 
-    @Transactional
-    public boolean vote(Guest guest) {
-
+    @Transactional(rollbackFor = TransactionRollbackException.class)
+    public void vote(Guest guest) throws TransactionRollbackException {
         boolean pass;
 
         for(Vote vote: guest.getVote()) {
             pass = guestVoteDao.updateVote(guest.getId(), vote);
             if (!pass) {
-                return false;
+                throw new TransactionRollbackException();
             }
         }
-        return true;
     }
 }

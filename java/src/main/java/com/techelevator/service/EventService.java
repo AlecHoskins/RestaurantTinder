@@ -14,6 +14,7 @@ import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class EventService {
         return bigEvents;
     }
 
-    @Transactional
-    public Event addEvent(Event newEvent) {
+    @Transactional(rollbackFor = TransactionRollbackException.class)
+    public Event addEvent(Event newEvent) throws TransactionRollbackException {
         long eventId = eventDao.addEvent(newEvent);
 
         for (Restaurant restaurant: newEvent.getEventRestaurants()) {
@@ -86,28 +87,24 @@ public class EventService {
                 isAdded = eventRestaurantDao.addEventRestaurant(eventId, restaurant.getId());
             }
             if(!isAdded) {
-                return null; // TODO : check rollback
+                throw new TransactionRollbackException();
             }
         }
 
-        // TODO : Add host as guest
-//        System.out.println(newEvent.getGuestList());
+        // TODO : Add host as guest - check with frontend
 
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
             if(id < 0) {
-//                System.out.println("guestId: " + id);
-                return null; // TODO : check rollback
+                throw new TransactionRollbackException();
             }
         }
-
-
 
         return getEvent(eventId);
     }
 
-    @Transactional
-    public boolean addRestaurant(Restaurant restaurant) {
+    @Transactional(rollbackFor = TransactionRollbackException.class)
+    public boolean addRestaurant(Restaurant restaurant) throws TransactionRollbackException {
         if(restaurantDao.findRestaurantById(restaurant.getId()) != null) {
             return true;
         }
@@ -120,28 +117,38 @@ public class EventService {
                     categoryId = categoryDao.addCategory(category);
                 }
 
+                if (categoryId == -1) {
+                    throw new TransactionRollbackException();
+                }
+
                 restaurantCategoryDao.addRestaurantCategory(restaurant.getId(), categoryId);
             }
             if(restaurant.getHours() != null) {
                 restaurantHoursDao.addAllHours(restaurant.getHours(), restaurant.getId());
             }
             return true;
+        } else {
+            throw new TransactionRollbackException();
         }
-
-        return false;
     }
 
-    @Transactional
-    public long addGuest(Guest guest, long eventId) {
+    @Transactional(rollbackFor = TransactionRollbackException.class)
+    public long addGuest(Guest guest, long eventId) throws TransactionRollbackException {
         long guestId = guestDao.addGuest(guest, eventId);
-//        System.out.println(guestId);
+
+        if(guestId == -1) {
+            throw new TransactionRollbackException();
+        }
 
         if(guestId > 0) {
             guest.setId(guestId);
             // TODO : add eventId to guest
             guest.setInviteUrl(guestId + "");
 
-            guestDao.updateGuest(guest);
+            boolean isUpdated = guestDao.updateGuest(guest);
+            if(!isUpdated) {
+                throw new TransactionRollbackException();
+            }
 
             Event event = getEvent(eventId);
             List<Restaurant> restaurants = event.getEventRestaurants();
@@ -149,7 +156,7 @@ public class EventService {
             for(Restaurant restaurant : restaurants) {
                 boolean isAdded = guestVoteDao.addGuestVote(guestId, restaurant.getId());
                 if(!isAdded) {
-                    return -1;
+                    throw new TransactionRollbackException();
                 }
             }
         }

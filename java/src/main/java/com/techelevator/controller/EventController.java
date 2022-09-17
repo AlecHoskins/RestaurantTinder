@@ -4,6 +4,7 @@ import com.techelevator.model.event.Event;
 import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.service.EventService;
 import com.techelevator.service.RestaurantService;
+import com.techelevator.service.TransactionRollbackException;
 import com.techelevator.service.YelpBusinessService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,12 @@ public class EventController {
 
     @PostMapping
     public Event addEvent(@RequestBody Event newEvent) {
-        System.out.println(newEvent);
-        return service.addEvent(newEvent);
+        try {
+            return service.addEvent(newEvent);
+        } catch(TransactionRollbackException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
 }

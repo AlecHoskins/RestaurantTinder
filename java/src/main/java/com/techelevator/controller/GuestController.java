@@ -4,6 +4,7 @@ import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
 import com.techelevator.service.GuestService;
+import com.techelevator.service.TransactionRollbackException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,7 +31,11 @@ public class GuestController {
     @PutMapping(path = "/vote")
 //    @ResponseStatus() TODO : implement response statuses
     public void vote(@RequestBody Guest guest) {
-        service.vote(guest);
+        try {
+            service.vote(guest);
+        } catch (TransactionRollbackException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
