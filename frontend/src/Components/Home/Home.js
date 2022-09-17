@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
@@ -17,26 +17,24 @@ const mapStateToProps = state => {
 function Home(props) {
     
     let currUser = useSelector(state => state.user.username);
-
     const [events, setEvents] = useState([]);
-    const [upcomingEvents, setUpcomingEvents] = useState(0);
     const userBlob = './yellowblobuser.png'
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { timeStyle: 'short'};
 
-    useEffect(() => {
-        document.title = "Restaurant Tinder - Home"
-		console.log(props);
-        loadEvents();
-      }, [])
-
-    const loadEvents = async() => {
+    const loadEvents = useCallback(async() => {
         if (props.userId === null) { return; }
 	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
 			alert('There was an error while retrieving the events');
 		});
 		if (myEvents) { setEvents(myEvents.data); }
-	}
+	}, [props.urls.getHostEvents, props.userId]);
+
+    useEffect(() => {
+        document.title = "Restaurant Tinder - Home"
+		console.log('useEffect');
+        loadEvents();
+      }, [loadEvents])
 
     const getNumberOfUpcomingEvents = (eventCards) => {
         const numWeeks = 2;
@@ -48,6 +46,7 @@ function Home(props) {
             if(newDate <= now) {
                 events++;
             }
+			return e;
         })
         return events;
     }
@@ -67,7 +66,9 @@ function Home(props) {
                             <div>{newDate.toLocaleDateString('en-US', dateOptions)} @ {newDate.toLocaleTimeString('en-US', timeOptions)}</div>
                         </div>
                     ) 
-                }
+                } else {
+					return null;
+				}
             })
         )
     }  

@@ -1,7 +1,7 @@
 import React from "react";
 import './EventView.css';
 import {connect} from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent} from '../../Redux/actionCreators'
@@ -31,8 +31,8 @@ function EventView(props) {
 	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { timeStyle: 'short'};
 
-	const [guest, setGuest] = useState();
-	const [isGuest, setIsGuest] = useState(false);
+	const [guest, setGuest] = useState(null);
+	const [isGuest, setIsGuest] = useState(true);
 	const [votes, setVotes] = useState([]);
 	
 	const eventId = props.event.id;
@@ -40,10 +40,9 @@ function EventView(props) {
 	const params = props.match.params;
 	const getEventUrl = props.urls.urls.getEvent;
 	const dispatch = props.dispatch;
-	const token = props.token;
+	const token = props.token.token;
 
 	const loadEvent = useCallback(async() => {
-		console.log('load event callback');
 		if (eventId === undefined) {
 			const myEvents = await axios.get(getEventUrl + params.id).catch((error) => {
 				alert('An error has occurred while attempting to retrieve the event details');
@@ -53,24 +52,20 @@ function EventView(props) {
 				await dispatch(setEvent(data)) 
 				if (data.guestList && data.guestList.length > 0) { /*The event has guests - Should always have guests in theory */
 					let currentGuest = null;
-					console.log("guestlist has guests");
-					console.log(data.guestList);
 					if(token /* the user is logged in */) {
-						console.log("guest is logged in");
-						console.log(data.guestList);
 						currentGuest = data.guestList.find((guest) => guest.userId === userId);
 					} else { /* the user is not logged in */
 						const guestId = params.guestcode;
-						currentGuest = data.guestList.find((guest) => guest.id === guestId);
+						currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
 					}
-					console.log("Current guest: " + JSON.stringify(currentGuest));
 					if (currentGuest) {
 						setGuest(currentGuest);
 						setVotes(currentGuest.vote);
 					}
 					//set as guest if the host Id is not the logged in user
 					setIsGuest((data.hostId !== userId && currentGuest));
-					console.log(currentGuest);
+
+					console.log(isGuest + ", " + JSON.stringify(guest));
 				}
 			}
 		}
@@ -84,7 +79,7 @@ function EventView(props) {
 		//setVotes((props.event.guestList.length > 0 && props.event.guestList[0].votes) ? props.event.guestList[0].votes : []);
 		console.log('useEffect');
         document.title = "Restaurant Tinder - Event"
-	}, [loadEvent]);
+	},[]);
 
 	const updateThumbsUp = (vote) => {
 		//figure out the index of the vote for this restaurant if it exists
@@ -131,7 +126,7 @@ function EventView(props) {
 		//just try to update the first vote for now
 		//TODO: UPDATE THIS URL WHEN THE URLSDTO GETS UPDATED
 		votes.forEach((vote) => {
-			axios.put(props.urls.urls.updateVote + 'guest/' + guest.id, vote).catch((error) => {
+			axios.put(props.urls.urls.updateVote + guest.id, vote).catch((error) => {
 				alert('Votes failed to update.');
 			})
 		})
@@ -197,13 +192,14 @@ function EventView(props) {
 
     return (
         <div className="eventView">
+			{/* {(!token && !guest) ? <Redirect to="/login" /> : <></>} */}
             <div>
                 <img src={blob} className='eventBlob' alt='Yellow Blob'/>
             </div>
             <div className="eventCard">
                 <div className="eventInfo">
                     {/* If a User is a guest*/}
-					{isGuest ? <h1>Welcome, {guest.nickname}!</h1>
+					{isGuest && guest ? <h1>Welcome, {guest.nickname}!</h1>
 					: <></>
 					}
                     {/* */}
@@ -212,10 +208,10 @@ function EventView(props) {
                     <h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
-					{(!guest && props.token) ? 
+					{/* {(!guest && props.token) ? 
 						<button className="eventEdit">Edit Event</button>
 						: <></>
-					}
+					} */}
                     {/* */}
                     {new Date(props.event.decisionDeadline) >= new Date() ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
