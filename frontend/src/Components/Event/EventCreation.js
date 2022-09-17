@@ -33,6 +33,13 @@ function EventCreation(props) {
 		//this is essentially a submit to create the event
 		//so now build the event here
 
+		//validate form:
+		let validation = '';
+		if (props.event.eventTitle === '') { validation += '-Event title must not be empty \n'}
+		let emptyGuest = formValues.find((guest) => guest.name === '');
+		if (emptyGuest) { validation += '-Guest names must not be empty. Please enter a guest name.\n' }
+		if (validation.length > 0) { alert(validation); return; }
+
 		const createGuestListDTO = () => {
 			return formValues.map((guest) => {
 				return {
@@ -46,6 +53,15 @@ function EventCreation(props) {
 			})
 		}
 		let guestListDTO = createGuestListDTO();
+		//add the current user to the guest list
+		guestListDTO.push({
+			id: 0,
+			eventId: 0,
+			nickname: props.user.username,
+			inviteUrl: '',
+			userId: props.user.id,
+			vote: []
+		})
 		props.dispatch(setEventGuests(guestListDTO));
 
 		
@@ -97,7 +113,11 @@ function EventCreation(props) {
 
 	let removeFormFields = (i) => {
 		let newFormValues = [...formValues];
-		newFormValues.splice(i, 1);
+		if (formValues.length > 1) {
+			newFormValues.splice(i, 1);
+		} else {
+			newFormValues[0].name = "";
+		}
 		setFormValues(newFormValues);
 	}
 
@@ -134,9 +154,7 @@ function EventCreation(props) {
 								<input type="text" name='name' value={element.name || ""} onChange={e => handleChange(index, e)} />
 								<button className='addRemoveButtons' onClick={() => addFormFields()}>➕</button>
 								{
-									index ?
-										<button className='addRemoveButtons' id='remove' onClick={() => removeFormFields(index)}>❌</button>
-										: null
+									<button className='addRemoveButtons' id='remove' onClick={() => removeFormFields(index)}>❌</button>
 								}
 							</div>
 						))}

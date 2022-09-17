@@ -23,11 +23,12 @@ function Home(props) {
 
     useEffect(() => {
         document.title = "Restaurant Tinder - Home"
+		console.log(props);
         loadEvents();
       }, [])
 
     const loadEvents = async() => {
-        console.log(props.userId)
+        if (props.userId === null) { return; }
 	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
 			alert('There was an error while retrieving the events');
 		});

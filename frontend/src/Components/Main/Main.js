@@ -65,7 +65,7 @@ class Main extends Component {
 				{this.props.urls ? 
 					<Switch>
 						<Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : () => <MainPage/>}/>
-						<Route path='/login' component={this.props.token.token !== undefined ? () => <Home/> : () => <Login/>}/>
+						<Route path='/login' component={this.props.token.token !== undefined ? () => <Redirect to='/home' /> : () => <Login/>}/>
 						<Route path='/register'component={() => <Register/>}/>
 						<Route path='/nearme'component={this.props.token.token !== undefined ? () => <NearMe/> : () => <Login/>}/>
 						<Route path='/event' component={this.props.token.token !== undefined ? () => <EventCreation/> : () => <Login/>}/>
