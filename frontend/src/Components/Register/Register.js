@@ -23,7 +23,9 @@ class Register extends Component{
             username: '',
             password: '',
             confirmPassword: '',
-			created: false
+			created: false,
+            showError: false,
+            errorMessage: ''
         }
         document.title = "Restaurant Tinder - Register"        
     }
@@ -38,19 +40,32 @@ class Register extends Component{
     handleSubmit = async () => {
 		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
+        this.setState({
+            errorMessage: '',
+            showError: false
+        })
         if(!this.checkPasswordStrength(this.state.password)) {
-            alert("Password must be 8 characters in length and contain at least one capital letter, one lowercase letter, and one number.")
+            this.setState({
+                errorMessage: "❗ Password must be 8 characters in length and contain at least one capital letter, one lowercase letter, and one number.",
+                showError: true
+            })
             return;
         }
         if(this.state.password === this.state.confirmPassword){
             const response = await axios.post(this.props.urls.register, data).catch((error) => {
-                alert("Username already in use, please choose another!")
+                this.setState({
+                    errorMessage: "❗ Username already in use, please choose another.",
+                    showError: true
+                })
             });
 			if (response && response.status === HTTP_CREATED) {
 				this.setState({created: true});
 			}
         }else{
-            alert("Password and Confirm Password must match!!!")
+            this.setState({
+                errorMessage: "❗ Password and Confirm Password must match.",
+                showError: true
+            })
         }
     }
 
@@ -75,6 +90,7 @@ class Register extends Component{
                     exit={{ left: "-1000px", opacity: 1, transition: { duration: .4 }}}
                 >
                     <h1 className='please'>Create Account</h1>
+                    {this. state.showError ? <p className='errorContainer'>{this. state.errorMessage}</p> : <></>}
                     <div className='user-box'>
                         <input
                             type="text"

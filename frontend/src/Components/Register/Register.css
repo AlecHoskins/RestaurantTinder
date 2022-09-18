@@ -86,3 +86,13 @@
 .registerPage a:hover {
     color: #69D2e7;
 }
+
+.errorContainer {
+    background-color: rgb(158, 0, 0, 0.2);
+    color: rgb(156, 0, 0);
+    border-radius: 5px;
+    text-align: center;
+    font-size: medium;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
