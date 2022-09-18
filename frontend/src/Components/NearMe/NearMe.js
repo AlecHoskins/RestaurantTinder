@@ -33,7 +33,6 @@ function NearMe(props) {
 		
         document.title = "Restaurant Tinder - New Event"
 		dispatch(setSelectedRestaurants([]));
-		console.log('useEffect');
       }, [dispatch])  
 
 	const searchHandler = async (event) => {
@@ -135,7 +134,7 @@ function NearMe(props) {
 					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
 				</div>
 				<div className='imageSection'>
-					<span className='open-now'>{card.hours && card.hours[0] && card.hours[0].is_open_now ? "Open Now" : ""}</span>
+					{card.hours && card.hours[0] && card.hours[0].is_open_now ? <span className='open-now'>"Open Now"</span> : <></>}
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div className='infoSection'>

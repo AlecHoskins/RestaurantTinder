@@ -22,7 +22,9 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            showError: false,
+            errorMessage: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         document.title = "Restaurant Tinder - Login"
@@ -33,7 +35,10 @@ class Login extends Component {
         const data = { username: this.state.username, password: this.state.password };
         
         const userWithToken = await axios.post(this.props.urls.login, data).catch((error) => {
-            alert("Username or Password is Incorrect, Please Login Again")
+            this.setState({
+                errorMessage: "❗ Username or password is incorrect, please login again.",
+                showError: true
+            })
         })
 
         if (userWithToken) {
@@ -67,6 +72,7 @@ class Login extends Component {
                 >
                     <div>
                     <h1 className='please'>Please Sign In</h1>
+                    {this. state.showError ? <p className='errorContainer'>{this. state.errorMessage}</p> : <></>}
                     <div className="user-box">
                         <input
                             type="text"
