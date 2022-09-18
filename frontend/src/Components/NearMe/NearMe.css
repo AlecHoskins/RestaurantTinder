@@ -269,6 +269,18 @@ select {
     animation: pulse 2s infinite;    
 }
 
+.closed-now {
+    position: absolute;
+    top: 48px;
+    left: 10px;
+    background: #bb0000;
+    text-align: center;
+    border-radius: 8px;
+    color:#ffffff;
+    padding: 4px;
+    font-size: 16px;    
+}
+
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);

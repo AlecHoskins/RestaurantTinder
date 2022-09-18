@@ -45,6 +45,13 @@
     left: 10px;
 }
 
+.eventInfo .viewGLButton {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 160px;
+}
+
 .eventInfo .eventSubmit {
     position: fixed;
     bottom: 10px;
@@ -100,6 +107,17 @@
 
 .thumbs {
     grid-area: thumbs;
+    color: black;
+}
+
+.thumbs div {
+    float: right;
+    margin-right: 2px;
+    margin-top: 5px;
+}
+
+.thumbsNoClick {
+    cursor: default !important;
 }
 
 .imageSection {

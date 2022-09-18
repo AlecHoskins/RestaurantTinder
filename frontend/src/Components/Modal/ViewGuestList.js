@@ -13,12 +13,11 @@ export default function ViewGuestList({open, thisGuestList, hostId, thisEventId,
 	}
     
     const mapGuestList = (guestList) => {
-        console.log(guestList)
         return guestList.map((guest) => {
             return (guest.userId !== hostId ? 
                 <tr key={guest.id}>
                 <th>{guest.nickname}</th>
-                <td><button className="link-copy" onClick={() => handleLinkCopy(guest)}>link</button></td>
+                <td><input type="text" className="linkTextBox" value={urlRoot + "/eventview/" + thisEventId + "/" + guest.inviteUrl}></input><button onClick={() => handleLinkCopy(guest)}><i className="fa fa-clone"></i></button></td>
                 </tr>
                 : null
             );

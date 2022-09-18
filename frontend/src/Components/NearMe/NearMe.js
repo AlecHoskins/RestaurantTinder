@@ -6,12 +6,14 @@ import {setSelectedRestaurants, setEventDate} from '../../Redux/actionCreators'
 import { Link } from 'react-router-dom';
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
 import { motion } from "framer-motion"
+import { API } from '../../Shared/API'
 
 const mapStateToProps = state => {
 	return {
 		date: state.event.eventDayTime,
 		eventRestaurants: state.event.eventRestaurants,
-		dispatch: state.dispatch
+		dispatch: state.dispatch,
+		token: state.token
 	}
 }
 
@@ -47,7 +49,7 @@ function NearMe(props) {
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
 		// let open_at = timeToUnix(new Date(date)) 
-		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode).catch((error) => {
+		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode, API.createAuthorizedHeaders(props.token)).catch((error) => {
 			alert('An error has occured while searching for restaurants');
 		})
 
@@ -134,7 +136,8 @@ function NearMe(props) {
 					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
 				</div>
 				<div className='imageSection'>
-					{card.hours && card.hours[0] && card.hours[0].is_open_now ? <span className='open-now'>"Open Now"</span> : <></>}
+					{card.hours && card.hours[0] && card.hours[0].is_open_now && <span className='open-now'>Open Now</span>}
+					{card.hours && card.hours[0] && !card.hours[0].is_open_now && <span className='closed-now'>Closed</span>}
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div className='infoSection'>
