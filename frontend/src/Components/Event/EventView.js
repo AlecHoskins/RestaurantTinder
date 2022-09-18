@@ -122,15 +122,15 @@ function EventView(props) {
 	const voteSubmitHandler = async(event) => {
 		//do vote submission here
 		if (!guest) { console.log('did not vote'); return; }
-		console.log('voted');
 		//as of right now will have to make an axios call for each restaurant
 		//just try to update the first vote for now
 		//TODO: UPDATE THIS URL WHEN THE URLSDTO GETS UPDATED
-		votes.forEach((vote) => {
-			axios.put(props.urls.urls.updateVote + guest.id, vote).catch((error) => {
-				alert('Votes failed to update.');
-			})
+		let sendGuest = {...guest};
+		sendGuest.vote = votes;
+		await axios.put(props.urls.urls.updateVote, sendGuest).catch((error) => {
+			alert('Votes failed to update.');
 		})
+		alert('votes submitted');
 		props.dispatch(setEventGuestVotes(guest, votes))
 	}
 
@@ -192,6 +192,7 @@ function EventView(props) {
     }
 
 	const handleLinkCopy = (guest) => {
+		console.log(guest.inviteUrl);
 		const link = urlRoot + "/eventview/" + props.event.id + "/" + guest.inviteUrl;
 		navigator.clipboard.writeText(link);
 	}
