@@ -149,6 +149,12 @@ function EventView(props) {
 			}
 		)
 	}
+	
+	const deadlineHasPassed = (deadline) => {
+		deadline = new Date(deadline);
+		const today = new Date();
+		return deadline < today;
+	}
 
     //Maps through restaurants to display on page
     const eventRestaurantCards = function() {
@@ -158,10 +164,13 @@ function EventView(props) {
                     <div className="titleSection">
                         <h5 className="card-name">{card.name}</h5>
                     </div>
+					{!deadlineHasPassed(props.event.decisionDeadline) ?
                     <div className="thumbs">
 						<img onClick={() => thumbsUpHandler(card)} src={getThumbImage(card, true)} alt="Thumbs Up"/>
 						<img onClick={() => thumbsDownHandler(card)} src={getThumbImage(card, false)} alt="Thumbs Down"/>
-                    </div>
+					</div>
+					:<></>
+					}
                     <div className="imageSection">
                         <img className="card-img" src={card.image_url} alt="Restaurant" />
                     </div>
@@ -212,7 +221,10 @@ function EventView(props) {
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
                     <h2>{new Date(props.event.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</h2>
-                    <h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
+                    {!deadlineHasPassed(props.event.decisionDeadline) ? 
+						<h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
+					: <h5>Voting has ended</h5>
+					}
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(loaded && token && props.event.hostId === props.userId) ? 
@@ -240,7 +252,7 @@ function EventView(props) {
 						<></>
 					}
                     {/* */}
-                    {new Date(props.event.decisionDeadline) >= new Date() ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
+                    {!deadlineHasPassed(props.event.decisionDeadline) ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
                 <div className="eventRestaurants">
                     {eventRestaurantCards()}
