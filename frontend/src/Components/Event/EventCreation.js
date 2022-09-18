@@ -93,6 +93,7 @@ function EventCreation(props) {
 			guestList: guestListDTO
 		}
 
+		console.log(formValues);
 		console.log(JSON.stringify(newEvent));
 
 		//props.urls.createEvent - this isn't being used yet

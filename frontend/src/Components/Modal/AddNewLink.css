@@ -77,3 +77,8 @@
     float: right;
     width: 170px;
 }
+
+.modalContainer table {
+    margin-left: auto;
+    margin-right: auto;
+}

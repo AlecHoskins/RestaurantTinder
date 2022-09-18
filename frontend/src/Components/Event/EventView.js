@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import { Navigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import ViewGuestList from '../Modal/ViewGuestList'
 import {setEventGuestVotes, setEvent, setURLs} from '../../Redux/actionCreators'
 import {militaryTimeToStandardTime, numDayToString, deadlineHasPassed} from '../../Shared/timeFormatting'
 import baseUrl from '../../Shared/baseUrl'
@@ -36,6 +37,7 @@ function EventView(props) {
 	const [isGuest, setIsGuest] = useState(true);
 	const [votes, setVotes] = useState([]);
 	const [loaded, setLoaded] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
 	
 	const eventId = props.event.id;
 	const userId = props.userId;
@@ -78,7 +80,7 @@ function EventView(props) {
 			loadEvent(props.urls.urls);
 		}
         document.title = "Restaurant Tinder - Event"
-
+		setOpenModal(false);
 	},[]);
 
 	const updateThumbsUp = (vote) => {
@@ -200,6 +202,10 @@ function EventView(props) {
 		navigator.clipboard.writeText(link);
 	}
 
+	const handleModalChange = () => {
+		setOpenModal(true);
+	}
+
     return (
         <div className="eventView">
 			{(loaded && !token && !guest) ? <Navigate to="/login" /> : <></>}
@@ -222,26 +228,7 @@ function EventView(props) {
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(loaded && token && props.event.hostId === props.userId) ? 
-						<table>
-						<thead>
-							<tr>
-								<th>Guest nickname: </th>
-								<th>Guest invite url: </th>
-							</tr>
-						</thead>
-						<tbody>
-							
-						{props.event.guestList.map((guest) => {
-							return (guest.userId !== props.event.hostId ? 
-								<tr key={guest.id}>
-									<th>{guest.nickname}</th>
-									<td><button className="link-copy" onClick={() => handleLinkCopy(guest)}>link</button></td>
-								</tr>
-								: null
-							);
-						})}
-						</tbody>
-						</table>
+						<button onClick={handleModalChange}>View Guest List</button>
 						:
 						<></>
 					}
@@ -252,6 +239,7 @@ function EventView(props) {
                     {eventRestaurantCards()}
                 </div>
             </div>
+			<ViewGuestList open={openModal} thisGuestList={props.event.guestList} hostId={props.event.hostId} thisEventId={eventId} onClose={() => setOpenModal(false)} />
 			{/* {loaded && props.event.id === undefined ? <Redirect to='/home/' /> : <></>} */}
         </div>
     )
