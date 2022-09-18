@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {setEventGuestVotes, setEvent, setURLs} from '../../Redux/actionCreators'
-import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
+import {militaryTimeToStandardTime, numDayToString, deadlineHasPassed} from '../../Shared/timeFormatting'
 import baseUrl from '../../Shared/baseUrl'
 
 const mapStateToProps = state => {
@@ -150,12 +150,6 @@ function EventView(props) {
 		)
 	}
 	
-	const deadlineHasPassed = (deadline) => {
-		deadline = new Date(deadline);
-		const today = new Date();
-		return deadline < today;
-	}
-
     //Maps through restaurants to display on page
     const eventRestaurantCards = function() {
         return (

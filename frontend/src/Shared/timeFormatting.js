@@ -1,3 +1,4 @@
+
 export const militaryTimeToStandardTime = (time) => {
 	const firstHalf = time.substring(0, 2);
 	const secondHalf = time.substring(2);
@@ -40,4 +41,10 @@ export const numDayToString = (numDay) => {
 
 export const timeToUnix = (time = new Date()) => {
 	return Math.floor(time.getTime() / 1000);
+}
+
+export const deadlineHasPassed = (deadline) => {
+	deadline = new Date(deadline);
+	const today = new Date();
+	return (deadline.getTime() < today.getTime());
 }
