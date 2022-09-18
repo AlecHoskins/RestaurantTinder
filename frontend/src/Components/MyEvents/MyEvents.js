@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
 import { Link, Navigate } from 'react-router-dom'
 import { motion } from "framer-motion"
+import {deadlineHasPassed} from '../../Shared/timeFormatting'
 import './MyEvents.css'
 
 const mapStateToProps = state => {
@@ -57,7 +58,7 @@ function MyEvents(props) {
 		return (
 			eventCards.map((e) => {
 				return (<div key={e.id} className='upcomingCard'>
-					<Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
+					<Link to={`/eventview/${e.id}`}><button>{!deadlineHasPassed(e.decisionDeadline) ? 'Event Details' : 'View Finalists'}{' >'}</button></Link>
 					<h5>{e.eventTitle}</h5>
 					<div>{new Date(e.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(e.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</div>
 					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}
