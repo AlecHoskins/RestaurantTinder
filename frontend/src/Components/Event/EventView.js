@@ -228,7 +228,7 @@ function EventView(props) {
                     <a>How do I start?</a>
                     {/* User is the Event Creator */}
 					{(loaded && token && props.event.hostId === props.userId) ? 
-						<button onClick={handleModalChange}>View Guest List</button>
+						<button className="viewGLButton" onClick={handleModalChange}>View Guest List</button>
 						:
 						<></>
 					}
