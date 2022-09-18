@@ -5,6 +5,7 @@ import {setEventDate, deleteCurrentEvent} from '../../Redux/actionCreators'
 import { Link, Navigate } from 'react-router-dom'
 import { motion } from "framer-motion"
 import {deadlineHasPassed} from '../../Shared/timeFormatting'
+import AddNewLink from '../Modal/AddNewLink';
 import './MyEvents.css'
 
 const mapStateToProps = state => {
@@ -21,6 +22,7 @@ function MyEvents(props) {
 	const [events, setEvents] = useState([]);
 	const [eventDate, setDate] = useState();
 	const [newEventCreated, setNewEventCreated] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
 	const blob = '/yellowbloblogin.png';
 	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { timeStyle: 'short'};
@@ -40,6 +42,7 @@ function MyEvents(props) {
 		dispatch(deleteCurrentEvent());
 		loadEvents();
 		document.title = "Restaurant Tinder - My Events"
+		setOpenModal(false);
 	}, [loadEvents, dispatch]);
 
 	const handleNewEvent = () => {
@@ -52,6 +55,10 @@ function MyEvents(props) {
 
 	const handleDateChange = (event) => {
 		setDate(event.target.value);
+	}
+
+	const handleModalChange = () => {
+			setOpenModal(true);
 	}
 	
 	const getMapOfEventCards = (eventCards) => {
@@ -84,7 +91,7 @@ function MyEvents(props) {
 				<div className='myEventsInfo'>
 					<h1>My Events</h1>
 					{events && events.length > 0 ? <h5>You currently have {events.length} event{events.length === 1 ? "" : "s"} scheduled.</h5> : <span></span>}
-					<button>Add New Invite Link</button>
+					<button onClick={handleModalChange}>Add New Invite Link</button>
 				</div>
 					{events && events.length > 0 ? 
 							<div className='myEvents'>
@@ -102,6 +109,7 @@ function MyEvents(props) {
 						</div>
 					}
 			</motion.div>
+			<AddNewLink open={openModal} onClose={() => setOpenModal(false)}/>
 			{newEventCreated ? <Navigate to={'/nearme'}/> : <></>}
 		</div>
 	);
