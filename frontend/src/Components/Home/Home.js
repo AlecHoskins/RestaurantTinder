@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import { motion } from "framer-motion"
+import {deadlineHasPassed} from '../../Shared/timeFormatting'
 import axios from 'axios';
 import './Home.css'
 
@@ -53,15 +54,16 @@ function Home(props) {
 
     const getMapOfUpcomingEvents = (eventCards) => {
         const numWeeks = 2;
-        const now = new Date();
-        now.setDate(now.getDate() + numWeeks * 7);
+        const today = new Date();
+        const twoWeeks = new Date();
+        twoWeeks.setDate(twoWeeks.getDate() + numWeeks * 7);
         return (
             eventCards.map((e) => {
                 const newDate = new Date(e.eventDayTime)
-                if(newDate <= now) {
+                if(newDate <= twoWeeks && newDate >= today) {
                     return (
                         <div key={e.id} className='upcomingCard'>
-                            <Link to={`/eventview/${e.id}`}><button>Event Details {'>'}</button></Link>
+                            <Link to={`/eventview/${e.id}`}><button>{!deadlineHasPassed(e.decisionDeadline) ? 'Event Details' : 'View Finalists'}{' >'}</button></Link>
                             <h5>{e.eventTitle}</h5>
                             <div>{newDate.toLocaleDateString('en-US', dateOptions)} @ {newDate.toLocaleTimeString('en-US', timeOptions)}</div>
                         </div>
