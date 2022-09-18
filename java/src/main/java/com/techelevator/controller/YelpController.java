@@ -16,7 +16,7 @@ public class YelpController {
     YelpBusinessService yelpBusinessService;
 
     @GetMapping()
-    public Restaurant[] search( // TODO : Add parameter to check if a restaurant will be open on a specific day/time
+    public Restaurant[] search( // TODO : check if restaurant is permanently closed.
             @RequestParam (defaultValue = "restaurant") String term,
             @RequestParam (defaultValue = "78229") String location,
             @RequestParam (defaultValue = "-1") int eventUnixTime
