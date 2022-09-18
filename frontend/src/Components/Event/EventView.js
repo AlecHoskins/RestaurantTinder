@@ -38,6 +38,7 @@ function EventView(props) {
 	const [votes, setVotes] = useState([]);
 	const [loaded, setLoaded] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
+	const [isFinal, setIsFinal] = useState(false);
 	
 	const eventId = props.event.id;
 	const userId = props.userId;
@@ -68,6 +69,7 @@ function EventView(props) {
 		//set as guest if the host Id is not the logged in user
 		setIsGuest((data.hostId !== userId && currentGuest));
 		setLoaded(true);
+		setIsFinal(deadlineHasPassed(data.decisionDeadline));
 	}
 
 	useEffect(() => {
@@ -160,12 +162,16 @@ function EventView(props) {
                     <div className="titleSection">
                         <h5 className="card-name">{card.name}</h5>
                     </div>
-					{!deadlineHasPassed(props.event.decisionDeadline) ?
+					{!isFinal ?
                     <div className="thumbs">
 						<img onClick={() => thumbsUpHandler(card)} src={getThumbImage(card, true)} alt="Thumbs Up"/>
 						<img onClick={() => thumbsDownHandler(card)} src={getThumbImage(card, false)} alt="Thumbs Down"/>
 					</div>
-					:<></>
+					: 
+					<div className="thumbs">
+						<img src={tuBlack} className="thumbsNoClick" alt="Thumbs Up" />
+						<div>86</div>
+					</div>
 					}
                     <div className="imageSection">
                         <img className="card-img" src={card.image_url} alt="Restaurant" />
@@ -221,7 +227,7 @@ function EventView(props) {
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
                     <h2>{new Date(props.event.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</h2>
-                    {!deadlineHasPassed(props.event.decisionDeadline) ? 
+                    {!isFinal ? 
 						<h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
 					: <h5>Voting has ended</h5>
 					}
@@ -233,7 +239,7 @@ function EventView(props) {
 						<></>
 					}
                     {/* */}
-                    {!deadlineHasPassed(props.event.decisionDeadline) ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
+                    {!isFinal ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
                 <div className="eventRestaurants">
                     {eventRestaurantCards()}
