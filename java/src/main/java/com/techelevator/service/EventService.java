@@ -145,7 +145,6 @@ public class EventService {
 
         if(guestId > 0) {
             guest.setId(guestId);
-            // TODO : add eventId to guest
 
             String url_hash = new BCryptPasswordEncoder().encode(guestId + ""); // TODO : Modify to remove any '/' and add hostId to guarantee uniqueness
             guest.setInviteUrl(url_hash);
