@@ -33,7 +33,6 @@ function Home(props) {
 
     useEffect(() => {
         document.title = "Restaurant Tinder - Home"
-		console.log('useEffect');
         loadEvents();
       }, [loadEvents])
 
