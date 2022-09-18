@@ -6,13 +6,15 @@ import { Navigate } from 'react-router-dom'
 import {setEventDeadlineDate, setEventTitle, setEventDate, setEventGuests, setEvent} from '../../Redux/actionCreators'
 import baseUrl from '../../Shared/baseUrl';
 import './EventCreation.css'
+import {API} from '../../Shared/API'
 
 const mapStateToProps = state => {
 	return {
 		event: state.event,
 		user: state.user,
 		urls: state.urls.urls,
-		dispatch: state.dispatch
+		dispatch: state.dispatch,
+		token: state.token
 	}
 }
 
@@ -97,7 +99,7 @@ function EventCreation(props) {
 		console.log(JSON.stringify(newEvent));
 
 		//props.urls.createEvent - this isn't being used yet
-		const response = await axios.post(baseUrl + '/event/', newEvent);
+		const response = await axios.post(baseUrl + '/event/', newEvent, API.createAuthorizedHeaders(props.token));
 		//console.log(response.data);
 		if (response && response.data) { 
 			newEvent.id = response.data.id;

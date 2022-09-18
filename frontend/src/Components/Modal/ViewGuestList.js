@@ -13,7 +13,6 @@ export default function ViewGuestList({open, thisGuestList, hostId, thisEventId,
 	}
     
     const mapGuestList = (guestList) => {
-        console.log(guestList)
         return guestList.map((guest) => {
             return (guest.userId !== hostId ? 
                 <tr key={guest.id}>

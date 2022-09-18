@@ -9,6 +9,8 @@ import {setEventGuestVotes, setEvent, setURLs} from '../../Redux/actionCreators'
 import {militaryTimeToStandardTime, numDayToString, deadlineHasPassed} from '../../Shared/timeFormatting'
 import baseUrl from '../../Shared/baseUrl'
 
+import { API } from '../../Shared/API'
+
 const mapStateToProps = state => {
     return {
 		userId: (state.user) ? state.user.id : 0,
@@ -36,7 +38,8 @@ function EventView(props) {
 	const [guest, setGuest] = useState(null);
 	const [isGuest, setIsGuest] = useState(true);
 	const [votes, setVotes] = useState([]);
-	const [loaded, setLoaded] = useState(false);
+	const [eventLoaded, setEventLoaded] = useState(false);
+	const [guestLoaded, setGuestLoaded] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 	const [isFinal, setIsFinal] = useState(false);
 	
@@ -48,9 +51,25 @@ function EventView(props) {
 	const token = props.token.token;
 	const urlRoot = "http://localhost:3000";
 
+
+
+	const loadGuest = async(urls) => {
+		console.log('loading guest');
+		//if not a logged in user
+		if (!props.userId) {
+			const curGuest = await axios.get(urls.getGuest + guestid).catch((error) => {
+				alert('An error has occurred while attempting to retreive the guest information');
+				//this should then navigate
+			})
+			setGuest(curGuest);
+			setGuestLoaded(true);
+		} 
+	}
+
 	const loadEvent = async(urls) => {
 		console.log("loading");
-		const myEvents = await axios.get(urls.getEvent + id).catch((error) => {
+		let url = (props.userId) ? urls.getEvent + id : urls.getGuestEvent + guestid;
+		const myEvents = await axios.get(url, (props.token ? API.createAuthorizedHeaders(props.token) : {})).catch((error) => {
 			alert('An error has occurred while attempting to retrieve the event details');
 		})
 		const data = myEvents.data;
@@ -62,13 +81,14 @@ function EventView(props) {
 			const guestId = guestid;
 			currentGuest = data.guestList.find((guest) => {return guest.inviteUrl == guestId});
 		}
+		console.log(data);
 		if (currentGuest) {
 			setGuest(currentGuest);
 			setVotes(currentGuest.vote);
 		}
 		//set as guest if the host Id is not the logged in user
 		setIsGuest((data.hostId !== userId && currentGuest));
-		setLoaded(true);
+		setEventLoaded(true);
 		setIsFinal(deadlineHasPassed(data.decisionDeadline));
 	}
 
@@ -79,6 +99,7 @@ function EventView(props) {
 				loadEvent(response.data);
 			})
 		} else {
+			loadGuest(props.urls.urls);
 			loadEvent(props.urls.urls);
 		}
         document.title = "Restaurant Tinder - Event"
@@ -214,7 +235,7 @@ function EventView(props) {
 
     return (
         <div className="eventView">
-			{(loaded && !token && !guest) ? <Navigate to="/login" /> : <></>}
+			{(eventLoaded && !token && !guest && guestLoaded) ? <Navigate to="/login" /> : <></>}
             <div>
                 <img src={blob} className='eventBlob' alt='Yellow Blob'/>
             </div>
@@ -227,13 +248,13 @@ function EventView(props) {
                     {/* */}
                     <h1>{props.event.eventTitle}</h1>
                     <h2>{new Date(props.event.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</h2>
-                    {!isFinal ? 
+					{!isFinal ? 
 						<h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
 					: <h5>Voting has ended</h5>
 					}
                     {/*<a>How do I start?</a>*/}
                     {/* User is the Event Creator */}
-					{(loaded && token && props.event.hostId === props.userId) ? 
+					{(eventLoaded && token && props.event.hostId === props.userId) ? 
 						<button className="viewGLButton" onClick={handleModalChange}>View Guest List</button>
 						:
 						<></>

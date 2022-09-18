@@ -6,13 +6,15 @@ import { motion } from "framer-motion"
 import {deadlineHasPassed} from '../../Shared/timeFormatting'
 import axios from 'axios';
 import './Home.css'
+import {API} from './../../Shared/API'
 
 const mapStateToProps = state => {
 	return {
 		userId: state.user.id,
 		urls: state.urls.urls,
 		dispatch: state.dispatch,
-		eventDate: state.event.date
+		eventDate: state.event.date,
+		token: state.token
 	}
 }
 
@@ -26,7 +28,7 @@ function Home(props) {
 
     const loadEvents = useCallback(async() => {
         if (props.userId === null) { return; }
-	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
+	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId, API.createAuthorizedHeaders(props.token)).catch((error) => {
 			alert('There was an error while retrieving the events');
 		});
 		if (myEvents) { setEvents(myEvents.data); }

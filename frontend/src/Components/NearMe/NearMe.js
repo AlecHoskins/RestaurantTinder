@@ -6,12 +6,14 @@ import {setSelectedRestaurants, setEventDate} from '../../Redux/actionCreators'
 import { Link } from 'react-router-dom';
 import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeFormatting'
 import { motion } from "framer-motion"
+import { API } from '../../Shared/API'
 
 const mapStateToProps = state => {
 	return {
 		date: state.event.eventDayTime,
 		eventRestaurants: state.event.eventRestaurants,
-		dispatch: state.dispatch
+		dispatch: state.dispatch,
+		token: state.token
 	}
 }
 
@@ -47,7 +49,7 @@ function NearMe(props) {
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
 		// let open_at = timeToUnix(new Date(date)) 
-		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode).catch((error) => {
+		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode, API.createAuthorizedHeaders(props.token)).catch((error) => {
 			alert('An error has occured while searching for restaurants');
 		})
 

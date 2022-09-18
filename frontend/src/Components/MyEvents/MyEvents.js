@@ -6,6 +6,7 @@ import { Link, Navigate } from 'react-router-dom'
 import { motion } from "framer-motion"
 import {deadlineHasPassed} from '../../Shared/timeFormatting'
 import AddNewLink from '../Modal/AddNewLink';
+import {API} from '../../Shared/API'
 import './MyEvents.css'
 
 const mapStateToProps = state => {
@@ -13,7 +14,8 @@ const mapStateToProps = state => {
 		userId: state.user.id,
 		urls: state.urls.urls,
 		dispatch: state.dispatch,
-		eventDate: state.event.date
+		eventDate: state.event.date,
+		token: state.token
 	}
 }
 
@@ -29,8 +31,8 @@ function MyEvents(props) {
 	const dispatch = props.dispatch;
 
 	const loadEvents = useCallback(async() => {
-		if (props.userId) {
-			const myEvents = await axios.get(props.urls.getHostEvents + props.userId).catch((error) => {
+		if (props.userId && props.token) {
+			const myEvents = await axios.get(props.urls.getHostEvents + props.userId, API.createAuthorizedHeaders(props.token)).catch((error) => {
 				alert('There was an error while retrieving the events');
 			});
 			if (myEvents) { setEvents(myEvents.data); }
