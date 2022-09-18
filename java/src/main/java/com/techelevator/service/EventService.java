@@ -8,7 +8,7 @@ import com.techelevator.dao.restaurant.CategoryDao;
 import com.techelevator.dao.restaurant.RestaurantCategoryDao;
 import com.techelevator.dao.restaurant.RestaurantDao;
 import com.techelevator.dao.restaurant.RestaurantHoursDao;
-import com.techelevator.dto.FinalistDTO;
+import com.techelevator.dto.VoteTallyDTO;
 import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
@@ -47,6 +47,8 @@ public class EventService {
         }
         event.setGuestList(guests);
 
+        event.setVotes(getVotes(id));
+        // TODO : check decision deadline, filter accordingly
         List<Restaurant> restaurants = restaurantDao.getEventRestaurants(id);
         for(Restaurant restaurant : restaurants) {
             restaurant.setCategories(restaurantCategoryDao.getCategoriesByRestaurant(restaurant.getId()));
@@ -167,34 +169,30 @@ public class EventService {
         return guestId;
     }
 
-    public List<FinalistDTO> getFinalists() {
-        List<FinalistDTO> finalists = new ArrayList<>();
-        Map<String, Integer> voteTally = new HashMap<>();
-        List<Vote> upVotes = guestVoteDao.getUpVotesOnly();
+    public List<VoteTallyDTO> getVotes(long eventId) {
+        List<VoteTallyDTO> votes = new ArrayList<>();
+        Map<String, Integer> voteMap = new HashMap<>();
+        List<Vote> upVotes = guestVoteDao.getUpVotesOnly(eventId);
 
         for (Vote vote : upVotes) {
-            if(!voteTally.containsKey(vote.getRestaurantId())) {
-                voteTally.put(vote.getRestaurantId(), 0);
+            if(!voteMap.containsKey(vote.getRestaurantId())) {
+                voteMap.put(vote.getRestaurantId(), 0);
             }
 
-            int count = voteTally.get(vote.getRestaurantId());
+            int count = voteMap.get(vote.getRestaurantId());
 
             if(vote.getUpVote() != null && vote.getUpVote()) {
-                voteTally.put(vote.getRestaurantId(), count + 1);
+                voteMap.put(vote.getRestaurantId(), count + 1);
             }
         }
 
-        for (Map.Entry<String, Integer> entry : voteTally.entrySet()) {
-            Restaurant restaurant = restaurantDao.findRestaurantById(entry.getKey());
-            restaurant.setCategories(restaurantCategoryDao.getCategoriesByRestaurant(restaurant.getId()));
-            restaurant.setHours(restaurantHoursDao.getHoursByRestaurant(restaurant.getId()));
-
-            finalists.add(new FinalistDTO(restaurant, entry.getValue()));
+        for (Map.Entry<String, Integer> entry : voteMap.entrySet()) {
+            votes.add(new VoteTallyDTO(entry.getKey(), entry.getValue()));
         }
 
-        Collections.sort(finalists);
+        Collections.sort(votes);
 
-        return finalists;
+        return votes;
     }
 
 }

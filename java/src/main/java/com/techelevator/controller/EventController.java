@@ -1,6 +1,6 @@
 package com.techelevator.controller;
 
-import com.techelevator.dto.FinalistDTO;
+import com.techelevator.dto.VoteTallyDTO;
 import com.techelevator.model.event.Event;
 import com.techelevator.service.EventService;
 import org.springframework.http.HttpStatus;
@@ -35,10 +35,10 @@ public class EventController {
         return service.getEventsByUser(id);
     }
 
-    @GetMapping("/finalists")
-    public List<FinalistDTO> getFinalists() {
-        return service.getFinalists();
-    }
+//    @GetMapping("/finalists/{id}")
+//    public List<VoteTallyDTO> getFinalists() {
+//        return service.getVotes();
+//    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping

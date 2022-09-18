@@ -66,10 +66,10 @@ public class GuestService {
     }
 
     @Transactional(rollbackFor = TransactionRollbackException.class)
-    public void vote(Guest guest) throws TransactionRollbackException {
+    public void vote(Guest guest) throws TransactionRollbackException, DecisionDatePassedException {
         boolean pass;
 
-        Event event = getEventById(guest.getEventId());
+        Event event = getEventById(guestDao.getGuestById(guest.getId()).getEventId());
 
         if(LocalDateTime.now().isEqual(LocalDateTime.parse(event.getDecisionDeadline()))
                 || LocalDateTime.now().isAfter(LocalDateTime.parse(event.getDecisionDeadline()))) {

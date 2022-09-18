@@ -1,5 +1,6 @@
 package com.techelevator.model.event;
 
+import com.techelevator.dto.VoteTallyDTO;
 import com.techelevator.model.restaurant.Restaurant;
 import lombok.Data;
 
@@ -15,13 +16,22 @@ public class Event implements Comparable {
     private String eventTitle;
     private String eventDayTime;
     private String decisionDeadline;
-    private List<Restaurant> eventRestaurants;
     private List<Guest> guestList;
+    private List<Restaurant> eventRestaurants;
+    private List<VoteTallyDTO> votes;
 
     @Override
     public int compareTo(Object o) {
         Event e = ((Event)o); // type cast
         return this.getEventDayTime().compareTo(e.getEventDayTime());
+    }
+
+    public List<VoteTallyDTO> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VoteTallyDTO> votes) {
+        this.votes = votes;
     }
 
     public String getEventTitle() {
@@ -80,7 +90,7 @@ public class Event implements Comparable {
         this.guestList = guestList;
     }
 
-    public Event(long id, long hostId, String event_daytime, String decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle) {
+    public Event(long id, long hostId, String event_daytime, String decision_deadline, List<Restaurant> eventRestaurants, List<Guest> guestList, String eventTitle, List<VoteTallyDTO> votes) {
         this.id = id;
         this.hostId = hostId;
         this.eventDayTime = event_daytime;
@@ -88,6 +98,7 @@ public class Event implements Comparable {
         this.eventRestaurants = eventRestaurants;
         this.guestList = guestList;
         this.eventTitle = eventTitle;
+        this.votes = votes;
     }
 
     public Event() {

@@ -28,7 +28,7 @@ public class GuestController {
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PutMapping(path = "/vote") // TODO : Check if we're past the deadline or not
+    @PutMapping(path = "/vote")
     public void vote(@RequestBody Guest guest) {
         service.vote(guest);
     }
