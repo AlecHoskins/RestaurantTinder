@@ -231,7 +231,7 @@ function EventView(props) {
 						<h5>Voting Ends: {new Date(props.event.decisionDeadline).toLocaleDateString('en-US', dateOptions)} @ {new Date(props.event.decisionDeadline).toLocaleTimeString('en-US', timeOptions)}</h5>
 					: <h5>Voting has ended</h5>
 					}
-                    <a>How do I start?</a>
+                    {/*<a>How do I start?</a>*/}
                     {/* User is the Event Creator */}
 					{(loaded && token && props.event.hostId === props.userId) ? 
 						<button className="viewGLButton" onClick={handleModalChange}>View Guest List</button>
@@ -242,7 +242,11 @@ function EventView(props) {
                     {!isFinal ? <button className="eventSubmit" onClick={voteSubmitHandler}>Submit</button> : <></>}
                 </div>
                 <div className="eventRestaurants">
-                    {eventRestaurantCards()}
+					{isGuest && guest && isFinal?
+						<h3>The voting for this event has ended.</h3>
+						:
+						eventRestaurantCards()
+					}
                 </div>
             </div>
 			<ViewGuestList open={openModal} thisGuestList={props.event.guestList} hostId={props.event.hostId} thisEventId={eventId} onClose={() => setOpenModal(false)} />
