@@ -57,7 +57,7 @@ function EventView(props) {
 			currentGuest = data.guestList.find((guest) => guest.userId === userId);
 		} else { /* the user is not logged in */
 			const guestId = guestid;
-			currentGuest = data.guestList.find((guest) => {return parseInt(guest.inviteUrl) == guestId});
+			currentGuest = data.guestList.find((guest) => {return guest.inviteUrl == guestId});
 		}
 		if (currentGuest) {
 			setGuest(currentGuest);
@@ -238,7 +238,7 @@ function EventView(props) {
 						<tbody>
 							
 						{props.event.guestList.map((guest) => {
-							return (guest.id !== props.event.hostId ? 
+							return (guest.userId !== props.event.hostId ? 
 								<tr key={guest.id}>
 									<th>{guest.nickname}</th>
 									<td><button className="link-copy" onClick={() => handleLinkCopy(guest)}>link</button></td>
