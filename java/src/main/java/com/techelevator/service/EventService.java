@@ -9,6 +9,7 @@ import com.techelevator.dao.restaurant.RestaurantCategoryDao;
 import com.techelevator.dao.restaurant.RestaurantDao;
 import com.techelevator.dao.restaurant.RestaurantHoursDao;
 import com.techelevator.dto.FinalistDTO;
+import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
@@ -17,7 +18,6 @@ import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -145,7 +145,7 @@ public class EventService {
             guest.setId(guestId);
             // TODO : add eventId to guest
 
-            String url_hash = new BCryptPasswordEncoder().encode(guestId + "");
+            String url_hash = new BCryptPasswordEncoder().encode(guestId + ""); // TODO : Modify to remove any '/' and add hostId to guarantee uniqueness
             guest.setInviteUrl(url_hash);
 
             boolean isUpdated = guestDao.updateGuest(guest);

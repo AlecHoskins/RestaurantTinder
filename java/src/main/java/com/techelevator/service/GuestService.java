@@ -8,15 +8,17 @@ import com.techelevator.dao.restaurant.CategoryDao;
 import com.techelevator.dao.restaurant.RestaurantCategoryDao;
 import com.techelevator.dao.restaurant.RestaurantDao;
 import com.techelevator.dao.restaurant.RestaurantHoursDao;
+import com.techelevator.exception.DecisionDatePassedException;
+import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -67,6 +69,13 @@ public class GuestService {
     public void vote(Guest guest) throws TransactionRollbackException {
         boolean pass;
 
+        Event event = getEventById(guest.getEventId());
+
+        if(LocalDateTime.now().isEqual(LocalDateTime.parse(event.getDecisionDeadline()))
+                || LocalDateTime.now().isAfter(LocalDateTime.parse(event.getDecisionDeadline()))) {
+            throw new DecisionDatePassedException();
+        }
+
         for(Vote vote: guest.getVote()) {
             pass = guestVoteDao.updateVote(guest.getId(), vote);
             if (!pass) {
@@ -74,4 +83,9 @@ public class GuestService {
             }
         }
     }
+
+    private Event getEventById(long id) {
+        return eventDao.getEventById(id);
+    }
+
 }

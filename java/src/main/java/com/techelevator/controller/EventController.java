@@ -2,17 +2,10 @@ package com.techelevator.controller;
 
 import com.techelevator.dto.FinalistDTO;
 import com.techelevator.model.event.Event;
-import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.service.EventService;
-import com.techelevator.service.RestaurantService;
-import com.techelevator.service.TransactionRollbackException;
-import com.techelevator.service.YelpBusinessService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

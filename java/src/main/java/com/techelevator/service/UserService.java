@@ -1,6 +1,7 @@
 package com.techelevator.service;
 
 import com.techelevator.dao.event.GuestDao;
+import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
