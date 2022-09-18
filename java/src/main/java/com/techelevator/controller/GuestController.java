@@ -29,15 +29,9 @@ public class GuestController {
         return service.getEvent(url);
     }
 
-    @PutMapping(path = "/vote")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping(path = "/vote") // TODO : Check if we're past the deadline or not
     public void vote(@RequestBody Guest guest) {
-//        try {
-//
-//        } catch (TransactionRollbackException e) {
-//            System.out.println("GuestController exception: " + e.getMessage());
-//        }
-
         service.vote(guest);
     }
 

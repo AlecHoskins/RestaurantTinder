@@ -42,7 +42,6 @@ public class EventController {
         return service.getEventsByUser(id);
     }
 
-    // TODO : add to UrlDTO
     @GetMapping("/finalists")
     public List<FinalistDTO> getFinalists() {
         return service.getFinalists();

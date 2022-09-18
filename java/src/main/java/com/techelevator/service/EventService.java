@@ -145,8 +145,8 @@ public class EventService {
             guest.setId(guestId);
             // TODO : add eventId to guest
 
-            String password_hash = new BCryptPasswordEncoder().encode(guestId + "");
-            guest.setInviteUrl(password_hash);
+            String url_hash = new BCryptPasswordEncoder().encode(guestId + "");
+            guest.setInviteUrl(url_hash);
 
             boolean isUpdated = guestDao.updateGuest(guest);
             if(!isUpdated) {
