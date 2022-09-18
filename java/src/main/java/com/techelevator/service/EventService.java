@@ -146,11 +146,7 @@ public class EventService {
         if(guestId > 0) {
             guest.setId(guestId);
 
-            String url_hash = new BCryptPasswordEncoder().encode(guestId + "");
-
-            url_hash = url_hash.replaceAll("/", "0");
-
-            guest.setInviteUrl(url_hash);
+            guest.setInviteUrl(hashId(guestId));
 
             boolean isUpdated = guestDao.updateGuest(guest);
             if(!isUpdated) {
@@ -195,5 +191,13 @@ public class EventService {
         Collections.sort(votes);
 
         return votes;
+    }
+
+    private String hashId(long id) {
+        String hash = new BCryptPasswordEncoder().encode(id + "");
+
+        hash = hash.replaceAll("/", "0");
+
+        return hash;
     }
 }
