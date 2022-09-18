@@ -135,7 +135,7 @@ function NearMe(props) {
 					<button className="add-restaurant" onClick={() => handleRestaurantAddRemove(card)}>{!card.added ? "Add" : "Remove"}</button>
 				</div>
 				<div className='imageSection'>
-					<span className='open-now'>{card.is_closed ? "" : "Open Now"}</span>
+					<span className='open-now'>{card.hours && card.hours[0] && card.hours[0].is_open_now ? "Open Now" : ""}</span>
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div className='infoSection'>
