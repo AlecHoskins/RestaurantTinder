@@ -1,0 +1,79 @@
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 40%;
+    height: 30%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.modalClose {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.modalContainer h2 {
+    color: #004e63;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modalContainer p {
+    text-align: center;
+}
+
+.user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #004e63;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #004e63;
+    outline: none;
+    background: transparent;
+    border-radius: 0px;
+}
+
+.user-box label {
+    position: absolute;
+    width: auto;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #004e63;
+    pointer-events: none;
+    transition: .5s !important;
+    overflow: visible;
+}
+
+.modalContainer .user-box input:focus ~ label,
+.modalContainer .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #004e63;
+  font-size: 12px;
+}
+
+.form-control:focus {
+    color: #004e63;
+    background-color: transparent;
+    border-color: #004e63;
+    outline: none;
+    box-shadow: none;
+}
+
+.modalContainer button {
+    float: right;
+    width: 170px;
+}
