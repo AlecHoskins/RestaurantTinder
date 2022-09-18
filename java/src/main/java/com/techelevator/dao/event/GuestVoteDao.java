@@ -12,7 +12,7 @@ public interface GuestVoteDao {
     // Read
     List<Vote> getVotesByGuest(long guestId);
     List<Vote> getVotesByRestaurant(String restaurantId, long eventId);
-    List<Vote> getUpVotesOnly(long eventId);
+    List<Vote> getVotesByEvent(long eventId);
 
     // Update
     boolean updateVote(long guestId, Vote updatedVote);

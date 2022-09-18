@@ -71,8 +71,7 @@ public class GuestService {
 
         Event event = getEventById(guestDao.getGuestById(guest.getId()).getEventId());
 
-        if(LocalDateTime.now().isEqual(LocalDateTime.parse(event.getDecisionDeadline()))
-                || LocalDateTime.now().isAfter(LocalDateTime.parse(event.getDecisionDeadline()))) {
+        if(HelperService.isPastDeadline(event.getId(), eventDao)) {
             throw new DecisionDatePassedException();
         }
 

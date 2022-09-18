@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/yelp")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class YelpController {
     @Autowired
     YelpBusinessService yelpBusinessService;
 
     @GetMapping()
-    public Restaurant[] search(
+    public Restaurant[] search( // TODO : Add parameter to check if a restaurant will be open on a specific day/time
             @RequestParam (defaultValue = "restaurant") String term,
             @RequestParam (defaultValue = "78229") String location,
             @RequestParam (defaultValue = "-1") int eventUnixTime

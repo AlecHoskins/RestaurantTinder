@@ -1,13 +1,5 @@
 package com.techelevator.service;
 
-import com.techelevator.dao.event.EventDao;
-import com.techelevator.dao.event.EventRestaurantDao;
-import com.techelevator.dao.event.GuestDao;
-import com.techelevator.dao.event.GuestVoteDao;
-import com.techelevator.dao.restaurant.CategoryDao;
-import com.techelevator.dao.restaurant.RestaurantCategoryDao;
-import com.techelevator.dao.restaurant.RestaurantDao;
-import com.techelevator.dao.restaurant.RestaurantHoursDao;
 import com.techelevator.dto.VoteTallyDTO;
 import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
@@ -15,7 +7,7 @@ import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Category;
 import com.techelevator.model.restaurant.Restaurant;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class EventService {
+public class EventService extends AutowireService {
 
-    @Autowired private YelpBusinessService yelpBusinessService;
-
-    @Autowired private EventDao eventDao;
-    @Autowired private EventRestaurantDao eventRestaurantDao;
-
-    @Autowired private GuestDao guestDao;
-    @Autowired private GuestVoteDao guestVoteDao;
-
-    @Autowired private RestaurantDao restaurantDao;
-    @Autowired private CategoryDao categoryDao;
-    @Autowired private RestaurantCategoryDao restaurantCategoryDao;
-    @Autowired private RestaurantHoursDao restaurantHoursDao;
+    private final boolean FOLLOW_TRELLO_RULES = false;
 
     public Event getEvent(long id) {
         Event event = eventDao.getEventById(id);
@@ -48,15 +29,32 @@ public class EventService {
         event.setGuestList(guests);
 
         event.setVotes(getVotes(id));
-        // TODO : check decision deadline, filter accordingly
+        boolean isPastDeadline = HelperService.isPastDeadline(event.getId(), eventDao);
+
         List<Restaurant> restaurants = restaurantDao.getEventRestaurants(id);
-        for(Restaurant restaurant : restaurants) {
+        for(int i = 0; i < restaurants.size(); i++) {
+            Restaurant restaurant = restaurants.get(i);
+            if(isPastDeadline && !isOnVotesList(restaurant.getId(), event.getVotes())) {
+                restaurants.remove(restaurant);
+                i--;
+                continue;
+            }
+
             restaurant.setCategories(restaurantCategoryDao.getCategoriesByRestaurant(restaurant.getId()));
             restaurant.setHours(restaurantHoursDao.getHoursByRestaurant(restaurant.getId()));
         }
         event.setEventRestaurants(restaurants);
 
         return event;
+    }
+
+    private boolean isOnVotesList(String restaurantId, List<VoteTallyDTO> votes) {
+        for(VoteTallyDTO vote : votes) {
+            if(vote.getRestaurantId().equals(restaurantId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Event> getEventsByHost(long id) {
@@ -93,8 +91,6 @@ public class EventService {
                 throw new TransactionRollbackException("addEvent failed, rollback.");
             }
         }
-
-        // TODO : Add host as guest - check with frontend
 
         for (Guest guest : newEvent.getGuestList()) {
             long id = addGuest(guest, eventId);
@@ -170,7 +166,8 @@ public class EventService {
     public List<VoteTallyDTO> getVotes(long eventId) {
         List<VoteTallyDTO> votes = new ArrayList<>();
         Map<String, Integer> voteMap = new HashMap<>();
-        List<Vote> upVotes = guestVoteDao.getUpVotesOnly(eventId);
+        List<Vote> upVotes = guestVoteDao.getVotesByEvent(eventId);
+        List<String> downvotedRestaurants = new ArrayList<>();
 
         for (Vote vote : upVotes) {
             if(!voteMap.containsKey(vote.getRestaurantId())) {
@@ -182,9 +179,19 @@ public class EventService {
             if(vote.getUpVote() != null && vote.getUpVote()) {
                 voteMap.put(vote.getRestaurantId(), count + 1);
             }
+
+            if(vote.getUpVote() != null && !vote.getUpVote()) {
+                if(FOLLOW_TRELLO_RULES) {
+                    downvotedRestaurants.add(vote.getRestaurantId());
+                }
+                voteMap.put(vote.getRestaurantId(), count - 1);
+            }
         }
 
         for (Map.Entry<String, Integer> entry : voteMap.entrySet()) {
+            if((entry.getValue() < 0) || (FOLLOW_TRELLO_RULES && downvotedRestaurants.contains(entry.getKey()))) {
+                continue;
+            }
             votes.add(new VoteTallyDTO(entry.getKey(), entry.getValue()));
         }
 

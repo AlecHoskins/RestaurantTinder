@@ -9,7 +9,7 @@ import java.security.Principal;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class UserController {
 
     public UserController() {
