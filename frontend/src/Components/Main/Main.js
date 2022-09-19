@@ -7,6 +7,7 @@ import baseUrl from '../../Shared/baseUrl'
 import axios from 'axios'
 import AnimatedRoutes from '../Animations/AnimatedRoutes'
 
+//Map State to Props
 const mapStateToProps = state => {
     return {
         token: state.token,
@@ -15,6 +16,7 @@ const mapStateToProps = state => {
     }
 }
 
+//Map Dispatch to Props
 const mapDispatchToProps = (dispatch) => ({
     addToken: () => { dispatch(addToken()) },
     deleteUser: () => { dispatch(deleteUser())},
@@ -26,26 +28,18 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Main extends Component {
 
+    //Constructor for props and urls
     constructor(props){
         super(props);
-
 		this.getUrls();
-        
     }
 
+    //API to get base URLS
 	getUrls = () => {
 		axios.get(baseUrl).then((response) => {
 			this.props.setURLs(response.data);
 		})
 	}
-
-    handleLogout = () => {
-        this.props.addToken("")
-        this.props.deleteUser()
-		this.props.deleteCurrentEvent();
-    }
-
-
 
     render(){
 
