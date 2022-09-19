@@ -9,6 +9,7 @@ import AddNewLink from '../Modal/AddNewLink';
 import {API} from '../../Shared/API'
 import './MyEvents.css'
 
+//Map state to props
 const mapStateToProps = state => {
 	return {
 		userId: state.user.id,
@@ -21,6 +22,7 @@ const mapStateToProps = state => {
 
 function MyEvents(props) {
 
+	//Set Constants and State
 	const [events, setEvents] = useState([]);
 	const [eventDate, setDate] = useState();
 	const [newEventCreated, setNewEventCreated] = useState(false);
@@ -30,6 +32,7 @@ function MyEvents(props) {
     const timeOptions = { timeStyle: 'short'};
 	const dispatch = props.dispatch;
 
+	//API Call to load all user's events
 	const loadEvents = useCallback(async() => {
 		if (props.userId && props.token) {
 			const myEvents = await axios.get(props.urls.getHostEvents + props.userId, API.createAuthorizedHeaders(props.token)).catch((error) => {
@@ -39,6 +42,8 @@ function MyEvents(props) {
 		}
 	}, [props.urls.getHostEvents, props.userId]);
 
+	/*useEffect to delete and saved state of current event, trigger function
+	loadEvents, set document title and set Modal state*/
 	useEffect(() => {
 		//in this page we should not be storing a 'current event'
 		dispatch(deleteCurrentEvent());
@@ -47,6 +52,7 @@ function MyEvents(props) {
 		setOpenModal(false);
 	}, [loadEvents, dispatch]);
 
+	//Function to set new event date
 	const handleNewEvent = () => {
 
 		props.dispatch(deleteCurrentEvent());
@@ -55,14 +61,17 @@ function MyEvents(props) {
 
 	}
 
+	//Function to set state on input of date box
 	const handleDateChange = (event) => {
 		setDate(event.target.value);
 	}
 
+	//Handles state of open or closed modal
 	const handleModalChange = () => {
 			setOpenModal(true);
 	}
-	
+
+	//Maps event cards into divs for display	
 	const getMapOfEventCards = (eventCards) => {
 		return (
 			eventCards.map((e) => {
