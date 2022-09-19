@@ -8,6 +8,7 @@ import {militaryTimeToStandardTime, numDayToString} from '../../Shared/timeForma
 import { motion } from "framer-motion"
 import { API } from '../../Shared/API'
 
+//Map State to Props
 const mapStateToProps = state => {
 	return {
 		date: state.event.eventDayTime,
@@ -19,28 +20,23 @@ const mapStateToProps = state => {
 
 function NearMe(props) {
 
+	//Set consants and state
 	const urls = useSelector(state => state.urls.urls);
 	const dispatch = props.dispatch;
-
 	const phoneLogo = '/phone-icon.png';
 	const yellowBlob = '/yellowblobsignup.png'
-
 	const [searchData, setSearchData] = useState();
 	const [restaurantData, setRestaurantData] = useState();
-	//const [restaurantSelections, setRestaurantSelections] = useState([]);
-	// const [restaurantDetail, setRestaurantDetail] = useState();
-	// const [restaurantDetailId, setRestaurantDetailId] = useState();
 
+	//useEffect to set document title and dispatch set selected restaurants
 	useEffect(() => {
-		
         document.title = "Restaurant Tinder - New Event"
 		dispatch(setSelectedRestaurants([]));
       }, [dispatch])  
 
+	//API call to Yelp API to search for restaraunts that match user's search parameters
 	const searchHandler = async (event) => {
 		event.preventDefault();
-		//if searchData state is undefined, use the props instead
-		//const date = (!searchData.date) ? props.date : searchData.date;
 		
 		if (!searchData || !searchData.location) {
 			alert("Please enter a location");
@@ -48,7 +44,6 @@ function NearMe(props) {
 		}
 		let zipcode = searchData.location;
 		let term = (searchData.cuisine ? searchData.cuisine : 'restaurant');
-		// let open_at = timeToUnix(new Date(date)) 
 		const restaurants = await axios.get(urls.yelp + "?term=" + term + "&location=" + zipcode, API.createAuthorizedHeaders(props.token)).catch((error) => {
 			alert('An error has occured while searching for restaurants');
 		})
@@ -65,11 +60,13 @@ function NearMe(props) {
 		await setRestaurantData(restaurants.data);
 	}
 
+	//Handles state change of date on input
 	const handleDateChange = (event) => {
 		dispatch(setEventDate(event.target.value));
 		handleInputChange(event);
 	}
 
+	//Handles state change on input
 	const handleInputChange = (event) => {
 		event.preventDefault();
 		setSearchData((previousSearchData) => {
@@ -80,8 +77,9 @@ function NearMe(props) {
 		});
 	}
 
+	//API call to Yelp API by Restaurant ID for Hours information
 	const handleMoreInfo = async (id) => {
-		const moreInfo = await axios.get(urls.yelpById + id);
+		const moreInfo = await axios.get(urls.yelpById + id, API.createAuthorizedHeaders(props.token));
 
 		//Swapping out restaurant card data with detail data
 		let newData = [...restaurantData];
@@ -92,10 +90,9 @@ function NearMe(props) {
 				break;
 			}
 		}
-		//await setRestaurantDetail(moreInfo.data);
-		//await setRestaurantDetailId(id);
 	}
 
+	//Map hours for display on the restaurant card
 	const mapDays = (hour) => {
 		var curDay = null;
 		if (!hour.open) { return <span>No hours found</span> }
@@ -112,6 +109,7 @@ function NearMe(props) {
 		)
 	}
 
+	//Handles add and removal of restaraunts to event creation details
 	const handleRestaurantAddRemove = (card) => {
 		let restaurants = [...props.eventRestaurants];
 		if (!card.added) {
@@ -124,9 +122,9 @@ function NearMe(props) {
 		card.added = (!card.added) ? true : false;
 		//setting this to the redux store so event js can access it
 		dispatch(setSelectedRestaurants(restaurants));
-		//setRestaurantSelections(restaurants);
 	}
 
+	//Maps search results of restaraunts to seperate div cards
 	const restarauntCards = function() {  
 		return (
 			restaurantData.map(card => (
@@ -138,6 +136,7 @@ function NearMe(props) {
 				<div className='imageSection'>
 					{card.hours && card.hours[0] && card.hours[0].is_open_now && <span className='open-now'>Open Now</span>}
 					{card.hours && card.hours[0] && !card.hours[0].is_open_now && <span className='closed-now'>Closed</span>}
+					{!card.hours && <span className='no-span'></span>}
 					<img className='card-img' src={card.image_url} alt="restaurant" />
 				</div>
 				<div className='infoSection'>
@@ -208,6 +207,8 @@ function NearMe(props) {
 				<div className='restaurant-cardContainer'>
 					{(restaurantData) ? restarauntCards() : (<div></div>)}
 				</div>
+				{props.eventRestaurants && props.eventRestaurants.length > 1 ? 
+						<Link to="/Event"><button id="event-button-mobile">Create Event</button></Link> : <></>}
 				<div id="eventCO">
 					<ul className='selected-restaurants'>
 						{props.eventRestaurants.map((card) => 

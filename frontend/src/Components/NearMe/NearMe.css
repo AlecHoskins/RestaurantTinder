@@ -99,6 +99,7 @@ select {
     overflow-x: hidden;
 }
 
+/* Adds a scrollbar on overflow of restaurants */
 .restaurant-cardContainer::-webkit-scrollbar {
     width: 20px;
 }
@@ -226,7 +227,7 @@ select {
 #event-button {
     position: fixed;
     bottom: 3%;
-    left: 20%;
+    right: 70%;
 }
 
 .selected-restaurants {
@@ -236,6 +237,7 @@ select {
     overflow-x: hidden;
 }
 
+/* Adds a scroll bar on overflow of selected restaurants */
 .selected-restaurants::-webkit-scrollbar {
     width: 20px;
 }
@@ -281,6 +283,18 @@ select {
     font-size: 16px;    
 }
 
+.no-span {
+    position: absolute;
+    top: 48px;
+    left: 10px;
+    text-align: center;
+    border-radius: 8px;
+    color:#ffffff;
+    padding: 4px;
+    font-size: 16px; 
+}
+
+/* Adds pulse effect to Open Badge */
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
@@ -297,6 +311,12 @@ select {
     margin-top: 3px;
 }
 
+/* Hides Mobile Button */
+#event-button-mobile {
+    display: none;
+}
+
+/* Mobile Styling */
 @media only screen and (max-width: 800px){ 
     .eventSearch {
         display: inline;
@@ -336,6 +356,7 @@ select {
         max-width: 65%;
         margin-top: 10px;
         overflow-wrap: normal;
+        margin-bottom: 35px;
     }
 
     .imageSection {
@@ -350,6 +371,24 @@ select {
     .open-now {
         position: relative;
         top: 38px;
+    }
+
+    .closed-now {
+        position: relative;
+        top: 38px;
+    }
+
+    #event-button-mobile {
+        display: inline;
+        position:fixed;
+        right: 2%;
+        bottom: 2%;
+    }
+}
+
+@media only screen and (max-width: 700px){ 
+    .restaurant-cardContainer {
+        height: 68%;
     }
 }
 
