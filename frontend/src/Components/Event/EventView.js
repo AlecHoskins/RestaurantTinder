@@ -57,12 +57,12 @@ function EventView(props) {
 		console.log('loading guest');
 		//if not a logged in user
 		if (!props.userId) {
-			console.log('loading guest data');
 			const curGuest = await axios.get(urls.getGuest + guestid).catch((error) => {
 				alert('An error has occurred while attempting to retreive the guest information');
 				//this should then navigate
 			})
 			setGuest(curGuest.data);
+			setVotes(curGuest.data.vote);
 			setGuestLoaded(true);
 		} 
 	}
@@ -87,7 +87,7 @@ function EventView(props) {
 			setVotes(currentGuest.vote);
 		}
 		//set as guest if the host Id is not the logged in user
-		setIsGuest((data.hostId !== userId && currentGuest));
+		setIsGuest((data.hostId !== userId && (currentGuest || guest)));
 		setEventLoaded(true);
 		setIsFinal(deadlineHasPassed(data.decisionDeadline));
 	}
