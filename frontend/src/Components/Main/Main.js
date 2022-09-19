@@ -44,7 +44,6 @@ class Main extends Component {
     render(){
 
 		if (!this.props.urls.urls) {
-			console.log('reget urls');
 			this.getUrls();
 		}
 

@@ -54,7 +54,6 @@ function EventView(props) {
 
 
 	const loadGuest = async(urls) => {
-		console.log('loading guest');
 		//if not a logged in user
 		if (!props.userId) {
 			const curGuest = await axios.get(urls.getGuest + guestid).catch((error) => {
@@ -68,13 +67,13 @@ function EventView(props) {
 	}
 
 	const loadEvent = async(urls) => {
-		console.log("loading");
 		let url = (props.userId) ? urls.getEvent + id : urls.getGuestEvent + guestid;
 		const myEvents = await axios.get(url, (props.token ? API.createAuthorizedHeaders(props.token) : {})).catch((error) => {
 			alert('An error has occurred while attempting to retrieve the event details');
 		})
 		const data = myEvents.data;
-		await dispatch(setEvent(data)) 
+		
+		await dispatch(setEvent(data));
 		let currentGuest = null;
 		if(token /* the user is logged in */) {
 			currentGuest = data.guestList.find((guest) => guest.userId === userId);
@@ -87,7 +86,8 @@ function EventView(props) {
 			setVotes(currentGuest.vote);
 		}
 		//set as guest if the host Id is not the logged in user
-		setIsGuest((data.hostId !== userId && (currentGuest || guest)));
+		const isGuest = (data.hostId !== userId && guestid != null)
+		setIsGuest(isGuest);
 		setEventLoaded(true);
 		setIsFinal(deadlineHasPassed(data.decisionDeadline));
 	}
@@ -237,6 +237,7 @@ function EventView(props) {
     return (
         <div className="eventView">
 			{(eventLoaded && !token && !guest && guestLoaded) ? <Navigate to="/login" /> : <></>}
+			{(eventLoaded && isFinal && isGuest) ? <Navigate to="/home" /> : <></>}
             <div>
                 <img src={blob} className='eventBlob' alt='Yellow Blob'/>
             </div>
