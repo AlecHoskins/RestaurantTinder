@@ -24,6 +24,7 @@
     position: relative;
 }
 
+/* Styling of Inputs and Labels for Transition Effect */
 .user-box input {
     width: 100%;
     padding: 10px 0;
@@ -87,6 +88,7 @@
     color: #69D2e7;
 }
 
+/* Error Styling */
 .errorContainer {
     background-color: rgb(158, 0, 0, 0.2);
     color: rgb(156, 0, 0);
@@ -95,4 +97,13 @@
     font-size: medium;
     margin-bottom: 20px;
     margin-top: 0px;
+}
+
+/*Mobile Styling*/
+@media only screen and (max-width: 550px){ 
+
+    .registerPage {
+        width: 90%;
+    }
+    
 }

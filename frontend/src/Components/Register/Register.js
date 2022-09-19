@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import { motion } from "framer-motion"
 import './Register.css'
 
+//Mapping State to Props
 const mapStateToProps = state => {
 	return {
 		urls: state.urls.urls,
@@ -13,10 +14,12 @@ const mapStateToProps = state => {
 	}
 }
 
+//Constant of BG img
 const signupBlob = './yellowblobsignup.png';
 
 class Register extends Component{
 
+    //Constructor for state and setting document title
     constructor(props){
         super(props);
         this.state = {
@@ -30,6 +33,7 @@ class Register extends Component{
         document.title = "Restaurant Tinder - Register"        
     }
 
+    //Handles state change on input of text box
     handleInputChange = (event) => {
         event.preventDefault()
         this.setState({
@@ -37,6 +41,7 @@ class Register extends Component{
         })
     }
 
+    //Handles creation of new account and error message handling
     handleSubmit = async () => {
 		const HTTP_CREATED = 201;
         const data = {username: this.state.username, password: this.state.password, confirmPassword: this.state.confirmPassword, role: 'USER'}
@@ -69,6 +74,7 @@ class Register extends Component{
         }
     }
 
+    //Function to make sure password meets 1 capital, 1 lowercase, 1 special character, and 8-30 characters
     checkPasswordStrength = (password) => {
         var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/;
         return passw.test(password);
