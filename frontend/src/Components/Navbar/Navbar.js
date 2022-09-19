@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import {addToken, deleteUser, deleteCurrentEvent } from '../../Redux/actionCreators'
 import './Navbar.css';
 
+//Map State to Props
 const mapStateToProps = state => {
   return {
       token: state.token,
@@ -12,9 +13,7 @@ const mapStateToProps = state => {
   }
 }
 
-const logo = '/restaurant-tinder.png';
-
-
+//Map Dispatch to Props
 const mapDispatchToProps = (dispatch) => ({
   addToken: () => { dispatch(addToken()) },
   deleteUser: () => { dispatch(deleteUser())},
@@ -23,20 +22,25 @@ const mapDispatchToProps = (dispatch) => ({
 
 function Navbar(props) {
 
+  //Set Constants and States
   const navigate = useNavigate()
   const [checked, setCheckec] = useState(false);
+  const logo = '/restaurant-tinder.png';
 
+  //Function to handle logout
   const handleLogout = () => {
     props.addToken("")
     props.deleteUser()
-	props.deleteCurrentEvent();
-	navigate('/home');
+	  props.deleteCurrentEvent();
+	  navigate('/home');
   }
 
+  //Function to switch view of the mobile hamburger Menu
   const handleCheck = () => {
     setCheckec(old => !old)
   }
 
+  //Set Motion Varaints for Hamburger Menu
   const variants = {
     open: { 
       opacity: 1, 
