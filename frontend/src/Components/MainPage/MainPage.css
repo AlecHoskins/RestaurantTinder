@@ -45,6 +45,7 @@ p {
     font-weight: bold;
 }
 
+/*BG Image Styling*/
 #imageBlob {
     width: auto;
     height: 100%;
@@ -63,6 +64,7 @@ p {
     animation: rotation 30s infinite linear;
 }
 
+/* Rotation Transition of Food Plate*/
 @keyframes rotation {
     from {
         transform: rotate(0deg);

@@ -5,9 +5,11 @@ import './MainPage.css';
 
 function MainPage() {
     
+    //Constants Declaration
     const foodPlate = "/foodplate.png";
     const blob = "/yellowblob.png";
 
+    //Use Effect to set document title
     useEffect(() => {
         document.title = "Restaurant Tinder"
       }, [])
