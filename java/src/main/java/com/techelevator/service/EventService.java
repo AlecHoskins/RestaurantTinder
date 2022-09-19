@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class EventService extends AutowireService {
+public class EventService extends AutowiredService {
 
     private final boolean FOLLOW_TRELLO_RULES = false;
 
@@ -188,8 +188,9 @@ public class EventService extends AutowireService {
             }
         }
 
+        boolean isPastDeadline = HelperService.isPastDeadline(eventId, eventDao);
         for (Map.Entry<String, Integer> entry : voteMap.entrySet()) {
-            if((entry.getValue() < 0) || (FOLLOW_TRELLO_RULES && downvotedRestaurants.contains(entry.getKey()))) {
+            if(isPastDeadline && ((entry.getValue() < 0) || (FOLLOW_TRELLO_RULES && downvotedRestaurants.contains(entry.getKey())))) {
                 continue;
             }
             votes.add(new VoteTallyDTO(entry.getKey(), entry.getValue()));

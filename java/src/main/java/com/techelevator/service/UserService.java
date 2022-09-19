@@ -2,18 +2,25 @@ package com.techelevator.service;
 
 import com.techelevator.dao.event.GuestDao;
 import com.techelevator.exception.TransactionRollbackException;
+import com.techelevator.model.User;
 import com.techelevator.model.event.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-public class UserService {
+import java.security.Principal;
 
-    @Autowired GuestDao guestDao;
+@Service
+public class UserService extends AutowiredService {
 
     @Transactional(rollbackFor = TransactionRollbackException.class)
-    public Guest updateUserId(long id, String url) throws TransactionRollbackException {
+    public Guest updateUserId(String url, Principal principal) throws TransactionRollbackException {
+        User user = userDao.findByUsername(principal.getName());
         Guest guest = guestDao.getGuestByUrl(url);
-        guest.setUserId(id);
+        if(guest == null) {
+            throw new TransactionRollbackException("updateUserId failed, rollback.");
+        }
+        guest.setUserId(user.getId());
 
         boolean isUpdated = guestDao.updateGuest(guest);
         if(!isUpdated) {
