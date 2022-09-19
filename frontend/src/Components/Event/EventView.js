@@ -57,11 +57,12 @@ function EventView(props) {
 		console.log('loading guest');
 		//if not a logged in user
 		if (!props.userId) {
+			console.log('loading guest data');
 			const curGuest = await axios.get(urls.getGuest + guestid).catch((error) => {
 				alert('An error has occurred while attempting to retreive the guest information');
 				//this should then navigate
 			})
-			setGuest(curGuest);
+			setGuest(curGuest.data);
 			setGuestLoaded(true);
 		} 
 	}
@@ -81,7 +82,6 @@ function EventView(props) {
 			const guestId = guestid;
 			currentGuest = data.guestList.find((guest) => {return guest.inviteUrl == guestId});
 		}
-		console.log(data);
 		if (currentGuest) {
 			setGuest(currentGuest);
 			setVotes(currentGuest.vote);
@@ -92,15 +92,19 @@ function EventView(props) {
 		setIsFinal(deadlineHasPassed(data.decisionDeadline));
 	}
 
+	const loadAll = async(urls) => {
+		await loadGuest(urls);
+		await loadEvent(urls);
+	}
+
 	useEffect(() => {
-		if (!props.urls.urls) {
+		if (props.urls.urls) {
+			loadAll(props.urls.urls);
+		} else {
 			axios.get(baseUrl).then((response) => {
 				dispatch(setURLs(response.data))
-				loadEvent(response.data);
+				loadAll(response.data);
 			})
-		} else {
-			loadGuest(props.urls.urls);
-			loadEvent(props.urls.urls);
 		}
         document.title = "Restaurant Tinder - Event"
 		setOpenModal(false);
@@ -147,9 +151,6 @@ function EventView(props) {
 	const voteSubmitHandler = async(event) => {
 		//do vote submission here
 		if (!guest) { console.log('did not vote'); return; }
-		//as of right now will have to make an axios call for each restaurant
-		//just try to update the first vote for now
-		//TODO: UPDATE THIS URL WHEN THE URLSDTO GETS UPDATED
 		let sendGuest = {...guest};
 		sendGuest.vote = votes;
 		await axios.put(props.urls.urls.updateVote, sendGuest).catch((error) => {
