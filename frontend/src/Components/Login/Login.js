@@ -6,7 +6,7 @@ import {addToken, addUser} from '../../Redux/actionCreators'
 import axios from 'axios'
 import './Login.css'
 
-
+//Mapping State to Props
 const mapStateToProps = state => {
 	return {
 		urls: state.urls.urls,
@@ -14,10 +14,12 @@ const mapStateToProps = state => {
 	}
 }
 
+//Constant Declaration to BG img
 const loginBlob = './yellowbloblogin.png';
 
 class Login extends Component {
     
+    //Class constructor to set state, input change, and set document title
     constructor(props){
         super(props);
         this.state = {
@@ -30,7 +32,7 @@ class Login extends Component {
         document.title = "Restaurant Tinder - Login"
     }
     
-
+    //Handles Login function of the page and handles errors
     handleLogin = async () => {
         const data = { username: this.state.username, password: this.state.password };
         
@@ -48,6 +50,7 @@ class Login extends Component {
         
     }
 
+    //Handles setting state on input change of text boxes
     handleInputChange = (event) => {
         event.preventDefault()
         this.setState({

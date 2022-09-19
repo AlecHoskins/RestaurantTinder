@@ -24,6 +24,7 @@
     position: relative;
 }
 
+/* Styling of Inputs and Labels for Transition Effect */
 .user-box input {
     width: 100%;
     padding: 10px 0;
@@ -84,4 +85,13 @@
 
 .loginPage a:hover {
     color: #69D2e7;
+}
+
+/*Mobile Styling*/
+@media only screen and (max-width: 550px){ 
+
+    .loginPage {
+        width: 90%;
+    }
+    
 }
