@@ -5,13 +5,16 @@ import { useEffect } from "react";
 
 export default function ViewGuestList({open, thisGuestList, hostId, thisEventId, onClose}) {
 
+    //Constants
     const urlRoot = "http://localhost:3000";
 
+    //Handles the copy to clipboard function
     const handleLinkCopy = (guest) => {
 		const link = urlRoot + "/eventview/" + thisEventId + "/" + guest.inviteUrl;
 		navigator.clipboard.writeText(link);
 	}
     
+    //Function that maps each guest to a table row
     const mapGuestList = (guestList) => {
         return guestList.map((guest) => {
             return (guest.userId !== hostId ? 

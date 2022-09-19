@@ -1,40 +1,18 @@
 package com.techelevator.service;
 
-import com.techelevator.dao.event.EventDao;
-import com.techelevator.dao.event.EventRestaurantDao;
-import com.techelevator.dao.event.GuestDao;
-import com.techelevator.dao.event.GuestVoteDao;
-import com.techelevator.dao.restaurant.CategoryDao;
-import com.techelevator.dao.restaurant.RestaurantCategoryDao;
-import com.techelevator.dao.restaurant.RestaurantDao;
-import com.techelevator.dao.restaurant.RestaurantHoursDao;
 import com.techelevator.exception.DecisionDatePassedException;
 import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
 import com.techelevator.model.event.Vote;
 import com.techelevator.model.restaurant.Restaurant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class GuestService {
-
-    @Autowired private EventDao eventDao;
-    @Autowired private EventRestaurantDao eventRestaurantDao;
-
-    @Autowired private GuestDao guestDao;
-    @Autowired private GuestVoteDao guestVoteDao;
-
-    @Autowired private RestaurantDao restaurantDao;
-    @Autowired private CategoryDao categoryDao;
-    @Autowired private RestaurantCategoryDao restaurantCategoryDao;
-    @Autowired private RestaurantHoursDao restaurantHoursDao;
-
+public class GuestService extends AutowiredService {
 
     public Guest getGuestByUrl(String url) {
         Guest guest = guestDao.getGuestByUrl(url);

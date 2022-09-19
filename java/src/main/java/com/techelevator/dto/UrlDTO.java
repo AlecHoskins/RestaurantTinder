@@ -36,9 +36,16 @@ public class UrlDTO {
      * Authenticated: FALSE
      * */
 
-    @JsonProperty private final String getUsername = BASE_URL + "username";
+    @JsonProperty private final String getUsername = BASE_URL + "user";
     /**UserController
      * Method: GET
+     * Authenticated: TRUE
+     * */
+
+    @JsonProperty private final String addUserToGuest = BASE_URL + "user/guest";
+    /**UserContrller
+     * Method: PUT
+     * Pathvariable: /user/guest/{url}
      * Authenticated: TRUE
      * */
 
@@ -54,13 +61,6 @@ public class UrlDTO {
      * Method: GET
      * Path variables: yelp/{id}
      * Authenticated: TRUE
-     * */
-
-//    @JsonProperty private final String getRestaurant = BASE_URL + "restaurant/";
-    /**RestaurantController
-     * Method: GET
-     * Path variables: restaurant/{id}
-     * Authenticated: TRUE (disabled for testing)
      * */
 
     @JsonProperty private final String getEvent = BASE_URL + "event/";

@@ -5,7 +5,7 @@ import com.techelevator.model.event.Event;
 
 import java.time.LocalDateTime;
 
-public class HelperService extends AutowireService {
+public class HelperService extends AutowiredService {
 
     public static boolean isPastDeadline(long eventId, EventDao eventDao) {
         Event event = eventDao.getEventById(eventId);

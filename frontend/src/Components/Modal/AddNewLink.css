@@ -30,6 +30,7 @@
     text-align: center;
 }
 
+/* Animated Styling for input boxes */
 .user-box input {
     width: 100%;
     padding: 10px 0;
@@ -83,6 +84,7 @@
     overflow-x: hidden;
 }
 
+/* Adds a scrollbar to an overflow of guests */
 .guestListContainer::-webkit-scrollbar {
     width: 20px;
 }
@@ -115,8 +117,10 @@
     width: auto;
     height: auto;
     float: none;
+    margin-left: 5px;
 }
 
+/* Mobile Styling */
 @media only screen and (max-width: 900px){ 
     .modalContainer {
         width: 90%;

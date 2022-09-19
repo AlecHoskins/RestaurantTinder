@@ -69,7 +69,7 @@ class Login extends Component {
                     <img src={loginBlob} alt="Yellow Blob" id="loginBlob" />
                 </motion.div>
                 <motion.div className='loginPage'
-                    initial={{ left: "2000px", opacity: 1, transition: { duration: .4 } }}
+                    initial={{ left: "3300px", opacity: 1, transition: { duration: .4 } }}
                     animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
                     exit={{ left: "-1000px", opacity: 1, transition: { duration: .4 }}}
                 >

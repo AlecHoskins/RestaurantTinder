@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/event")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class EventController {
 
     private final EventService service;
@@ -21,7 +21,7 @@ public class EventController {
         this.service = service;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // TODO : only host?
     public Event getEvent(@PathVariable long id) {
         return service.getEvent(id);
     }
@@ -35,13 +35,6 @@ public class EventController {
     public List<Event> getEventsByUser(@PathVariable long id) {
         return service.getEventsByUser(id);
     }
-
-//    @GetMapping("/finalists/{id}")
-//    public List<VoteTallyDTO> getFinalists() {
-//        return service.getVotes();
-//    }
-
-    // TODO : add endpoint to link user to guest
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
