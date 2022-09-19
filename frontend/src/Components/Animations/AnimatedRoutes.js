@@ -11,6 +11,7 @@ import EventView from '../Event/EventView'
 import ErrorPage from '../ErrorPage/ErrorPage'
 import { AnimatePresence } from 'framer-motion'
 
+//Map State to Props
 const mapStateToProps = state => {
     return {
         token: state.token,
@@ -20,6 +21,7 @@ const mapStateToProps = state => {
 
 function AnimatedRoutes(props) {
 
+    //Sets useLocation for framer-motion
     const location = useLocation();
 
         return (
