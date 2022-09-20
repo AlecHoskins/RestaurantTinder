@@ -39,6 +39,7 @@
     overflow-x: hidden;
 }
 
+/* Adds a scrollbar on overflow of guests */
 .eventGuests::-webkit-scrollbar {
     width: 20px;
 }
@@ -79,6 +80,7 @@
     top: 1px;
 }
 
+/* Mobile Styling */
 @media only screen and (max-width: 800px){ 
 
     .eventCreation {
