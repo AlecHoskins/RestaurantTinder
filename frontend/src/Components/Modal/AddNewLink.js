@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion"
 import './AddNewLink.css'
+import axios from "axios";
+import { API } from '../../Shared/API'
 
-export default function AddNewLink({open, onClose}) {
+export default function AddNewLink({open, onClose, addLinkURL, token}) {
 
     //Constant States
     const [inviteLink, setInviteLink] = useState('');
@@ -12,6 +14,14 @@ export default function AddNewLink({open, onClose}) {
     const handleInputChange = (event => {
         setInviteLink(event.target.value);
     })
+
+	const handleAddLink = () => {
+		console.log(token);
+		const guestURL = inviteLink.substring(inviteLink.lastIndexOf('/'))
+		axios.put(addLinkURL + guestURL, null, API.createAuthorizedHeaders(token)).catch((error) => {
+			alert('Failed to add the link.');
+		})
+	}
 
     if (!open) {
         return null;
@@ -35,7 +45,7 @@ export default function AddNewLink({open, onClose}) {
                         required
                     />
                     <label className="sr-only">Invite Link</label>
-                    <button type="submit">Add Link</button>
+                    <button type="submit" onClick={handleAddLink}>Add Link</button>
                 </div>
             </motion.div>
         )

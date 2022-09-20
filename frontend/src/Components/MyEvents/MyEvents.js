@@ -120,7 +120,7 @@ function MyEvents(props) {
 						</div>
 					}
 			</motion.div>
-			<AddNewLink open={openModal} onClose={() => setOpenModal(false)}/>
+			<AddNewLink open={openModal} onClose={() => setOpenModal(false)} addLinkURL={props.urls.addUserToGuest} token={props.token}/>
 			{newEventCreated ? <Navigate to={'/nearme'}/> : <></>}
 		</div>
 	);
