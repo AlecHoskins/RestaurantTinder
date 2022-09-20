@@ -35,7 +35,7 @@ function Home(props) {
 			alert('There was an error while retrieving the events');
 		});
 		if (myEvents) { setEvents(myEvents.data); }
-	}, [props.urls.getHostEvents, props.userId]);
+	}, [props.urls.getHostEvents, props.userId, props.token]);
 
     //useEffect to set document title and trigger loadEvents Function
     useEffect(() => {

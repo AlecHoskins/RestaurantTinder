@@ -40,7 +40,7 @@ function MyEvents(props) {
 			});
 			if (myEvents) { setEvents(myEvents.data); }
 		}
-	}, [props.urls.getHostEvents, props.userId]);
+	}, [props.urls.getHostEvents, props.userId, props.token]);
 
 	/*useEffect to delete and saved state of current event, trigger function
 	loadEvents, set document title and set Modal state*/

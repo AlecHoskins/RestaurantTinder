@@ -4,8 +4,11 @@ import { motion } from "framer-motion"
 import './AddNewLink.css'
 
 export default function AddNewLink({open, onClose}) {
+
+    //Constant States
     const [inviteLink, setInviteLink] = useState('');
 
+    //Handles input of Invite Link
     const handleInputChange = (event => {
         setInviteLink(event.target.value);
     })
