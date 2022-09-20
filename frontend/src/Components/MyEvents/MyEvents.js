@@ -75,14 +75,31 @@ function MyEvents(props) {
 	const getMapOfEventCards = (eventCards) => {
 		return (
 			eventCards.map((e) => {
+				console.log(eventCards);
 				return (<div key={e.id} className='upcomingCard'>
 					<Link to={`/eventview/${e.id}`}><button>{!deadlineHasPassed(e.decisionDeadline) ? 'Event Details' : 'View Finalists'}{' >'}</button></Link>
 					<h5>{e.eventTitle}</h5>
 					<div>{new Date(e.eventDayTime).toLocaleDateString('en-US', dateOptions)} @ {new Date(e.eventDayTime).toLocaleTimeString('en-US', timeOptions)}</div>
-					<div>Current winning restaraunt: Papa Mario's Pizza</div> {/* How are we calculating this */}
+					<div>Current winning restaraunt: {getCurrentWinningRestaurant(e)}</div> {/* How are we calculating this */}
 				</div>);
 				// return (<li key={e.id}>{e.day + ' ' + e.time + ' '}</li>)
 			}));
+	}
+
+	//Function to get Current Winning Restaurant
+	const getCurrentWinningRestaurant = (eventCard) => {
+		const winningVote = eventCard.votes[0].restaurantId
+		
+		if (winningVote == null) {
+			return "Guests are still deciding."
+		} else {
+			const winningRestaurant = eventCard.eventRestaurants.find((e) => {
+				return (
+					e.id === winningVote
+				)
+			})
+			return winningRestaurant.name;
+		}
 	}
 
 	return (
