@@ -11,6 +11,7 @@ import baseUrl from '../../Shared/baseUrl'
 
 import { API } from '../../Shared/API'
 
+//Map State to props
 const mapStateToProps = state => {
     return {
 		userId: (state.user) ? state.user.id : 0,
@@ -22,10 +23,8 @@ const mapStateToProps = state => {
 }
 
 function EventView(props) {
-	/*
-    const dummyData = [{"id":"SCxEMLXGhbVpoQRIv4bOdg","name":"Anong's","categories":[{"alias":"thai","title":"Thai"}],"location":{"address1":"101 E Ivinson Ave","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13077456262","hours":null,"closed":false,"image_url":"https://s3-media2.fl.yelpcdn.com/bphoto/dulTbK6KQKrvJ-hsMzbhfw/o.jpg","is_closed":false,"display_phone":"(307) 745-6262"},{"id":"86T-CAGwj9aclTnOfxPOzg","name":"Thai Spice","categories":[{"alias":"thai","title":"Thai"}],"location":{"address1":"204 S 3rd St","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13074603440","hours":null,"closed":false,"image_url":"https://s3-media3.fl.yelpcdn.com/bphoto/oD1l2Qq83VDCedRufmepOg/o.jpg","is_closed":false,"display_phone":"(307) 460-3440"},{"id":"EbA1nez8RPB8kFYBKFZGfQ","name":"The New Mandarin","categories":[{"alias":"chinese","title":"Chinese"}],"location":{"address1":"1254 N 3rd St","city":"Laramie","state":"WY","zip_code":"82072"},"phone":"+13077428822","hours":null,"closed":false,"image_url":"https://s3-media4.fl.yelpcdn.com/bphoto/i_yuaae7NcOgtXbCk5lquw/o.jpg","is_closed":false,"display_phone":"(307) 742-8822"},{"id":"VXagSQWvu9sKKtujh5S6Zw","name":"Sweet Melissa's","categories":[{"alias":"vegetarian","title":"Vegetarian"},{"alias":"bars","title":"Bars"},{"alias":"cafes","title":"Cafes"}],"location":{"address1":"213 S 1st St","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13077429607","hours":null,"closed":false,"image_url":"https://s3-media1.fl.yelpcdn.com/bphoto/3eO14T91ahdyleL_27MdTw/o.jpg","is_closed":false,"display_phone":"(307) 742-9607"},{"id":"H2kyfGjQJZYoZdNMQvP3zQ","name":"Speedgoat","categories":[{"alias":"mexican","title":"Mexican"},{"alias":"asianfusion","title":"Asian Fusion"},{"alias":"tex-mex","title":"Tex-Mex"}],"location":{"address1":"213 Grand Ave","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13074603396","hours":null,"closed":false,"image_url":"https://s3-media3.fl.yelpcdn.com/bphoto/EtTVx2PEQl9eSLv41-PcTw/o.jpg","is_closed":false,"display_phone":"(307) 460-3396"},{"id":"anFMxAcBOHOI26tzDU8GgQ","name":"Sushi Boat","categories":[{"alias":"sushi","title":"Sushi Bars"},{"alias":"korean","title":"Korean"},{"alias":"japanese","title":"Japanese"}],"location":{"address1":"421 Boswell Dr","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13077420355","hours":null,"closed":false,"image_url":"https://s3-media3.fl.yelpcdn.com/bphoto/klyjQ_ttXngACO1LSQtr9A/o.jpg","is_closed":false,"display_phone":"(307) 742-0355"},{"id":"ErnRwQoJGrePU4FBpMDDng","name":"Jeffrey's Bistro","categories":[{"alias":"salad","title":"Salad"},{"alias":"soup","title":"Soup"},{"alias":"sandwiches","title":"Sandwiches"}],"location":{"address1":"123 E Ivinson Ave","city":"Laramie","state":"WY","zip_code":"82070"},"phone":"+13077427046","hours":null,"closed":false,"image_url":"https://s3-media3.fl.yelpcdn.com/bphoto/Iqjh5BNJZcP7dOvACSeIyg/o.jpg","is_closed":false,"display_phone":"(307) 742-7046"}];
-	*/
 
+	//Set constants and states
     const tuBlack = '/thumbsupblack.png';
     const tuGreen = '/thumbsupgreen.png';
     const tdBlack = '/thumbsdownblack.png';
@@ -34,7 +33,6 @@ function EventView(props) {
     const blob = '/yellowblobsignup.png';
 	const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { timeStyle: 'short'};
-
 	const [guest, setGuest] = useState(null);
 	const [isGuest, setIsGuest] = useState(true);
 	const [votes, setVotes] = useState([]);
@@ -43,7 +41,6 @@ function EventView(props) {
 	const [openModal, setOpenModal] = useState(false);
 	const [isFinal, setIsFinal] = useState(false);
 	const [finalVotes, setFinalVotes] = useState(null);
-	
 	const eventId = props.event.id;
 	const userId = props.userId;
 	const {id} = useParams();
@@ -52,8 +49,7 @@ function EventView(props) {
 	const token = props.token.token;
 	const urlRoot = "http://localhost:3000";
 
-
-
+	//Get Guest Info
 	const loadGuest = async(urls) => {
 		//if not a logged in user
 		if (!props.userId) {
@@ -67,6 +63,7 @@ function EventView(props) {
 		} 
 	}
 
+	//Load Users Events
 	const loadEvent = async(urls) => {
 		let url = (props.userId) ? urls.getEvent + id : urls.getGuestEvent + guestid;
 		const myEvents = await axios.get(url, (props.token ? API.createAuthorizedHeaders(props.token) : {})).catch((error) => {
@@ -96,11 +93,13 @@ function EventView(props) {
 		setFinalVotes(data.votes);
 	}
 
+	//Load all events
 	const loadAll = async(urls) => {
 		await loadGuest(urls);
 		await loadEvent(urls);
 	}
 
+	//useEffect to get urls, set document title, and set Modal state
 	useEffect(() => {
 		if (props.urls.urls) {
 			loadAll(props.urls.urls);
@@ -114,6 +113,7 @@ function EventView(props) {
 		setOpenModal(false);
 	},[]);
 
+	//Updating the state if user votes a thumbs up
 	const updateThumbsUp = (vote) => {
 		//figure out the index of the vote for this restaurant if it exists
 		const index = votes.findIndex((oldvotes) => (vote.restaurantId === oldvotes.restaurantId));
@@ -127,6 +127,7 @@ function EventView(props) {
 		setVotes(newVotesList);
 	}
 
+	//Updates to show if there is already a thumbs up
 	const thumbsUpHandler = (card) => {
 		updateThumbsUp({
 			restaurantId: card.id,
@@ -134,6 +135,7 @@ function EventView(props) {
 		});
 	}
 
+	//Updates to show if there is already a thumbs down
 	const thumbsDownHandler = (card) => {
 		updateThumbsUp({
 			restaurantId: card.id,
@@ -141,6 +143,7 @@ function EventView(props) {
 		});
 	}
 
+	//Function to conditionally display thumbs images
 	const getThumbImage = (card, thumbsup = true) => {
 		const vote = votes.find((vote) => card.id === vote.restaurantId);
 		if (vote && vote.upVote === true && thumbsup) {
@@ -152,6 +155,7 @@ function EventView(props) {
 		}
 	}
 
+	//Handles API call to submit votes
 	const voteSubmitHandler = async(event) => {
 		//do vote submission here
 		if (!guest) { console.log('did not vote'); return; }
@@ -164,6 +168,7 @@ function EventView(props) {
 		props.dispatch(setEventGuestVotes(guest, votes))
 	}
 
+	//Maps hours to the restaraunt cards
 	const mapDays = (hour) => {
 		var curDay = null;
 		if (!hour.open) { return <span>No hours found</span> }
@@ -180,6 +185,7 @@ function EventView(props) {
 		)
 	}
 
+	//Get total votes of restaurants
 	const getRestaurantTotalVotes = (restaurantId) => {
 		const voteFinalDTO = (finalVotes) ? finalVotes.find((v) => v.restaurantId === restaurantId) : null;
 		return (voteFinalDTO ? voteFinalDTO.upVotes : null);
@@ -233,12 +239,7 @@ function EventView(props) {
         )))
     }
 
-	const handleLinkCopy = (guest) => {
-		console.log(guest.inviteUrl);
-		const link = urlRoot + "/eventview/" + props.event.id + "/" + guest.inviteUrl;
-		navigator.clipboard.writeText(link);
-	}
-
+	//Handles Opening and Closing of Modals
 	const handleModalChange = () => {
 		setOpenModal(true);
 	}

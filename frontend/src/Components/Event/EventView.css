@@ -25,6 +25,10 @@
 }
 
 /* Event Info */
+.eventInfo {
+    padding-right: 5px;
+}
+
 .eventInfo h1 {
     font-size: xx-large;
     text-align: left;
@@ -158,6 +162,16 @@
     margin-right: 2px;
 }
 
+@media only screen and (max-width: 1100px){ 
+    .eventInfo .viewGLButton {
+        position: static;
+    }
+
+    .eventInfo .eventSubmit {
+        position: static;
+    }
+}
+
 @media only screen and (max-width: 800px){ 
 
     .eventCard {
@@ -190,4 +204,16 @@
         width: 100%;
     }
 
+}
+
+@media only screen and (max-width: 550px){ 
+    .eventRestaurants {
+        height: 67%;
+    }
+}
+
+@media only screen and (max-width: 400px){ 
+    .eventRestaurants {
+        height: 50%;
+    }
 }
