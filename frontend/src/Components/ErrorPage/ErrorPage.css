@@ -1,0 +1,26 @@
+.errorDiv {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    width: 500px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+#erroredBlob {
+    width: auto;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.errorDiv h1 {
+    color: #004e63;
+}

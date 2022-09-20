@@ -38,10 +38,11 @@ function AnimatedRoutes(props) {
                             <Route path='/eventview/:id' element={props.token.token !== undefined ? <EventView /> : <Login/>}>
 								<Route path='/eventview/:id/:guestid' element={<EventView />} />
 							</Route>
+                            <Route path='/errorpage/' element={<ErrorPage/>} />
                         </Routes>
                     : 
                         <Routes>
-                        <Route path='/errorpage/' element={<ErrorPage />} />
+                        <Route path='/errorpage/' element={<ErrorPage/>} />
                         <Navigate to='/errorpage/' />
                         </Routes>}
             </AnimatePresence>
