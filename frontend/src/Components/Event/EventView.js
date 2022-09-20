@@ -42,6 +42,7 @@ function EventView(props) {
 	const [guestLoaded, setGuestLoaded] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 	const [isFinal, setIsFinal] = useState(false);
+	const [finalVotes, setFinalVotes] = useState(null);
 	
 	const eventId = props.event.id;
 	const userId = props.userId;
@@ -74,6 +75,7 @@ function EventView(props) {
 		const data = myEvents.data;
 		
 		await dispatch(setEvent(data));
+	
 		let currentGuest = null;
 		if(token /* the user is logged in */) {
 			currentGuest = data.guestList.find((guest) => guest.userId === userId);
@@ -87,9 +89,11 @@ function EventView(props) {
 		}
 		//set as guest if the host Id is not the logged in user
 		const isGuest = (data.hostId !== userId && guestid != null)
+		const isFinal = deadlineHasPassed(data.decisionDeadline);
 		setIsGuest(isGuest);
 		setEventLoaded(true);
-		setIsFinal(deadlineHasPassed(data.decisionDeadline));
+		setIsFinal(isFinal);
+		setFinalVotes(data.votes);
 	}
 
 	const loadAll = async(urls) => {
@@ -175,6 +179,11 @@ function EventView(props) {
 			}
 		)
 	}
+
+	const getRestaurantTotalVotes = (restaurantId) => {
+		const voteFinalDTO = (finalVotes) ? finalVotes.find((v) => v.restaurantId === restaurantId) : null;
+		return (voteFinalDTO ? voteFinalDTO.upVotes : null);
+	}
 	
     //Maps through restaurants to display on page
     const eventRestaurantCards = function() {
@@ -192,7 +201,7 @@ function EventView(props) {
 					: 
 					<div className="thumbs">
 						<img src={tuBlack} className="thumbsNoClick" alt="Thumbs Up" />
-						<div>86</div>
+						<div>{getRestaurantTotalVotes(card.id)}</div>
 					</div>
 					}
                     <div className="imageSection">
