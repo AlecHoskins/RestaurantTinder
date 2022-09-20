@@ -21,6 +21,7 @@ export default function AddNewLink({open, onClose, addLinkURL, token}) {
 		axios.put(addLinkURL + guestURL, null, API.createAuthorizedHeaders(token)).catch((error) => {
 			alert('Failed to add the link.');
 		})
+        onClose();
 	}
 
     if (!open) {

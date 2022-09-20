@@ -15,7 +15,7 @@ import { AnimatePresence } from 'framer-motion'
 const mapStateToProps = state => {
     return {
         token: state.token,
-        urls: state.urls
+        urls: state.urls.urls
     }
 }
 
@@ -35,15 +35,14 @@ function AnimatedRoutes(props) {
                             <Route path='/nearme'element={props.token.token !== undefined ? <NearMe/> : <Login/>}/>
                             <Route path='/event' element={props.token.token !== undefined ? <EventCreation/> : <Login/>}/>
                             <Route path='/myevents' element={props.token.token !== undefined ? <MyEvents/> : <Login/>}/>
-                            <Route path='/eventview/:id' element={props.token.token !== undefined ? <EventView /> : <Login/>}>
-								<Route path='/eventview/:id/:guestid' element={<EventView />} />
-							</Route>
+                            <Route path='/eventview/:id/:guestid' element={<EventView />}></Route>
+                            <Route path='/eventview/:id' element={props.token.token !== undefined ? <EventView /> : <Login/>}></Route>
+                            <Route path='/eventview/:id/:guestid' element={<EventView />}></Route>
                             <Route path='/errorpage/' element={<ErrorPage/>} />
                         </Routes>
                     : 
                         <Routes>
-                        <Route path='/errorpage/' element={<ErrorPage/>} />
-                        <Navigate to='/errorpage/' />
+                        <Route path='*' element={<ErrorPage/>} />
                         </Routes>}
             </AnimatePresence>
         )

@@ -31,7 +31,7 @@ function Home(props) {
     //API call to get a user's events
     const loadEvents = useCallback(async() => {
         if (props.userId === null) { return; }
-	    const myEvents = await axios.get(props.urls.getHostEvents + props.userId, API.createAuthorizedHeaders(props.token)).catch((error) => {
+	    const myEvents = await axios.get(props.urls.getUserEvents + props.userId, API.createAuthorizedHeaders(props.token)).catch((error) => {
 			alert('There was an error while retrieving the events');
 		});
 		if (myEvents) { setEvents(myEvents.data); }
