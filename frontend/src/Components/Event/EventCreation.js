@@ -20,19 +20,22 @@ const mapStateToProps = state => {
 
 function EventCreation(props) {
 
-	// const [created, setCreated] = useState(false);
+	//Set constants and states
 	const [formValues, setFormValues] = useState([{name: ""}]);
 	const [eventID, setEventID] = useState();
 	const blob = '/yellowblob.png'
 
+	//Handles change of deadline to state
 	const handleDeadlineChange = (event) => {
 		props.dispatch(setEventDeadlineDate(event.target.value))
 	}
 
+	//useEffect to set document title
 	useEffect(() => {
         document.title = "Restaurant Tinder - Event Creation"
       }, [])
 
+	//Function to handle API call to submit event creation
 	const createEvent = async() => {
 		//this is essentially a submit to create the event
 		//so now build the event here
@@ -124,10 +127,12 @@ function EventCreation(props) {
 		setFormValues(newFormValues);
 	}
 
+	//Adds a new form field to add another guest
 	let addFormFields = () => {
 		setFormValues([...formValues, { name: ""}])
 	}
 
+	//Removes a form field and guest information
 	let removeFormFields = (i) => {
 		let newFormValues = [...formValues];
 		if (formValues.length > 1) {
@@ -150,9 +155,9 @@ function EventCreation(props) {
 				<img src={blob} className='createBlob' alt='Yellow Blob'/>
 			</motion.div>
 			<motion.div className='eventCreation'
-				initial={{ left: "-300px", transition: { duration: .4 } }}
-				animate={{ left: "50%", transition: { duration: .4, delay: .4 } }}
-				exit={{ left: "-300px", transition: { duration: .4 }}}
+				initial={{ left: "3300px", opacity: 1, transition: { duration: .4 } }}
+                animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
+                exit={{ left: "-1000px", opacity: 0, transition: { duration: .4 }}}
 			>
 				<div className='eventDetails'>
 					<h2>Event Details</h2>

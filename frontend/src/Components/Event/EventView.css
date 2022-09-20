@@ -71,6 +71,7 @@
     overflow-x: hidden;
 }
 
+/* Adds scrollbar on overflow of restaurants */
 .eventRestaurants::-webkit-scrollbar {
     width: 20px;
 }
@@ -162,6 +163,7 @@
     margin-right: 2px;
 }
 
+/* Button fix */
 @media only screen and (max-width: 1100px){ 
     .eventInfo .viewGLButton {
         position: static;
@@ -172,6 +174,7 @@
     }
 }
 
+/* Mobile View */
 @media only screen and (max-width: 800px){ 
 
     .eventCard {
