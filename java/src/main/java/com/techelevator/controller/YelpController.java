@@ -18,14 +18,9 @@ public class YelpController {
     @GetMapping()
     public Restaurant[] search( // TODO : check if restaurant is permanently closed.
             @RequestParam (defaultValue = "restaurant") String term,
-            @RequestParam (defaultValue = "78229") String location,
-            @RequestParam (defaultValue = "-1") int eventUnixTime
+            @RequestParam (defaultValue = "78229") String location
     ) {
-        SearchDTO search = yelpBusinessService.getBusinessesByTermAndLocation(term, location, eventUnixTime);
-
-        if(search == null) return null;
-
-        return search.getRestaurants();
+        return yelpBusinessService.getBusinessesByTermAndLocation(term, location).getRestaurants();
     }
 
     @GetMapping(path = "/{id}")

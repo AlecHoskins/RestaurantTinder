@@ -3,6 +3,7 @@ package com.techelevator.service;
 import com.techelevator.model.restaurant.Restaurant;
 import com.techelevator.dto.SearchDTO;
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,6 +13,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,24 +63,18 @@ public class YelpBusinessService {
 
     /********************************** SEARCHES BUSINESSES WITH SEARCH TERM AND LOCATION *******************************/
     public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location) {
-        return getBusinessesByTermAndLocation(searchTerm, location, -1);
-    }
-
-    public SearchDTO getBusinessesByTermAndLocation(String searchTerm, String location, int unixTime) {
         List<String> queries = new ArrayList<>();
 
+        queries.add("open_now=true");
         if(searchTerm != null && searchTerm.length() > 0) {
             queries.add("term=" + searchTerm);
         }
         if(location != null && location.length() > 0) {
             queries.add("location=" + location);
         }
-        if(unixTime > 0) {
-            queries.add("open_at=" + unixTime);
-        }
 
         String urlQuery = getUrlQuery(queries);
-
+        System.out.println(urlQuery); // TODO DELETE SOUT
         SearchDTO searchResults = null;
         try {
             ResponseEntity<SearchDTO> response = restTemplate.exchange(
@@ -88,6 +86,10 @@ public class YelpBusinessService {
             searchResults = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println("YelpBusinessService exception: " + e.getMessage());
+        }
+
+        for(Restaurant restaurant : searchResults.getRestaurants()) {
+            // todo check if they're permanently closed
         }
 
         return searchResults;
