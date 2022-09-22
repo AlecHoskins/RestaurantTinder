@@ -240,4 +240,5 @@ public class EventService extends AutowiredService {
     public void checkEventAccess(long eventId, Principal principal) {
         checkEventAccess(eventId, getIdFromPrincipal(principal));
     }
+
 }

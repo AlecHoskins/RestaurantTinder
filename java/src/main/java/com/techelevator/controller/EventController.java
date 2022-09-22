@@ -22,7 +22,7 @@ public class EventController {
         this.service = service;
     }
 
-    @GetMapping("/{eventId}") // TODO : only host?
+    @GetMapping("/{eventId}")
     public Event getEvent(@PathVariable long eventId, Principal principal) {
         service.checkEventAccess(eventId, principal);
         return service.getEvent(eventId);
