@@ -1,6 +1,7 @@
 package com.techelevator.service;
 
 import com.techelevator.dto.VoteTallyDTO;
+import com.techelevator.exception.AccessDeniedException;
 import com.techelevator.exception.TransactionRollbackException;
 import com.techelevator.model.event.Event;
 import com.techelevator.model.event.Guest;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -207,5 +209,35 @@ public class EventService extends AutowiredService {
         hash = hash.replaceAll("/", "0");
 
         return hash;
+    }
+
+    public long getIdFromPrincipal(Principal principal) {
+        return userDao.findIdByUsername(principal.getName());
+    }
+
+    public void confirmId(long id, Principal principal) {
+        long confirmedId = getIdFromPrincipal(principal);
+        if(id != confirmedId) {
+            System.out.println("Exception: IDs don't match - " + id + " : " + confirmedId);
+            throw new AccessDeniedException("This user cannot access this event.");
+        }
+    }
+
+    public void checkEventAccess(long eventId, long userId) {
+        Event event = eventDao.getEventById(eventId);
+        if(userId == event.getHostId()) {
+            return;
+        }
+        List<Guest> guests = guestDao.getEventGuests(eventId);
+        for(Guest guest : guests) {
+            if(guest.getUserId() == userId) {
+                return;
+            }
+        }
+        throw new AccessDeniedException("This user cannot access this event.");
+    }
+
+    public void checkEventAccess(long eventId, Principal principal) {
+        checkEventAccess(eventId, getIdFromPrincipal(principal));
     }
 }

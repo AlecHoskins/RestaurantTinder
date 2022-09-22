@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -21,24 +22,28 @@ public class EventController {
         this.service = service;
     }
 
-    @GetMapping("/{id}") // TODO : only host?
-    public Event getEvent(@PathVariable long id) {
-        return service.getEvent(id);
+    @GetMapping("/{eventId}") // TODO : only host?
+    public Event getEvent(@PathVariable long eventId, Principal principal) {
+        service.checkEventAccess(eventId, principal);
+        return service.getEvent(eventId);
     }
 
-    @GetMapping("/host/{id}")
-    public List<Event> getEventsByHost(@PathVariable long id) {
-        return service.getEventsByHost(id);
+    @GetMapping("/host/{hostId}")
+    public List<Event> getEventsByHost(@PathVariable long hostId, Principal principal) {
+        service.confirmId(hostId, principal);
+        return service.getEventsByHost(hostId);
     }
 
-    @GetMapping("/user/{id}")
-    public List<Event> getEventsByUser(@PathVariable long id) {
-        return service.getEventsByUser(id);
+    @GetMapping("/user/{userId}")
+    public List<Event> getEventsByUser(@PathVariable long userId, Principal principal) {
+        service.confirmId(userId, principal);
+        return service.getEventsByUser(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Event addEvent(@RequestBody Event newEvent) {
+    public Event addEvent(@RequestBody Event newEvent, Principal principal) {
+        service.confirmId(newEvent.getHostId(), principal);
         return service.addEvent(newEvent);
     }
 
