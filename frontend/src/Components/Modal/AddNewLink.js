@@ -29,9 +29,9 @@ export default function AddNewLink({open, onClose, addLinkURL, token}) {
     } else {
         return (
             <motion.div className="modalContainer"
-                initial={{ left: "2000px", opacity: 1, transition: { duration: .4 } }}
+                initial={{ left: "3300px", opacity: 0, transition: { duration: .4 } }}
                 animate={{ left: "50%", opacity: 1, transition: { duration: .4, delay: .4, type: 'spring', damping: 18 } }}
-                exit={{ left: "-1000px", opacity: 1, transition: { duration: .4 }}}
+                exit={{ left: "-1000px", opacity: 0, transition: { duration: .4 }}}
             >
                 <span className="modalClose" onClick={onClose}>❌</span>
                 <h2>Add New Invite Link</h2>
